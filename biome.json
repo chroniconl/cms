@@ -1,0 +1,33 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"a11y": {
+				"noSvgWithoutTitle": "off"
+			},
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noArrayIndexKey": "off"
+			},
+			"complexity": {
+				"noForEach": "off"
+			},
+			"style": {
+				"noParameterAssign": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "off"
+			}
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	}
+}

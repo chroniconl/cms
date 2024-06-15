@@ -1,0 +1,5 @@
+#tiptap > li p,
+#tiptap > li p {
+  margin: 0;
+  padding: 0;
+}
