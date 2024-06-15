@@ -1,5 +1,7 @@
 # Chroniconl CMS
 
+Licensed under the [MIT License](./LICENSE)
+
 > It's not headless! 
 
 A (soon-to-be-complete) content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. 
