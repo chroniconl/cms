@@ -16,12 +16,14 @@ export default async function PostsPage() {
 					<Text>Here you can view all the posts you have created and manage their settings.</Text>
 				</div>
 				<div className="col-span-12 md:col-span-6 flex justify-end gap-2">
-					<NewDocumentButton url="chroniconl.com" />
+					<NewDocumentButton url={process.env.NEXT_PUBLIC_SITE_URL as string} />
 				</div>
 			</section>
 			<main className="grid grid-cols-12 gap-12">
 				<section className="col-span-4">
-					<CategoryFilterOptionOnServer />
+					<div className="sticky top-8 space-y-4 mb-16">
+						<CategoryFilterOptionOnServer />
+					</div>
 				</section>
 				<section className="col-span-8">
 					<PostsList data={data} />

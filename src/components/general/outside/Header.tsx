@@ -71,7 +71,7 @@ export function Header() {
 				<div className="flex lg:hidden">
 					<button
 						type="button"
-						className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+						className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-700"
 						onClick={() => setMobileMenuOpen(true)}
 					>
 						<span className="sr-only">Open main menu</span>
@@ -80,9 +80,9 @@ export function Header() {
 				</div>
 				<PopoverGroup className="hidden lg:flex lg:gap-x-12">
 					<Popover>
-						<PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+						<PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-stone-900">
 							Blog
-							<ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+							<ChevronDownIcon className="h-5 w-5 flex-none text-stone-400" aria-hidden="true" />
 						</PopoverButton>
 
 						<Transition
@@ -93,31 +93,31 @@ export function Header() {
 							leaveFrom="opacity-100 translate-y-0"
 							leaveTo="opacity-0 -translate-y-1"
 						>
-							<PopoverPanel className="absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-gray-900/5">
+							<PopoverPanel className="absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-stone-900/5">
 								<div className="mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8">
 									{products.map((item) => (
-										<div key={item.name} className="group relative rounded-lg p-6 text-sm leading-6 hover:bg-gray-50">
-											<div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-												<item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+										<div key={item.name} className="group relative rounded-lg p-6 text-sm leading-6 hover:bg-stone-50">
+											<div className="flex h-11 w-11 items-center justify-center rounded-lg bg-stone-50 group-hover:bg-white">
+												<item.icon className="h-6 w-6 text-stone-600 group-hover:text-indigo-600" aria-hidden="true" />
 											</div>
-											<a href={item.href} className="mt-6 block font-semibold text-gray-900">
+											<a href={item.href} className="mt-6 block font-semibold text-stone-900">
 												{item.name}
 												<span className="absolute inset-0" />
 											</a>
-											<p className="mt-1 text-gray-600">{item.description}</p>
+											<p className="mt-1 text-stone-600">{item.description}</p>
 										</div>
 									))}
 								</div>
-								<div className="bg-gray-50">
+								<div className="bg-stone-50">
 									<div className="mx-auto max-w-7xl px-6 lg:px-8">
-										<div className="grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5">
+										<div className="grid grid-cols-3 divide-x divide-stone-900/5 border-x border-stone-900/5">
 											{callsToAction.map((item) => (
 												<a
 													key={item.name}
 													href={item.href}
-													className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+													className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-stone-900 hover:bg-stone-100"
 												>
-													<item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+													<item.icon className="h-5 w-5 flex-none text-stone-400" aria-hidden="true" />
 													{item.name}
 												</a>
 											))}
@@ -128,13 +128,13 @@ export function Header() {
 						</Transition>
 					</Popover>
 
-					<a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+					<a href="#" className="text-sm font-semibold leading-6 text-stone-900">
 						Docs
 					</a>
-					<a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+					<a href="#" className="text-sm font-semibold leading-6 text-stone-900">
 						Features
 					</a>
-					<a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+					<a href="#" className="text-sm font-semibold leading-6 text-stone-900">
 						Pricing
 					</a>
 				</PopoverGroup>
@@ -144,7 +144,7 @@ export function Header() {
 			</nav>
 			<Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
 				<div className="fixed inset-0 z-10" />
-				<DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+				<DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-stone-900/10">
 					<div className="flex items-center justify-between">
 						<Link href="/" className="flex gap-2">
 							<div className="px-4 py-2 flex items-center justify-center">
@@ -155,7 +155,7 @@ export function Header() {
 						</Link>
 						<button
 							type="button"
-							className="-m-2.5 rounded-md p-2.5 text-gray-700"
+							className="-m-2.5 rounded-md p-2.5 text-stone-700"
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							<span className="sr-only">Close menu</span>
@@ -163,12 +163,12 @@ export function Header() {
 						</button>
 					</div>
 					<div className="mt-6 flow-root">
-						<div className="-my-6 divide-y divide-gray-500/10">
+						<div className="-my-6 divide-y divide-stone-500/10">
 							<div className="space-y-2 py-6">
 								<Disclosure as="div" className="-mx-3">
 									{({ open }) => (
 										<>
-											<DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+											<DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50">
 												Blog
 												<ChevronDownIcon
 													className={cn(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
@@ -181,7 +181,7 @@ export function Header() {
 														key={item.name}
 														as="a"
 														href={item.href}
-														className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+														className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 													>
 														{item.name}
 													</DisclosureButton>
@@ -192,19 +192,19 @@ export function Header() {
 								</Disclosure>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Docs
 								</a>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Features
 								</a>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Pricing
 								</a>
@@ -212,7 +212,7 @@ export function Header() {
 							<div className="py-6">
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+									className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Log in
 								</a>

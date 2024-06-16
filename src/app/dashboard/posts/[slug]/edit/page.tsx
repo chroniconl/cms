@@ -35,9 +35,9 @@ export default async function DocumentSlugEdit({
 	return (
 		<>
 			<div className="flex w-full">
-				<div className="w-full rounded-md prose dark:prose-invert max-w-full">
+				<div className="w-full rounded-md">
 					<div className="grid grid-cols-12 gap-4 md:gap-6">
-						<div className="col-span-12 md:col-span-8 grid gap-1">
+						<div className="col-span-12 md:col-span-8 grid gap-1 prose dark:prose-invert max-w-full">
 							<TitleForm title={data.title} id={data.id} />
 							<Card className="p-2">
 								<TipTap defaultValue={data.content} params={params} />

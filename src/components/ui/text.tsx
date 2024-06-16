@@ -1,9 +1,15 @@
 import { clsx } from 'clsx'
 import { firaSansCondensed } from "@/app/fonts";
 
-export function Text({ className, ...props }: {
+export function Text({ 
+	className, 
+	small = false, 
+	children,
+	...props 
+}: {
 	className?: string
-	children: React.ReactNode
+	children: React.ReactNode,
+	small?: boolean
 }) {
   return (
     <p
@@ -11,10 +17,13 @@ export function Text({ className, ...props }: {
       {...props}
       className={clsx(
 				className, 
-				'text-base md:text-lg text-stone-500 dark:text-stone-400',
+				'text-stone-500 dark:text-stone-400', 
+				small ? 'text-sm'  : 'text-base md:text-lg',
 				firaSansCondensed.className
 			)}
-    />
+    >
+			{children}
+    </p>
   )
 }
 

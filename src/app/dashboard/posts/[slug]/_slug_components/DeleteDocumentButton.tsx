@@ -5,14 +5,14 @@ export default async function DeleteDocumentButton({
 	id,
 }: {
 	id: string;
-}){
+}) {
 	const handleDeleteDocumentPrompt = () => {
 		const confirm = window.confirm("Are you sure you want to delete this document?");
 		if (!confirm) {
 			alert("Document was not deleted.")
 			return
 		}
-		
+
 		// Delete the document
 		const deleteDocument = async () => {
 			try {
@@ -39,9 +39,9 @@ export default async function DeleteDocumentButton({
 		deleteDocument();
 	}
 
-	return (<Button onClick={handleDeleteDocumentPrompt}>
-							Delete
-						</Button>
-						
+	return (
+		<Button onClick={handleDeleteDocumentPrompt}>
+			Delete
+		</Button>
 	);
 }

@@ -3,6 +3,13 @@ import { bangers } from "@/app/fonts";
 import { AuthButtons } from "@/components/general/header/AuthButtons";
 import { supabase } from "@/utils/supabase";
 import TipTap from "@/components/general/TipTap";
+import Post from "@/components/general/Post";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Categories } from "@/components/general/Categories";
+import { handleSubscribeToNewsletterFormSubmit } from "@/server/subscribeToNewsLetter";
 
 export default async function BlogPage({
 	params,
@@ -34,53 +41,76 @@ export default async function BlogPage({
 		console.error(error);
 		return <div>Error fetching post</div>;
 	}
-	
+
 	return (
-		<>
-			<header className="bg-black text-white flex flex-col-reverse md:flex-row md:justify-between gap-5">
-				<h1 className={bangers.className}>
-					Chroniconl
-					<span className={bangers.className}>A CMS without a Head!</span>
-				</h1>
-				<div className="w-full flex justify-end md:block md:w-fit">
-					<AuthButtons />
-				</div>
-			</header>
-			<div className="sticky top-0 flex gap-8 w-full justify-end py-6 pr-5 md:pr-10 bg-[#F5F5DC] shadow-md">
-				<Link
-					href="/documentation"
-					className="text-lg font-semibold hover:underline"
-				>
-					Documentation
-				</Link>
-				<Link href="/support" className="text-lg font-semibold hover:underline">
-					Support
-				</Link>
-				<Link href="/pricing" className="text-lg font-semibold hover:underline">
-					Pricing
-				</Link>
-				<Link href="/blog" className="text-lg font-semibold hover:underline">
-					Blog
-				</Link>
-			</div>
-			<main>
-				<section className="grid grid-cols-12 gap-4 mb-20">
-					<div className="col-span-12 md:col-span-6">
-						<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl mt-16">
-							{data?.title}
-						</h1>
- 						<TipTap defaultValue={data?.content} editable={false} />
-					</div>					
-				</section>
+		<div className="grid grid-cols-12 gap-8 px-[20px] lg:px-[40px] my-8">
+			<main className="col-span-12 lg:col-span-9">
+
+				<Post
+					title={data?.title}
+					date={data?.publish_date}
+					slug={data?.slug}
+					tags={data?.tags}
+					category={data?.category}
+					description={data?.description}
+					content={data?.content}
+				/>
 			</main>
-			<footer>
-				<div className="footer-links">
-					<a href="/">License</a>
-					<a href="/">Support</a>
-					<a href="/">Developer</a>
+			<aside className="lg:col-span-3 hidden lg:block">
+				<div className="sticky top-8 space-y-4 mb-16">
+					<Categories />
+					<div className="rounded-lg bg-secondary p-4 shadow-md mt-4">
+						<h3 className="text-lg font-bold">Search</h3>
+						<div className="mt-2">
+							<Input
+								type="search"
+								placeholder="Search articles..."
+								className="w-full"
+							/>
+						</div>
+					</div>
+					<div className="rounded-lg bg-secondary p-4 shadow-md mt-4">
+						<h3 className="text-lg font-bold">Featured</h3>
+						<div className="mt-4 space-y-4">
+							{[...Array(3)].map((_, i) => (
+								<div key={i} className="group">
+									<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg bg-stone-200 shadow-md">
+										<img
+											src="/placeholder.svg"
+											alt="Featured Article Thumbnail"
+											width={320}
+											height={180}
+											className="object-cover object-center group-hover:opacity-75"
+										/>
+									</div>
+									<div className="mt-2">
+										<Heading level={4} className="text-sm font-bold">
+											<Link href="#" prefetch={false}>
+												New Study Shows Benefits of Exercise for Mental Health
+											</Link>
+										</Heading>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+					<form className="rounded-lg bg-secondary p-4 shadow-md mt-4" action={handleSubscribeToNewsletterFormSubmit}>
+						<Heading className="text-lg font-bold">Newsletter</Heading>
+						<Text className="mt-2" small>
+							Subscribe to our newsletter to receive the latest news and
+							updates.
+						</Text>
+						<div className="mt-4">
+							<Input
+								type="email-address"
+								placeholder="Enter your email"
+								className="w-full"
+							/>
+							<Button className="mt-2 w-full" type="submit">Subscribe</Button>
+						</div>
+					</form>
 				</div>
-				<p>© 2023 - 2024 Chroniconl CMS. All rights reserved.</p>
-			</footer>
-		</>
+			</aside>
+		</div>
 	);
 }

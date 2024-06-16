@@ -109,9 +109,9 @@ export default function MetaForm({
 	useEffect(setProps__IntoStateOnLoad, []);
 
 	return (
-		<div>
-			<form className="px-4" role="form">
-				<Heading>{"Document Settings"}</Heading>				
+		<div className="flex flex-col gap-4">
+			<form className="px-4 bg-secondary py-6 rounded-md" role="form">
+				<Heading level={2}>{"Document Settings"}</Heading>				
 				<div id="meta-form--visibility" className="mt-4">
 					<Label>{"Select Visibility"}</Label>
 					<Select
@@ -132,6 +132,12 @@ export default function MetaForm({
 						</SelectContent>
 					</Select>
 				</div>
+				
+				
+				{/* TODO: make featured post toggle - 3 posts may be featured*/}
+				{/* TODO: make primary featured post toggle - 1 post may be primary featured */}
+
+
 				<div id="meta-form--category" className="mt-4 grid grid-cols-12 gap-4">
 					<div className="col-span-10">
 						<Label>{"Select Category"}</Label>
@@ -178,16 +184,6 @@ export default function MetaForm({
 						}}
 					/>
 				</div>
-				<div id="meta-form--created-at" className="mt-4 flex flex-col gap-2">
-					<Label>{"Created At"}</Label>
-					<DatePickerSimple
-						date={new Date(store__createdAt)}
-						setDate={(date) => {
-							setCreatedAt(date);
-						}}
-						disabled
-					/>
-				</div>
 				<div id="meta-form--published-at" className="mt-4 flex flex-col gap-2">
 					<Label>{"Publish Date"}</Label>
 					<DatePickerWithPresets
@@ -204,10 +200,10 @@ export default function MetaForm({
 				</div>
 			</form>
 			
-			<div className="px-4">
-				<Heading>Page Info</Heading>
+			<div className="px-4 bg-secondary py-6 rounded-md">
+				<Heading level={2}>Page Info</Heading>
 				{/* display slug */}
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 mt-4">
 					<Label>{"Slug"}</Label>
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-1">

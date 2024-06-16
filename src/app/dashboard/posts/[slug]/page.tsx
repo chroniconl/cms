@@ -3,6 +3,8 @@ import { supabase } from "@/utils/supabase";
 import Link from "next/link";
 import TipTap from "@/components/general/TipTap";
 import DeleteDocumentButton from "./_slug_components/DeleteDocumentButton";
+import { Heading } from "@/components/ui/heading";
+import Post from "@/components/general/Post";
 
 export default async function DocumentsSlugPage({ params }: { params: { slug: string; } }) {
 	if (!params.slug) {
@@ -29,21 +31,22 @@ export default async function DocumentsSlugPage({ params }: { params: { slug: st
 				<DeleteDocumentButton id={data.id} />
 				<Link
 					href={`/dashboard/posts/${data.slug}/edit`}
-					className="border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 text-black dark:text-white"
+					className="border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
 				>
-					{"Edit"}
+					Edit
 				</Link>
 			</div>
-			<div className="mt-10 md:mx-4">
-				<div className="mb-20 pb-10 border-b border-accent">
-					<h1 className="md:px-4 text-4xl font-bold text-black dark:text-white">{data.title}</h1>
-					<div className="prose dark:prose-invert max-w-3xl">
-						<TipTap 
-							defaultValue={data.content} 
-							editable={false} 
-							className="prose dark:prose-invert prose-li:py-1 prose:w-full prose-p:0.5 prose-stone"
-						/>
-					</div>
+			<div className="mt-10 md:mx-4 mb-20 pb-10 grid grid-cols-12 gap-8">
+				<div className="col-span-9">
+					<Post
+						title={data.title}
+						date={data.publish_date}
+						slug={data.slug}
+						tags={data.tags}
+						category={data.category}
+						description={data.description}
+						content={data.content}
+					/>
 				</div>
 			</div>
 		</>
