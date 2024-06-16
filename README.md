@@ -11,9 +11,10 @@ This project is an active work in progress, I'd love to hear your suggestions an
 ## Table of Contents
 
 - [Why?](#why)
-- [Set up your own](#set-up-your-own)
-- [Stack](#stack)
+- [Getting Started](#getting-started)
+- [About the Stack](#about-the-stack)
 - [FAQ](#faq-stack-questions)
+- [Contributing / Bug Reports](#contributing--bug-reports)
 
 ## Why?
 
@@ -24,7 +25,7 @@ Why build a CMS when you could use one of the many alternatives?
 3. To provide all the benefits of a highly secured CMS out of the box.
 
 
-## Set up your own
+## Getting Started
 
 ### Prerequisites
 - Node.js 18.x
@@ -188,11 +189,9 @@ Once you're ready to deploy, you can use Vercel to deploy the project to your ow
 4. Follow the prompts to deploy the project to your own domain.
 
 
-## Stack 
+## About the Stack 
 
 Next.js (app router) x TypeScript, TailwindCSS x shadcn/ui, Zustand, Supabase, Clerk, UploadThing, Vercel, TipTap is a pretty integral part of this app's interface too. 
-
-### FAQ Stack Questions
 
 ### Why Clerk, isn't that expensive?
 
@@ -221,3 +220,19 @@ Because Redux seems mildly unnecessary for this project.
 ### Why Supabase?
 
 Supabase provides a safe way to scale this project quickly. It provides this front-end focused project peace-of-mind.
+
+## Contributing / Bug Reports
+
+We'd be appreciative of bug reports/ fixes, and would gladly accept new proposals.
+
+If you'd like to contribute to an existing issue, kindly communicate through the designated ticket to avoid overlapping efforts. Check out the [Open Issues](https://github.com/matthewbub/chroniconl-cms/issues?q=is%3Aissue+is%3Aopen) and our Contributing Guide for more information.
+
+This project requires Node.js and pnpm to be installed. If needed, you can install them from Node.js website and pnpm website.
+
+### Contributors Setup
+
+1. Fork this repository
+2. Clone the forked repository to your local machine, or open a new Code Space
+3. Checkout to a clean branch. e.g git checkout feature/addSomeCode (Please be more descriptive)
+4. (Follow the steps in [Getting Started](#getting-started) to install dependencies)
+5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/matthewbub/chroniconl-cms/issues 🙂 
