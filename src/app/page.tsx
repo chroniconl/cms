@@ -13,7 +13,7 @@ import Link from "next/link";
 export default async function Page() {
 	const { data, error } = await supabase
 		.from("posts")
-		.select("*, category:categories(id, name, slug, color)") 
+		.select("*, category:categories(id, name, slug, color)")
 		.order("created_at", { ascending: false })
 		.eq("visibility", "public")
 		.lt("publish_date", new Date().toISOString())
