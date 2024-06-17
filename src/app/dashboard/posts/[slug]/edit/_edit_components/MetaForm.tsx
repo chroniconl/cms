@@ -90,6 +90,7 @@ export default function MetaForm({
 		const createdAt = isValidDate(props__createdAt) ? parseISO(props__createdAt) : null;
 
 		// Set state
+		// This typeof shit is so dumb but was required for testing
 		if (publishDate && typeof setPublishDate === 'function') {
 			setPublishDate(publishDate);
 		}
@@ -111,7 +112,7 @@ export default function MetaForm({
 	return (
 		<div className="flex flex-col gap-4">
 			<form className="px-4 bg-secondary py-6 rounded-md" role="form">
-				<Heading level={2}>{"Document Settings"}</Heading>				
+				<Heading level={3}>{"Document Settings"}</Heading>				
 				<div id="meta-form--visibility" className="mt-4">
 					<Label>{"Select Visibility"}</Label>
 					<Select
@@ -132,8 +133,7 @@ export default function MetaForm({
 						</SelectContent>
 					</Select>
 				</div>
-				
-				
+								
 				{/* TODO: make featured post toggle - 3 posts may be featured*/}
 				{/* TODO: make primary featured post toggle - 1 post may be primary featured */}
 
@@ -201,7 +201,7 @@ export default function MetaForm({
 			</form>
 			
 			<div className="px-4 bg-secondary py-6 rounded-md">
-				<Heading level={2}>Page Info</Heading>
+				<Heading level={3}>Page Info</Heading>
 				{/* display slug */}
 				<div className="flex flex-col gap-2 mt-4">
 					<Label>{"Slug"}</Label>

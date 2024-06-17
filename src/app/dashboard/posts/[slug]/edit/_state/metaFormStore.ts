@@ -22,6 +22,12 @@ export interface MetaFormState {
 	
 	currentCategory: string;
 	setCurrentCategory: (currentCategory: string) => void;
+
+	imageUrl: string | null;
+	setImageUrl: (imageUrl: string | null) => void;
+
+	imageId: string | null;
+	setImageId: (imageId: string | null) => void;
 }
 
 export const useMetaFormStore = create<MetaFormState>((set) => ({
@@ -45,4 +51,10 @@ export const useMetaFormStore = create<MetaFormState>((set) => ({
 
 	currentCategory: '',
 	setCurrentCategory: (currentCategory: string) => set({ currentCategory }),
+
+	imageUrl: '',
+	setImageUrl: (imageUrl: string | null) => set({ imageUrl }),
+
+	imageId: '',
+	setImageId: (imageId: string | null) => set({ imageId }),
 }));

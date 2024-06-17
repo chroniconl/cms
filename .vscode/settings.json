@@ -9,6 +9,8 @@
 		"supabase",
 		"Thingys",
 		"Tiptap",
-		"upsert"
+		"Uploadthing",
+		"upsert",
+		"utapi"
 	]
 }

@@ -32,7 +32,7 @@ export default function TitleForm({title, id}: {title: string, id: string}) {
 				}}
 				type="text"
 				placeholder="Enter a title"
-				className="text-2xl px-4 py-6 w-full font-bold bg-transparent rounded-md"
+				className="text-2xl px-4 py-6 w-full font-bold bg-transparent rounded-md border border-input"
 			/>
     </form>
   );

@@ -10,7 +10,6 @@ export const getPostsAction = async (current: number = 0, next: number = 10) => 
 		.single();
 
 	if (userError) {
-		console.error(userError);
 		return []
 	}
 
@@ -21,8 +20,6 @@ export const getPostsAction = async (current: number = 0, next: number = 10) => 
 		.eq("user_id", userData?.id)
 		.range(current, next)
 		.limit(10);
-
-	console.log('COUNT: ' +count);
 
 	if (error) {
 		console.error(error);

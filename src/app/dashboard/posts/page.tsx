@@ -12,7 +12,7 @@ export default async function PostsPage() {
 		<>
 			<section className="grid grid-cols-12 gap-4 mb-20">
 				<div className="col-span-12 md:col-span-6">
-					<Heading>Posts</Heading>
+					<Heading>Your Posts</Heading>
 					<Text>Here you can view all the posts you have created and manage their settings.</Text>
 				</div>
 				<div className="col-span-12 md:col-span-6 flex justify-end gap-2">
