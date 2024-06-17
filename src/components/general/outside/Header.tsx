@@ -96,8 +96,8 @@ export function Header() {
 							<PopoverPanel className="absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-stone-900/5">
 								<div className="mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8">
 									{products.map((item) => (
-										<div key={item.name} className="group relative rounded-lg p-6 text-sm leading-6 hover:bg-stone-50">
-											<div className="flex h-11 w-11 items-center justify-center rounded-lg bg-stone-50 group-hover:bg-white">
+										<div key={item.name} className="group relative rounded-md p-6 text-sm leading-6 hover:bg-stone-50">
+											<div className="flex h-11 w-11 items-center justify-center rounded-md bg-stone-50 group-hover:bg-white">
 												<item.icon className="h-6 w-6 text-stone-600 group-hover:text-indigo-600" aria-hidden="true" />
 											</div>
 											<a href={item.href} className="mt-6 block font-semibold text-stone-900">
@@ -168,7 +168,7 @@ export function Header() {
 								<Disclosure as="div" className="-mx-3">
 									{({ open }) => (
 										<>
-											<DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50">
+											<DisclosureButton className="flex w-full items-center justify-between rounded-md py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50">
 												Blog
 												<ChevronDownIcon
 													className={cn(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
@@ -181,7 +181,7 @@ export function Header() {
 														key={item.name}
 														as="a"
 														href={item.href}
-														className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-stone-900 hover:bg-stone-50"
+														className="block rounded-md py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 													>
 														{item.name}
 													</DisclosureButton>
@@ -192,19 +192,19 @@ export function Header() {
 								</Disclosure>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
+									className="-mx-3 block rounded-md px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Docs
 								</a>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
+									className="-mx-3 block rounded-md px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Features
 								</a>
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
+									className="-mx-3 block rounded-md px-3 py-2 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Pricing
 								</a>
@@ -212,7 +212,7 @@ export function Header() {
 							<div className="py-6">
 								<a
 									href="#"
-									className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
+									className="-mx-3 block rounded-md px-3 py-2.5 text-base font-semibold leading-7 text-stone-900 hover:bg-stone-50"
 								>
 									Log in
 								</a>

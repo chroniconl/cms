@@ -89,7 +89,7 @@ export default function CategoryFilterOption() {
 			<Label htmlFor="category-filter">Filter by Category</Label>  
 			<div className="flex flex-col gap-2 mt-4">
 				{categories && categories.length > 0 ? (
-					<ScrollArea className="h-72 rounded-lg border border-stone-800">
+					<ScrollArea className="h-72 rounded-md border border-stone-800">
 						<div className="py-4 px-2 flex flex-col gap-2">
 							<div className="flex items-center gap-2">
 								<Controller

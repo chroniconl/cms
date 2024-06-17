@@ -59,7 +59,7 @@ export default async function BlogPage({
 			<aside className="lg:col-span-3 hidden lg:block">
 				<div className="sticky top-8 space-y-4 mb-16">
 					<Categories />
-					<div className="rounded-lg bg-secondary p-4 shadow-md mt-4">
+					<div className="rounded-md bg-secondary p-4 shadow-md mt-4">
 						<h3 className="text-lg font-bold">Search</h3>
 						<div className="mt-2">
 							<Input
@@ -69,12 +69,12 @@ export default async function BlogPage({
 							/>
 						</div>
 					</div>
-					<div className="rounded-lg bg-secondary p-4 shadow-md mt-4">
+					<div className="rounded-md bg-secondary p-4 shadow-md mt-4">
 						<h3 className="text-lg font-bold">Featured</h3>
 						<div className="mt-4 space-y-4">
 							{[...Array(3)].map((_, i) => (
 								<div key={i} className="group">
-									<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg bg-stone-200 shadow-md">
+									<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-stone-200 shadow-md">
 										<img
 											src="/placeholder.svg"
 											alt="Featured Article Thumbnail"
@@ -94,7 +94,7 @@ export default async function BlogPage({
 							))}
 						</div>
 					</div>
-					<form className="rounded-lg bg-secondary p-4 shadow-md mt-4" action={handleSubscribeToNewsletterFormSubmit}>
+					<form className="rounded-md bg-secondary p-4 shadow-md mt-4" action={handleSubscribeToNewsletterFormSubmit}>
 						<Heading className="text-lg font-bold">Newsletter</Heading>
 						<Text className="mt-2" small>
 							Subscribe to our newsletter to receive the latest news and

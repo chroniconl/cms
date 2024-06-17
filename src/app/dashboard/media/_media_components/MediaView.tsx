@@ -24,7 +24,7 @@ export default function MediaView() {
 					Array.from({ length: 10 }).map((_, index) => (
 						<div
 							key={index}
-							className="group flex flex-col gap-2 rounded-lg border border-stone-200 bg-white p-2 shadow-sm hover:shadow-md dark:border-stone-800 dark:bg-stone-950"
+							className="group flex flex-col gap-2 rounded-md border border-stone-200 bg-white p-2 shadow-sm hover:shadow-md dark:border-stone-800 dark:bg-stone-950"
 						>
 							<div className="relative aspect-video overflow-hidden rounded-md">
 								<img

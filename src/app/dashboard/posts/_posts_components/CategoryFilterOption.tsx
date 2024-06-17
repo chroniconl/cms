@@ -76,7 +76,7 @@ export default function CategoryFilterOption({ categories: categoriesFromServer 
 								/>
 								<Label htmlFor="category-filter-all">Select All</Label>
 							</div>
-							<ScrollArea className="h-72 rounded-lg border border-stone-800 bg-stone-800">
+							<ScrollArea className="h-72 rounded-md border border-stone-800 bg-stone-800">
 								<div className="py-3 px-2 flex flex-col gap-2">
 
 									{categories.map((category: Category) => (

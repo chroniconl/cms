@@ -15,7 +15,7 @@ export default async function DashboardHeader() {
 			<div className="flex items-center gap-4 w-full">				
 				<div className="flex flex-grow">
 					{navItems.map(({ label, url }) => (
-						<Link key={label} href={url} className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+						<Link key={label} href={url} className="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground transition-all hover:text-primary">
 							{label}
 						</Link>
 					))}

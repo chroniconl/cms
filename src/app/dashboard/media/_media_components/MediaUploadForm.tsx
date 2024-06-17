@@ -49,7 +49,7 @@ export default function MediaUploadForm() {
 			</div>
 			<div {...getRootProps()} className={"grid gap-4"}>
 				<div
-					className={`flex items-center justify-center rounded-lg border-2 ${
+					className={`flex items-center justify-center rounded-md border-2 ${
 						isDragActive
 							? "border-blue-500"
 							: "border-dashed border-stone-300 dark:border-stone-700"
@@ -78,7 +78,7 @@ export default function MediaUploadForm() {
 						key={index}
 						src={file.preview}
 						alt="Uploaded Image"
-						className="aspect-square object-cover rounded-lg"
+						className="aspect-square object-cover rounded-md"
 						width={300}
 						height={300}
 					/>

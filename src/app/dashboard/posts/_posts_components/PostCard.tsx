@@ -24,7 +24,7 @@ export default function PostCard({
 				href={slug}
 				className={cn([
 					"grid grid-cols-12 gap-4",
-					"w-full group p-4 rounded-lg",
+					"w-full group p-4 rounded-md",
 					"bg-secondary hover:bg-stone-100 dark:hover:bg-stone-800",
 					"transition-colors duration-200 ease-in-out"
 				])}
