@@ -49,9 +49,9 @@ export default async function Page() {
 										</Link>
 									</Heading>
 									<Text className="mt-2 text-sm text-stone-500 line-clamp-3">
-										Researchers at XYZ University have developed a groundbreaking
-										AI model that can recognize objects and scenes with
-										unprecedented accuracy...
+										Researchers at XYZ University have developed a
+										groundbreaking AI model that can recognize objects and
+										scenes with unprecedented accuracy...
 									</Text>
 								</div>
 								<div className="mt-3 flex items-center text-sm">
@@ -67,7 +67,9 @@ export default async function Page() {
 						{data?.map((post, i) => (
 							<Link
 								key={post.id}
-								href={`/blog/${formatTimestampToSlug(post.publish_date)}/${post.slug}`}
+								href={`/blog/${formatTimestampToSlug(post.publish_date)}/${
+									post.slug
+								}`}
 							>
 								<article key={post.id} className="group">
 									<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-stone-100 shadow-md">
