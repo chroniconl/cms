@@ -240,3 +240,9 @@ This project requires Node.js and pnpm to be installed. If needed, you can insta
 3. Checkout to a clean branch. e.g git checkout feature/addSomeCode (Please be more descriptive)
 4. (Follow the steps in [Getting Started](#getting-started) to install dependencies)
 5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/matthewbub/chroniconl-cms/issues 🙂 
+
+## FAQ
+
+### Why is my Blog Post not showing up?
+
+If you've already created a blog post and are expecting it to show up on the homepage or be accessible via direct link, make sure you've set the posts "Visibility" field to "Public". In addition, ensure the "Publish Date" field is set to a point in the past.

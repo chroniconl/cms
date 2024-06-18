@@ -48,7 +48,9 @@ export default async function BlogPage() {
 								tags={doc.tags}
 								category={{ name: doc.category.name, color: doc.category.color }}
 								description={doc.description}
-								publish_date={doc.publish_date}
+								publish_date={doc.publish_date} 
+								imageUrl={doc.image_url}
+								imageAlt={doc.image_alt}
 							/>
 						</div>
 					))}

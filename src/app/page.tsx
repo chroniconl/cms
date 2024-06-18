@@ -4,6 +4,7 @@ import Header from "@/components/general/header/Header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
+import { ClientImage } from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { formatTimestampToSlug } from "@/utils/formatTimestampToSlug";
@@ -72,15 +73,7 @@ export default async function Page() {
 								}`}
 							>
 								<article key={post.id} className="group">
-									<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-stone-100 shadow-md">
-										<img
-											src="https://plus.unsplash.com/premium_photo-1718198501646-a95f049e39b5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-											alt="Article Thumbnail"
-											width={640}
-											height={360}
-											className="object-cover object-center group-hover:opacity-75"
-										/>
-									</div>
+									<ClientImage src={post.image_url} alt={post.image_alt} />
 									<div className="mt-4 flex flex-col justify-between">
 										<div>
 											<Heading className="text-base font-bold text-stone-900">
@@ -90,7 +83,7 @@ export default async function Page() {
 												className="mt-2 text-sm text-stone-500 line-clamp-2"
 												small
 											>
-												{post?.description.slice(0, 200)}
+												{post?.description?.slice(0, 200)}
 											</Text>
 										</div>
 										<div className="mt-3 flex items-center text-sm">

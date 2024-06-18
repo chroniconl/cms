@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Badge } from "../ui/badge";
-import { Heading } from "../ui/heading";
-import { Time } from "./Time";
-import { Text } from "../ui/text";
-import TipTap from "./TipTap";
+import { Badge } from "@/components/ui/badge";
+import { Heading } from "@/components/ui/heading";
+import { Time } from "@/components/general/Time";
+import { Text } from "@/components/ui/text";
+import TipTap from "@/components/general/TipTap";
 import { formatTimestampToSlug } from "@/utils/formatTimestampToSlug";
+import { ClientImage } from "@/components/ui/image";
 
 interface PostProps {
 	title: string;
@@ -14,6 +15,8 @@ interface PostProps {
 	slug: string;
 	tags: string;
 	category: string;
+	imageUrl: string | null;
+	imageAlt: string | null;
 }
 export default function Post({
 	title,
@@ -22,19 +25,13 @@ export default function Post({
 	date,
 	slug,
 	tags,
-	category
+	category,
+	imageUrl,
+	imageAlt
 }: PostProps) {
 	return (
 		<article className="group bg-secondary p-6 shadow-md rounded-md">
-			<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md shadow-md">
-				<img
-					src="https://plus.unsplash.com/premium_photo-1718198501646-a95f049e39b5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-					alt="Featured Article"
-					width={1920}
-					height={1080}
-					className="object-cover object-center group-hover:opacity-75"
-				/>
-			</div>
+			<ClientImage src={imageUrl} alt={imageAlt} />
 			<div className="mt-4 flex flex-col justify-between group-hover:opacity-75">
 				<div>
 					<Heading>
@@ -70,6 +67,8 @@ export const PostCardDefaultSize = ({
 	tags,
 	category,
 	publish_date,
+	imageUrl,
+	imageAlt,
 }: {
 	title: string;
 	description: string;
@@ -81,19 +80,13 @@ export const PostCardDefaultSize = ({
 		color: string;
 	}
 	publish_date: string;
+	imageUrl: string | null;
+	imageAlt: string | null;
 }) => {
 	return (
 		<Link href={`/blog/${formatTimestampToSlug(publish_date)}/${slug}`}>
 			<article className="group">
-				<div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-stone-100 shadow-md">
-					<img
-						src="https://plus.unsplash.com/premium_photo-1718198501646-a95f049e39b5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-						alt="Article Thumbnail"
-						width={640}
-						height={360}
-						className="object-cover object-center group-hover:opacity-75"
-					/>
-				</div>
+				<ClientImage src={imageUrl} alt={imageAlt} />
 				<div className="mt-4 flex flex-col justify-between">
 					<div>
 						<Heading className="text-base font-bold text-stone-900">

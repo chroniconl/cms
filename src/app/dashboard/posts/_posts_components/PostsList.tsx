@@ -26,6 +26,10 @@ export default function PostsList({data}: {data: any}) {
 						slug={`/dashboard/posts/${doc.slug}`}
 						tags={doc.tags}
 						category={doc.category}
+						imageAlt={doc.image_alt}
+						imageUrl={doc.image_url}
+						description={doc.description}						
+						publishDate={doc.publish_date}
 					/>
 				))}
 			</div>

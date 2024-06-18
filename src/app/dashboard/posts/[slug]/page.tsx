@@ -46,6 +46,8 @@ export default async function DocumentsSlugPage({ params }: { params: { slug: st
 						category={data.category}
 						description={data.description}
 						content={data.content}
+						imageAlt={data.image_alt}
+						imageUrl={data.image_url}
 					/>
 				</div>
 			</div>

@@ -8,16 +8,12 @@ export async function PUT(request: Request) {
 		return failResponse("Document ID is required");
 	}
 
-	if (!requestData.image_alt || !requestData.image_caption) {
-		return failResponse("Nothing to update");
-	}
-
 	// Remove from Supabase
 	const { error } = await supabase
 		.from("posts")
 		.update({
-			image_caption: requestData.image_caption,
-			image_alt: requestData.image_alt,
+			image_caption: requestData?.image_caption || '',
+			image_alt: requestData?.image_alt || '',
 		})
 		.match({ id: requestData.id });
 

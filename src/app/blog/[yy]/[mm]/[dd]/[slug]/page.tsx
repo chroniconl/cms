@@ -45,7 +45,6 @@ export default async function BlogPage({
 	return (
 		<div className="grid grid-cols-12 gap-8 px-[20px] lg:px-[40px] my-8">
 			<main className="col-span-12 lg:col-span-9">
-
 				<Post
 					title={data?.title}
 					date={data?.publish_date}
@@ -54,6 +53,8 @@ export default async function BlogPage({
 					category={data?.category}
 					description={data?.description}
 					content={data?.content}
+					imageUrl={data?.image_url}
+					imageAlt={data?.image_alt}
 				/>
 			</main>
 			<aside className="lg:col-span-3 hidden lg:block">

@@ -36,7 +36,7 @@ export default function ImageForm({
 	imageAlt: string | null;
 	imageCaption: string | null;
 }) {
-	const { control, handleSubmit, setValue } = useForm({
+	const { control, handleSubmit, setValue, watch } = useForm({
 		defaultValues: {
 			imageAlt: props__imageAlt || '',
 			imageCaption: props__imageCaption || ''
@@ -80,7 +80,7 @@ export default function ImageForm({
 
 		setValue('imageAlt', '');
 		setValue('imageCaption', '');
-		
+
 		toast({
 			title: 'Image deleted',
 			description: 'The image has been deleted.'
@@ -132,8 +132,10 @@ export default function ImageForm({
 			})
 			return
 		}
+
 		state__setImageUrl(data.image_url);
 		state__setImageId(data.image_id);
+
 		toast({
 			title: 'Image uploaded',
 			description: 'The image has been uploaded.'
@@ -152,7 +154,8 @@ export default function ImageForm({
 			variant: 'destructive',
 		});
 	}
-	
+
+	const imageAlt = watch('imageAlt');
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="px-4 bg-secondary py-6 rounded-md">
@@ -185,7 +188,7 @@ export default function ImageForm({
 						<AspectRatio ratio={16 / 9} className="bg-muted">
 							<Image
 								src={state__imageUrl}
-								alt="Photo by ..."
+								alt={imageAlt || ''}
 								fill
 								className="rounded-md object-cover"
 							/>
