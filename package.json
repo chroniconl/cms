@@ -7,7 +7,7 @@
 		"build": "next build --no-lint",
 		"start": "next start",
 		"lint": "npx biome lint ./src/**/*.{ts,tsx}",
-		"biome:format": "npx biome format ./src/**/*.{ts,tsx} --write",
+		"biome:format": "npx biome format ./src/**/**/**/**/**/**/*.{ts,tsx} --write",
 		"biome:lint": "npx biome lint ./src/**/*.{ts,tsx}",
 		"biome:check": "npx biome check --apply ./src/**/*.{ts,tsx}",
 		"biome:check:apply-unsafe": "npx biome check --apply-unsafe ./src/**/*.{ts,tsx}",
