@@ -2,59 +2,59 @@ import { Category } from "@/utils/types";
 import { create } from "zustand";
 
 export interface MetaFormState {
-	categories: Category[];
-	setCategories: (categories: Category[]) => void;
-	
-	publishDate: Date;
-	setPublishDate: (publishDate: Date) => void;
-	
-	createdAt: Date;
-	setCreatedAt: (createdAt: Date) => void;
+  categories: Category[];
+  setCategories: (categories: Category[]) => void;
 
-	visibility: string;
-	setVisibility: (visibility: string) => void;
-	
-	tags: string;
-	setTags: (tags: string) => void;
-	
-	description: string;
-	setDescription: (description: string) => void;
-	
-	currentCategory: string;
-	setCurrentCategory: (currentCategory: string) => void;
+  publishDate: Date;
+  setPublishDate: (publishDate: Date) => void;
 
-	imageUrl: string | null;
-	setImageUrl: (imageUrl: string | null) => void;
+  createdAt: Date;
+  setCreatedAt: (createdAt: Date) => void;
 
-	imageId: string | null;
-	setImageId: (imageId: string | null) => void;
+  visibility: string;
+  setVisibility: (visibility: string) => void;
+
+  tags: string;
+  setTags: (tags: string) => void;
+
+  description: string;
+  setDescription: (description: string) => void;
+
+  currentCategory: string;
+  setCurrentCategory: (currentCategory: string) => void;
+
+  imageUrl: string | null;
+  setImageUrl: (imageUrl: string | null) => void;
+
+  imageId: string | null;
+  setImageId: (imageId: string | null) => void;
 }
 
 export const useMetaFormStore = create<MetaFormState>((set) => ({
-	categories: [],
-	setCategories: (categories: Category[]) => set({ categories }),
+  categories: [],
+  setCategories: (categories: Category[]) => set({ categories }),
 
-	publishDate: new Date(),
-	setPublishDate: (publishDate: Date) => set({ publishDate }),
-	
-	createdAt: new Date(),
-	setCreatedAt: (createdAt: Date) => set({ createdAt }),
+  publishDate: new Date(),
+  setPublishDate: (publishDate: Date) => set({ publishDate }),
 
-	visibility: '',
-	setVisibility: (visibility: string) => set({ visibility }),
+  createdAt: new Date(),
+  setCreatedAt: (createdAt: Date) => set({ createdAt }),
 
-	tags: '',
-	setTags: (tags: string) => set({ tags }),
+  visibility: "",
+  setVisibility: (visibility: string) => set({ visibility }),
 
-	description: '',
-	setDescription: (description: string) => set({ description }),
+  tags: "",
+  setTags: (tags: string) => set({ tags }),
 
-	currentCategory: '',
-	setCurrentCategory: (currentCategory: string) => set({ currentCategory }),
+  description: "",
+  setDescription: (description: string) => set({ description }),
 
-	imageUrl: '',
-	setImageUrl: (imageUrl: string | null) => set({ imageUrl }),
+  currentCategory: "",
+  setCurrentCategory: (currentCategory: string) => set({ currentCategory }),
 
-	imageId: '',
-	setImageId: (imageId: string | null) => set({ imageId }),
+  imageUrl: "",
+  setImageUrl: (imageUrl: string | null) => set({ imageUrl }),
+
+  imageId: "",
+  setImageId: (imageId: string | null) => set({ imageId }),
 }));

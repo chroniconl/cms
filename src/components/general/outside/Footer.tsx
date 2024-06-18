@@ -1,13 +1,11 @@
-
-
 export function Footer({
-	hideNewsletter = false,
+  hideNewsletter = false,
 }: {
-	hideNewsletter?: boolean;
+  hideNewsletter?: boolean;
 }) {
-	return (
-		<footer className="bg-white" aria-labelledby="footer-heading">
-			Footer
-		</footer>
-	);
+  return (
+    <footer className="bg-white" aria-labelledby="footer-heading">
+      Footer
+    </footer>
+  );
 }

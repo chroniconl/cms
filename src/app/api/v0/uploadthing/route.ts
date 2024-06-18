@@ -6,7 +6,7 @@ import { supabase } from "@/utils/supabase";
 import joi from "joi";
 
 export async function GET(request: Request) {
-	const files = await utapi.listFiles();
+  const files = await utapi.listFiles();
 
-	return okResponse(files, "Heres your files");
+  return okResponse(files, "Heres your files");
 }

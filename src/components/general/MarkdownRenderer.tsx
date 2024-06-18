@@ -3,16 +3,16 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 export default function MarkdownRenderer({
-	markdown,
+  markdown,
 }: {
-	markdown: string;
+  markdown: string;
 }) {
-	return (
-		<Markdown
-			remarkPlugins={[remarkGfm]}
-			className="prose dark:prose-invert w-full max-w-full"
-		>
-			{markdown}
-		</Markdown>
-	);
+  return (
+    <Markdown
+      remarkPlugins={[remarkGfm]}
+      className="prose dark:prose-invert w-full max-w-full"
+    >
+      {markdown}
+    </Markdown>
+  );
 }
