@@ -1,5 +1,6 @@
 "use client";
 
+import { Card } from "@/components/ui/card";
 import React from "react";
 
 const updateTitle = (title: string, id: string) => {
@@ -26,17 +27,8 @@ export default function TitleForm({
   id,
 }: { title: string; id: string }) {
   return (
-    <form>
-      <input
-        defaultValue={title}
-        name="title"
-        onChange={(e) => {
-          updateTitle(e.target.value, id);
-        }}
-        type="text"
-        placeholder="Enter a title"
-        className="text-2xl px-4 py-6 w-full font-bold bg-transparent rounded-md border border-input"
-      />
-    </form>
+    <Card>
+      <h2 className="text-2xl px-4 w-full font-bold mt-6">{title}</h2>
+    </Card>
   );
 }

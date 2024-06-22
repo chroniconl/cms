@@ -15,8 +15,7 @@ export const metadata = {
     template: "%s - Chroniconl",
     default: "Chroniconl",
   },
-  description:
-    "Hanging out on the technical side of entrepreneurship.",
+  description: "Hanging out on the technical side of entrepreneurship.",
   alternates: {
     types: {
       "application/rss+xml": `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,

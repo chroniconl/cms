@@ -14,7 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import {
   DatePickerSimple,
-  DatePickerWithPresets,
+  // DatePickerWithPresets,
 } from "@/components/general/DatePicker";
 import { Button } from "@/components/ui/button";
 import { Category } from "@/utils/types";
@@ -195,7 +195,7 @@ export default function MetaForm({
         </div>
         <div id="meta-form--published-at" className="mt-4 flex flex-col gap-2">
           <Label>{"Publish Date"}</Label>
-          <DatePickerWithPresets
+          {/* <DatePickerWithPresets
             date={new Date(store__publishDate)}
             setDate={(date) => {
               updatePublishDate(date, props__id);
@@ -207,7 +207,7 @@ export default function MetaForm({
             disabled={
               store__publishDate === null || store__publishDate === undefined
             }
-          />
+          /> */}
         </div>
       </form>
 

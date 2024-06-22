@@ -22,6 +22,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm, Controller } from "react-hook-form";
+import { Card } from "@/components/ui/card";
 
 export default function ImageForm({
   id: props__id,
@@ -161,8 +162,8 @@ export default function ImageForm({
   const imageAlt = watch("imageAlt");
   return (
     <div className="flex flex-col gap-4">
-      <div className="px-4 bg-secondary py-6 rounded-md">
-        <div className="flex justify-between w-full mb-4">
+      <Card>
+        <div className="flex justify-between w-full mb-4 px-4 pt-6">
           <Heading level={3}>{"Image"}</Heading>
           {state__imageUrl && (
             <AlertDialog>
@@ -189,56 +190,58 @@ export default function ImageForm({
             </AlertDialog>
           )}
         </div>
-        {state__imageUrl ? (
-          <div className="flex flex-col gap-2">
-            <AspectRatio ratio={16 / 9} className="bg-muted">
-              <Image
-                src={state__imageUrl}
-                alt={imageAlt || ""}
-                fill
-                className="rounded-md object-cover"
-              />
-            </AspectRatio>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-2 pt-4 border-t border-stone-200 dark:border-stone-700 mt-6"
-            >
-              <div>
-                <Label htmlFor="imageAlt">Alt text</Label>
-                <Controller
-                  name="imageAlt"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Input type="text" placeholder="Alt text" {...field} />
-                  )}
-                />
-              </div>
-              <div>
-                <Label htmlFor="imageCaption">Image caption</Label>
-                <Controller
-                  name="imageCaption"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Input type="text" placeholder="Photo by ..." {...field} />
-                  )}
-                />
-              </div>
-              <Button className="mt-4" type="submit">
-                Update Image Meta
-              </Button>
-            </form>
-          </div>
-        ) : (
-          <UploadDropzone
-            className="border border-input bg-background px-2.5 py-6 text-sm ring-offset-background text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            endpoint="imageUploader"
-            onClientUploadComplete={handleUploadImageComplete}
-            onUploadError={handleUploadError}
-          />
-        )}
-      </div>
+				<div className="px-4 pb-6"> 
+					{state__imageUrl ? (
+						<div className="flex flex-col gap-2">
+							<AspectRatio ratio={16 / 9} className="bg-muted">
+								<Image
+									src={state__imageUrl}
+									alt={imageAlt || ""}
+									fill
+									className="rounded-md object-cover"
+								/>
+							</AspectRatio>
+							<form
+								onSubmit={handleSubmit(onSubmit)}
+								className="flex flex-col gap-2 pt-4 border-t border-stone-200 dark:border-stone-700 mt-6"
+							>
+								<div>
+									<Label htmlFor="imageAlt">Alt text</Label>
+									<Controller
+										name="imageAlt"
+										control={control}
+										defaultValue=""
+										render={({ field }) => (
+											<Input type="text" placeholder="Alt text" {...field} />
+										)}
+									/>
+								</div>
+								<div>
+									<Label htmlFor="imageCaption">Image caption</Label>
+									<Controller
+										name="imageCaption"
+										control={control}
+										defaultValue=""
+										render={({ field }) => (
+											<Input type="text" placeholder="Photo by ..." {...field} />
+										)}
+									/>
+								</div>
+								<Button className="mt-4" type="submit">
+									Update Image Meta
+								</Button>
+							</form>
+						</div>
+					) : (
+						<UploadDropzone
+							className="border border-input bg-background px-2.5 py-6 text-sm ring-offset-background text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+							endpoint="imageUploader"
+							onClientUploadComplete={handleUploadImageComplete}
+							onUploadError={handleUploadError}
+						/>
+					)}
+				</div>
+      </Card>
     </div>
   );
 }

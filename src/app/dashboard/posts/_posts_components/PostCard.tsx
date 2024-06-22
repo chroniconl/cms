@@ -43,7 +43,7 @@ export default function PostCard({
         ])}
       >
         <div className="col-span-12 md:col-span-4">
-          <div className="min-h-[130px] border border-gray-200 dark:border-gray-700 ">
+          <div className="min-h-[130px] border border-stone-200 dark:border-stone-700 ">
             <ClientImage
               className="input-border"
               src={imageUrl}
