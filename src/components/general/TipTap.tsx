@@ -15,50 +15,44 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/a11y-dark.css';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-// load all highlight.js languages
-// import { lowlight } from 'lowlight'
-import { common, createLowlight } from 'lowlight'
-
-const lowlight = createLowlight(common)
-
-hljs.registerLanguage('css', css)
-hljs.registerLanguage('javascript', js)
-hljs.registerLanguage('typescript', ts)
-hljs.registerLanguage('xml', html)
-
 import { Button } from "@/components/ui/button";
 import {
-	ArrowDownWideNarrow,
 	BoldIcon,
-	BracketsIcon,
 	ImageIcon,
 	ItalicIcon,
 	Link2Icon,
 	Link2OffIcon,
 	List,
-	MinusIcon,
 	Strikethrough,
-	TextQuote,
 	UnderlineIcon,
 } from "lucide-react";
 import { debounce } from "@/utils/debounce";
 import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cn } from "@/utils/cn";
+import css from 'highlight.js/lib/languages/css'
+import js from 'highlight.js/lib/languages/javascript'
+import ts from 'highlight.js/lib/languages/typescript'
+import html from 'highlight.js/lib/languages/xml'
+import hljs from 'highlight.js/lib/core';
+import go from 'highlight.js/lib/languages/go'
+import 'highlight.js/styles/a11y-dark.css';
+
+// load all highlight.js languages
+// import { lowlight } from 'lowlight'
+import { common, createLowlight } from 'lowlight'
+import { Controller, useForm } from "react-hook-form";
+
+const lowlight = createLowlight(common)
+hljs.registerLanguage('css', css)
+hljs.registerLanguage('javascript', js)
+hljs.registerLanguage('typescript', ts)
+hljs.registerLanguage('xml', html)
+hljs.registerLanguage('go', go)
 
 const TipTap = ({
 	defaultValue,
@@ -73,6 +67,8 @@ const TipTap = ({
 	editable?: boolean;
 	className?: string;
 }) => {
+	const { control, setValue } = useForm();
+
 	const editor = useEditor({
 		editable: editable,
 		editorProps: {
@@ -141,6 +137,35 @@ const TipTap = ({
 		});
 	}, [editor, debouncedUpdate]);
 
+	useEffect(() => {
+		if (!editor) return;
+
+		const updateSelectValue = () => {
+			const { $anchor } = editor.state.selection;
+			const node = $anchor.node($anchor.depth);
+			let value = "Body (normal)";
+
+			console.log(node.type.name)
+			if (node.type.name === 'heading') {
+				value = `Heading ${node.attrs.level}`;
+			} else if (node.type.name === 'blockquote') {
+				value = 'Blockquote';
+			} else if (node.type.name === 'codeBlock') {
+				value = 'Code Block';
+			} else if (node.type.name === 'paragraph') {
+				value = 'Body (normal)';
+			}
+
+			setValue('text', value);
+		};
+
+		editor.on('selectionUpdate', updateSelectValue);
+
+		return () => {
+			editor.off('selectionUpdate', updateSelectValue);
+		};
+	}, [editor, setValue]);
+
 	const setLink = useCallback(() => {
 		if (!editor) {
 			return;
@@ -186,66 +211,74 @@ const TipTap = ({
 			{
 				editable && (
 					<div className="border-b border-accent flex flex-wrap items-center sticky top-0 bg-background z-10 gap-1 pb-2">
-						<Select
+						<Controller
 							name="text"
-							onValueChange={(value) => {
-								switch (value) {
-									case "Heading 1":
-										editor.chain().focus().toggleHeading({ level: 1 }).run();
-										break;
-									case "Heading 2":
-										editor.chain().focus().toggleHeading({ level: 2 }).run();
-										break;
-									case "Heading 3":
-										editor.chain().focus().toggleHeading({ level: 3 }).run();
-										break;
-									case "Heading 4":
-										editor.chain().focus().toggleHeading({ level: 4 }).run();
-										break;
-									case "Heading 5":
-										editor.chain().focus().toggleHeading({ level: 5 }).run();
-										break;
-									case "Heading 6":
-										editor.chain().focus().toggleHeading({ level: 6 }).run();
-										break;
-									case "Code Block":
-										editor.chain().focus().toggleCodeBlock().run();
-										break;
-									case "Blockquote":
-										editor.chain().focus().toggleBlockquote().run();
-										break;
-									case "Body (normal)":
-										editor.chain().focus().clearNodes().run();
-										break;
-									case "Clear Formatting":
-										editor.chain().focus().unsetAllMarks().run();
-										editor.chain().focus().clearNodes().run();
-										break;
-									default:
-										break;
-								}
-							}}>
-							<SelectTrigger className="flex items-center justify-between w-[150px]">
-								<SelectValue placeholder={"Select text"} />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="Body (normal)">Body (normal)</SelectItem>
-								<SelectSeparator />
-								{["Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"].map((heading) => (
-									<SelectItem key={heading} value={heading}>
-										{heading}
-									</SelectItem>
-								))}
-								<SelectSeparator />
-								{["Blockquote", "Code Block"].map((block) => (
-									<SelectItem key={block} value={block}>
-										{block}
-									</SelectItem>
-								))}
-								<SelectSeparator />
-								<SelectItem value="Clear">Clear Formatting</SelectItem>
-							</SelectContent>
-						</Select>
+							control={control}
+							render={({ field: { onChange, value } }) => (
+								<Select
+									value={value}
+									onValueChange={(value) => {
+										onChange(value);
+										switch (value) {
+											case "Heading 1":
+												editor.chain().focus().toggleHeading({ level: 1 }).run();
+												break;
+											case "Heading 2":
+												editor.chain().focus().toggleHeading({ level: 2 }).run();
+												break;
+											case "Heading 3":
+												editor.chain().focus().toggleHeading({ level: 3 }).run();
+												break;
+											case "Heading 4":
+												editor.chain().focus().toggleHeading({ level: 4 }).run();
+												break;
+											case "Heading 5":
+												editor.chain().focus().toggleHeading({ level: 5 }).run();
+												break;
+											case "Heading 6":
+												editor.chain().focus().toggleHeading({ level: 6 }).run();
+												break;
+											case "Code Block":
+												editor.chain().focus().toggleCodeBlock().run();
+												break;
+											case "Blockquote":
+												editor.chain().focus().toggleBlockquote().run();
+												break;
+											case "Body (normal)":
+												editor.chain().focus().clearNodes().run();
+												break;
+											case "Clear Formatting":
+												editor.chain().focus().unsetAllMarks().run();
+												editor.chain().focus().clearNodes().run();
+												break;
+											default:
+												break;
+										}
+									}}
+								>
+									<SelectTrigger className="flex items-center justify-between w-[150px]">
+										<SelectValue placeholder={"Select text"} />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="Body (normal)">Body (normal)</SelectItem>
+										<SelectSeparator />
+										{["Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"].map((heading) => (
+											<SelectItem key={heading} value={heading}>
+												{heading}
+											</SelectItem>
+										))}
+										<SelectSeparator />
+										{["Blockquote", "Code Block"].map((block) => (
+											<SelectItem key={block} value={block}>
+												{block}
+											</SelectItem>
+										))}
+										<SelectSeparator />
+										<SelectItem value="Clear">Clear Formatting</SelectItem>
+									</SelectContent>
+								</Select>
+							)}
+						/>
 						<Button
 							size={"icon"}
 							variant={"ghost"}
@@ -324,21 +357,6 @@ const TipTap = ({
 							<ImageIcon className="w-5 h-5" />
 							<span className="sr-only">Image</span>
 						</Button>
-
-						{/* <Button
-							size={"icon"}
-							variant={"ghost"}
-							onClick={() => editor.chain().focus().toggleBlockquote().run()}
-							className={
-								editor.isActive("blockquote")
-									? "bg-accent text-accent-foreground"
-									: ""
-							}
-						>
-							<TextQuote className="w-5 h-5" />
-							<span className="sr-only">Block quote</span>
-						</Button> */}
-
 						<DropdownMenu>
 							<DropdownMenuTrigger>
 								<Button
@@ -377,22 +395,6 @@ const TipTap = ({
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
-
-
-
-						{/* <Button
-							size={"icon"}
-							variant={"ghost"}
-							onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-							className={
-								editor.isActive("codeBlock")
-									? "bg-accent text-accent-foreground"
-									: ""
-							}
-						>
-							<BracketsIcon className="w-5 h-5" />
-							<span className="sr-only">Code block</span>
-						</Button> */}
 					</div>
 				)
 			}

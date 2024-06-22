@@ -13,18 +13,6 @@ import { supabase } from "@/utils/supabase";
 import Link from "next/link";
 
 export default async function Page() {
-  const { data: headlinePost, error: headlinePostError } = await supabase
-    .from("posts")
-    .select("*, category:categories(id, name, slug, color)")
-    .eq("visibility", "public")
-    .eq("headline_post", true)
-    .single();
-
-  if (headlinePostError) {
-    console.error(headlinePostError);
-    return <div>Error fetching post</div>;
-  }
-
   const { data, error } = await supabase
     .from("posts")
     .select("*, category:categories(id, name, slug, color)")
@@ -37,10 +25,6 @@ export default async function Page() {
   if (error) {
     throw Error();
   }
-  // console.log(data[0])
-  // console.log(data.find((post) => post.publish_date_day))
-  // console.log(data.find((post) => post.publish_date_time))
-  // const headlinePost = data.find((post) => post.headline_post);
 
   return (
     <>
@@ -48,40 +32,6 @@ export default async function Page() {
 
       <div className="grid grid-cols-12 gap-8 px-[10px] md:px-[20px] lg:px-[40px] my-8">
         <main className="col-span-12 lg:col-span-9">
-          <section className="mb-6 md:mb-10 lg:mb-16">
-            <article className="group bg-secondary px-2.5 pt-3 pb-6 md:p-4 shadow-md rounded-md">
-              <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-md shadow-md">
-                <ClientImage
-                  src={headlinePost?.image_url}
-                  alt={headlinePost?.image_alt}
-                  className="object-cover object-center group-hover:opacity-75"
-                />
-              </div>
-              <div className="mt-4 flex flex-col justify-between group-hover:opacity-75">
-                <div>
-                  <Heading className="text-lg font-bold text-stone-900">
-                    <Link
-                      href={`/blog/${formatToPST(
-                        headlinePost?.publish_date_day,
-                      )}/${headlinePost?.slug}`}
-                      prefetch={false}
-                    >
-                      {headlinePost?.title}
-                    </Link>
-                  </Heading>
-                  <Text className="mt-2 text-sm text-stone-500 line-clamp-3">
-                    {headlinePost?.description?.slice(0, 200)}
-                  </Text>
-                </div>
-                <div className="mt-3 flex items-center text-sm">
-                  <Time date={headlinePost?.publish_date_day} />
-                  <Badge color={headlinePost?.category?.color}>
-                    {headlinePost?.category?.name}
-                  </Badge>
-                </div>
-              </div>
-            </article>
-          </section>
           <section className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {data?.map((post, i) => (
               <Link

@@ -102,7 +102,6 @@ export default async function DocumentSlugEdit({
 									publishDateDay={toPST(postData.publish_date_day)}
 									publishDateTime={postData.publish_date_time}
 									visibility={postData.visibility}
-									headlinePost={postData.headline_post}
 								/>
 								<FilterDataForm
 									id={postData.id}
