@@ -15,30 +15,138 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useForm, Controller } from "react-hook-form";
 import { Category } from "@/utils/types";
+import { Text } from "@/components/ui/text";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle
+} from "@/components/ui/dialog";
+import { create } from "zustand";
+import { useEffect } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 interface FilterDataFormProps {
 	categories: Category[];
-	tags: string[];
+	// Tags as an array of objects
+	tags: {
+		name: string;
+		slug: string;
+	}[];
+	id: string;
+	category: {
+		id: string;
+		name: string;
+	};
 }
 
 interface FilterDataFormState {
 	category: string;
+	// Tags as a string separated by commas
 	tags: string;
 }
+
+const categoryStore = create<{
+	categories: Category[];
+	setCategories: (categories: Category[]) => void;
+	categoryModalOpen: boolean;
+	setCategoryModalOpen: (categoryModalOpen: boolean) => void;
+}>((set) => ({
+	categories: [],
+	setCategories: (categories: Category[]) => set({ categories }),
+	categoryModalOpen: false,
+	setCategoryModalOpen: (categoryModalOpen: boolean) => set({ categoryModalOpen }),
+}));
+
 export default function FilterDataForm({
-	categories,
-	tags
+	categories: props__categories,
+	tags: props__tags,
+	id: props__id,
+	category: props__category,
 }: FilterDataFormProps) {
+	const categories = categoryStore((state) => state.categories);
+	const setCategories = categoryStore((state) => state.setCategories);
+	const categoryModalOpen = categoryStore((state) => state.categoryModalOpen);
+	const setCategoryModalOpen = categoryStore((state) => state.setCategoryModalOpen);
+
+	useEffect(() => {
+		if (props__categories) {
+			setCategories(props__categories);
+		}
+	}, [props__categories, setCategories]);
+
 	const { control, handleSubmit } = useForm<FilterDataFormState>({
 		defaultValues: {
-			category: "",
-			tags: ""
+			category: props__category.id || "",
+			tags: props__tags.map(tag => tag.name).join(", ")
 		}
 	});
 
-	const onSubmit = (data: FilterDataFormState) => {
-		console.log(data);
-		// Handle form submission
+	const onSubmit = async (data: FilterDataFormState) => {
+		const response = await fetch("/api/v0.1/document/filterable-data", {
+			method: "POST",
+			body: JSON.stringify({
+				id: props__id,
+				category_id: data.category,
+				tags: data.tags,
+			}),
+		});
+
+		const result = await response.json();
+
+		if (result.error) {
+			console.error(result.message)
+			toast({
+				title: "Error",
+				description: "Failed to update filterable data",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		toast({
+			title: "Success",
+			description: "Filterable data updated successfully",
+		});
+	};
+
+	const { control: categoryControl, handleSubmit: handleCategorySubmit, reset: resetCategoryForm } = useForm({
+		defaultValues: {
+			name: "",
+		}
+	});
+
+	const handleAddNewCategory = async (data: {
+		name: string;
+	}) => {
+		const response = await fetch("/api/v0/categories", {
+			method: "POST",
+			body: JSON.stringify({
+				name: data.name,
+			}),
+		});
+
+		const result = await response.json();
+
+		if (result.error) {
+			toast({
+				title: "Error",
+				description: "Failed to create category",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		setCategories([...categories, result.data]);
+		resetCategoryForm(); // Reset the form after submission
+		setCategoryModalOpen(false); // Close the modal after submission
+
+		toast({
+			title: "Success",
+			description: "Category created successfully",
+		});
 	};
 
 	return (
@@ -75,7 +183,7 @@ export default function FilterDataForm({
 							variant="outline"
 							className="w-full"
 							type="button"
-							onClick={() => { }}
+							onClick={() => setCategoryModalOpen(true)}
 						>
 							<PlusIcon className="w-5 h-5" />
 						</Button>
@@ -84,6 +192,7 @@ export default function FilterDataForm({
 
 				<div className="flex flex-col">
 					<Label htmlFor="tags">Tags</Label>
+					<Text small>Tags are used to help categorize your post. They are comma separated.</Text>
 					<Controller
 						name="tags"
 						control={control}
@@ -91,7 +200,7 @@ export default function FilterDataForm({
 							<Input
 								{...field}
 								placeholder="Add a tag"
-								className="w-full"
+								className="w-full mt-2"
 							/>
 						)}
 					/>
@@ -101,6 +210,32 @@ export default function FilterDataForm({
 					<Button type="submit">Update Filter Data</Button>
 				</div>
 			</form>
+
+			<Dialog open={categoryModalOpen} onOpenChange={setCategoryModalOpen}>
+				<DialogContent className="sm:max-w-[425px]">
+					<DialogHeader>
+						<DialogTitle>Create a new category</DialogTitle>
+						<DialogDescription>
+							Create a new category for your post here. Click save when you're done.
+						</DialogDescription>
+					</DialogHeader>
+					<form onSubmit={handleCategorySubmit(handleAddNewCategory)} className="grid gap-4 py-4">
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="name" className="text-right">
+								Name
+							</Label>
+							<Controller
+								name="name"
+								control={categoryControl}
+								render={({ field }) => <Input id="name" placeholder="Category Name" className="col-span-3" {...field} />}
+							/>
+						</div>
+						<DialogFooter>
+							<Button type="submit">Add Category</Button>
+						</DialogFooter>
+					</form>
+				</DialogContent>
+			</Dialog>
 		</Card>
 	);
 }

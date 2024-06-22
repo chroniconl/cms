@@ -47,6 +47,28 @@ export default async function DocumentSlugEdit({
 		if (authorsError) {
 			return <>Error fetching authors</>;
 		}
+
+		const { data: tagsData, error: tagsError } = await supabase
+			.from("post_tag_relationship")
+			.select(`tag:tags(id, name, slug)`)
+			.eq("post_id", postData.id)
+
+		if (tagsError) {
+			console.error(tagsError)
+			return <>Error fetching tags</>;
+		}
+
+		const formattedTags = tagsData.map((tag) => ({ 
+			// @ts-ignore - this is dumb I'm right TS wrong.
+			name: tag.tag?.name,
+			// @ts-ignore
+			slug: tag.tag?.slug,
+			// @ts-ignore
+			id: tag.tag?.id 
+		}))
+
+		console.log(formattedTags)
+		
 		// Use postData and categoriesData as needed
 		return (
 			<>
@@ -83,8 +105,10 @@ export default async function DocumentSlugEdit({
 									headlinePost={postData.headline_post}
 								/>
 								<FilterDataForm
+									id={postData.id}
 									categories={categoriesData}
-									tags={postData.tags}
+									tags={formattedTags}
+									category={postData.category}
 								/>
 							</div>
 						</div>
