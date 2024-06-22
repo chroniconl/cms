@@ -13,9 +13,15 @@ export default async function DashboardPage() {
         <Text>Coming Soon. We're working on this section</Text>
       </section>
 
-      <section className="mb-20 p-5 bg-secondary rounded-md">
+      <section className="mb-10 p-5 bg-secondary rounded-md">
         <Info className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />
         <Heading level={2}>Recent Comments</Heading>
+        <Text>Coming Soon. We're working on this section</Text>
+      </section>
+
+			<section className="mb-20 p-5 bg-secondary rounded-md">
+        <Info className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />
+        <Heading level={2}>Draft Posts</Heading>
         <Text>Coming Soon. We're working on this section</Text>
       </section>
     </>

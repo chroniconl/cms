@@ -9,7 +9,7 @@ export async function PUT(request: Request) {
     id: joi.string().required(),
 		title: joi.string().optional(),
     description: joi.string().optional(),
-		author: joi.string().optional(),
+		author_id: joi.string().optional(),
   });
 
   const { error: validationError } = schema.validate(requestData);
@@ -23,7 +23,7 @@ export async function PUT(request: Request) {
     .update({
 			title: requestData?.title || null,
       description: requestData?.description || null,
-			// author: requestData?.author || "",
+			author_id: requestData?.author_id || "",
     })
     .match({ id: requestData?.id });
 
