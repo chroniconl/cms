@@ -39,7 +39,7 @@ export function isPublished(publicationTime: string): boolean {
   return false;
 }
 /**
- * @deprecated 
+ * @deprecated
  * Converts a date to PST timezone
  * @param {string | Date} date - The date to convert
  * @returns {Date} - The converted date in PST
@@ -91,10 +91,9 @@ export function convertTimeString(timeString: string): string {
   return formattedTime;
 }
 
-
 export function getPSTDate() {
   const now = new Date();
-  const timeZone = 'America/Los_Angeles';
+  const timeZone = "America/Los_Angeles";
   const zonedDate = utcToZonedTime(now, timeZone);
   return zonedDate;
 }
