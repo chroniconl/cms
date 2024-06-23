@@ -13,10 +13,9 @@ import { Providers } from "./providers";
 export const metadata = {
   title: {
     template: "%s - Chroniconl",
-    default: "Chroniconl - Content made easy",
+    default: "Chroniconl",
   },
-  description:
-    "A content distribution platform that allows you to securely distribute your content to your audience.",
+  description: "Hanging out on the technical side of entrepreneurship.",
   alternates: {
     types: {
       "application/rss+xml": `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
