@@ -39,6 +39,7 @@ export function isPublished(publicationTime: string): boolean {
   return false;
 }
 /**
+ * @deprecated 
  * Converts a date to PST timezone
  * @param {string | Date} date - The date to convert
  * @returns {Date} - The converted date in PST
@@ -47,8 +48,7 @@ export function toPST(date: string | Date | null): Date {
   let dateObj: Date;
 
   if (!date) {
-    // @ts-ignore
-    return;
+    throw new Error("Invalid date");
   }
 
   if (typeof date === "string") {
@@ -89,4 +89,12 @@ export function convertTimeString(timeString: string): string {
   const formattedTime = format(date, "h:mm a");
 
   return formattedTime;
+}
+
+
+export function getPSTDate() {
+  const now = new Date();
+  const timeZone = 'America/Los_Angeles';
+  const zonedDate = utcToZonedTime(now, timeZone);
+  return zonedDate;
 }
