@@ -48,7 +48,7 @@ export function toPST(date: string | Date | null): Date {
   let dateObj: Date;
 
   if (!date) {
-    throw new Error("Invalid date");
+    dateObj = new Date();
   }
 
   if (typeof date === "string") {
@@ -67,16 +67,6 @@ export function toPST(date: string | Date | null): Date {
 }
 
 /**
- * Formats a date in PST to 'YYYY-MM-DD' string
- * @param {string | Date} date - The date to format
- * @returns {string} - The formatted date string
- */
-export function formatToPST(date: string | Date): string {
-  const zonedDate = toPST(date);
-  return format(zonedDate, "yyyy-MM-dd");
-}
-
-/**
  * Converts a time string in the format "HH:mm:ss" to "h:mm a"
  * @param timeString - The time string to convert
  * @returns The formatted time string
@@ -91,8 +81,8 @@ export function convertTimeString(timeString: string): string {
   return formattedTime;
 }
 
-export function getPSTDate() {
-  const now = new Date();
+export function getPSTDate(date = new Date()) {
+  const now = date;
   const timeZone = "America/Los_Angeles";
   const zonedDate = utcToZonedTime(now, timeZone);
   return zonedDate;
