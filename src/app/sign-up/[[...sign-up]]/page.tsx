@@ -1,12 +1,12 @@
-import { TemplateLayout } from "@/components/general/TemplateLayout";
+import PublicLayout from "@/components/general/PublicLayout";
 import { SignUp } from "@clerk/nextjs";
 
 export default function Page() {
-  return (
-    <TemplateLayout>
-      <div className="w-fit mx-auto my-20">
-        <SignUp path="/sign-up" />
-      </div>
-    </TemplateLayout>
-  );
+	return (
+		<PublicLayout>
+
+			<SignUp path="/sign-up" />
+
+		</PublicLayout>
+	);
 }

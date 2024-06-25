@@ -19,9 +19,8 @@ import { convertTimeString } from "@/utils/dates";
 export interface PublishDetailsProps {
 	id: string;
 	visibility?: string;
-	publishDateDay?: Date;
-	publishDateTime?: string;
-	headlinePost?: boolean;
+	publishDateDay?: Date | null;
+	publishDateTime?: string | null;
 }
 
 export interface PublishDetailsFormProps {
@@ -34,8 +33,8 @@ export interface PublishDetailsFormProps {
 export default function PublishDetailsForm({
 	id,
 	visibility,
-	publishDateDay,
-	publishDateTime
+	publishDateDay = null,
+	publishDateTime = null
 }: PublishDetailsProps) {
 	const { control, handleSubmit } = useForm<PublishDetailsFormProps>({
 		defaultValues: {
@@ -119,7 +118,7 @@ export default function PublishDetailsForm({
 				<div className="flex flex-col">
 					<Label htmlFor="publish_date">Post Visibility</Label>
 					<div className="flex w-full gap-2">
-						<Controller					
+						<Controller
 							name="visibility"
 							control={control}
 							render={({ field }) => (
@@ -142,7 +141,7 @@ export default function PublishDetailsForm({
 				</div>
 			</form>
 
-			
+
 		</Card>
 	);
 }

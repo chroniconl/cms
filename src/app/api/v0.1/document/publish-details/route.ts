@@ -10,36 +10,34 @@ interface PublishDetailsApiProps {
 	publishDateTime?: string;
 }
 export async function PUT(request: Request) {
-  const requestData = await request.json() as PublishDetailsApiProps;
+	const requestData = await request.json() as PublishDetailsApiProps;
 
-  const schema = joi.object({
-    id: joi.string().required(),
+	const schema = joi.object({
+		id: joi.string().required(),
 		visibility: joi.string().optional(),
 		publishDateDay: joi.date().optional(),
 		publishDateTime: joi.string().optional(),
-  });
+	});
 
-  const { error: validationError } = schema.validate(requestData);
+	const { error: validationError } = schema.validate(requestData);
 
-  if (validationError) {
-    return failResponse(validationError.message);
-  }
+	if (validationError) {
+		return failResponse(validationError.message);
+	}
 
-	console.log(requestData)
-
-  const { error } = await supabase
-    .from("posts")
-    .update({
+	const { error } = await supabase
+		.from("posts")
+		.update({
 			visibility: requestData?.visibility || null,
-			publish_date_day: requestData?.publishDateDay ? toPST(requestData?.publishDateDay) : null, 
+			publish_date_day: requestData?.publishDateDay ? toPST(requestData?.publishDateDay) : null,
 			publish_date_time: requestData?.publishDateTime || null,
-    })
-    .match({ id: requestData?.id });
+		})
+		.match({ id: requestData?.id });
 
-  if (error) {
-    console.error(error);
-    return failResponse(error?.message);
-  }
+	if (error) {
+		console.error(error);
+		return failResponse(error?.message);
+	}
 
-  return okResponse("Document updated");
+	return okResponse("Document updated");
 }

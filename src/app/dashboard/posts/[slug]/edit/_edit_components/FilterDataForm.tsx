@@ -79,8 +79,8 @@ export default function FilterDataForm({
 
 	const { control, handleSubmit } = useForm<FilterDataFormState>({
 		defaultValues: {
-			category: props__category.id || "",
-			tags: props__tags.map(tag => tag.name).join(", ")
+			category: props__category?.id || "",
+			tags: props__tags?.map(tag => tag.name).join(", ")
 		}
 	});
 
