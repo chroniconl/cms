@@ -45,25 +45,24 @@ export function isPublished(publicationTime: string): boolean {
  * @returns {Date} - The converted date in PST
  */
 export function toPST(date: string | Date | null): Date {
-	let dateObj: Date;
+  let dateObj: Date;
 
-	if (!date) {
-		dateObj = new Date();
-	}
+  if (!date) {
+    dateObj = new Date();
+  }
 
-	if (typeof date === "string") {
-		// Assuming the string is in ISO format (YYYY-MM-DD)
-		dateObj = parseISO(date);
-	} else if (date instanceof Date) {
-		dateObj = date;
-	} else {
-		console.log(date);
-		throw new Error("Invalid date format");
-	}
+  if (typeof date === "string") {
+    // Assuming the string is in ISO format (YYYY-MM-DD)
+    dateObj = parseISO(date);
+  } else if (date instanceof Date) {
+    dateObj = date;
+  } else {
+    throw new Error("Invalid date format");
+  }
 
-	// Convert the date to PST
-	const zonedDate = utcToZonedTime(dateObj, PST_TIMEZONE);
-	return zonedDate;
+  // Convert the date to PST
+  const zonedDate = utcToZonedTime(dateObj, PST_TIMEZONE);
+  return zonedDate;
 }
 
 /**
