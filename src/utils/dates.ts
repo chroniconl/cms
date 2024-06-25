@@ -57,7 +57,6 @@ export function toPST(date: string | Date | null): Date {
   } else if (date instanceof Date) {
     dateObj = date;
   } else {
-    console.log(date);
     throw new Error("Invalid date format");
   }
 

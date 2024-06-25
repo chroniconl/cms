@@ -1,7 +1,7 @@
-import {supabase} from "@/utils/supabase";
+import { supabase } from "@/utils/supabase";
 import Post from "@/components/general/Post";
-import {getPSTDate} from "@/utils/dates";
-import {format} from "date-fns";
+import { getPSTDate } from "@/utils/dates";
+import { format } from "date-fns";
 import PublicLayout
 	from "@/components/general/PublicLayout";
 
@@ -30,7 +30,6 @@ export default async function BlogPage({
 		const date = new Date(year, month, day);
 		safeDate = format(date, 'yyyy-MM-dd');
 	} catch (error) {
-		console.error(error);
 		return <div>Error parsing date</div>;
 	}
 
@@ -51,11 +50,8 @@ export default async function BlogPage({
 		.single();
 
 	if (error) {
-		console.error(error);
 		return <div>Error fetching post</div>;
 	}
-
-	console.log(data.publish_date_day, safeDate);
 
 	const postGotPublishedToday = data.publish_date_day === formattedPSTDate;
 
