@@ -82,7 +82,6 @@ export default function MetaForm({
 	const setAuthors = authorState((state) => state.setAuthors);
 
 	useEffect(() => {
-		console.log(authors)
 		if (authors.length > 0) {
 			setAuthors(authors);
 		}
@@ -153,9 +152,7 @@ export default function MetaForm({
 
 		const { data: newAuthor, error, message } = await response.json();
 
-		console.log(newAuthor)
 		if (error) {
-			console.error(message);
 			toast({
 				title: "Error",
 				description: "Failed to create author",
@@ -218,7 +215,7 @@ export default function MetaForm({
 										<SelectTrigger className="flex items-center justify-between w-full">
 											<SelectValue placeholder="Select an author" />
 										</SelectTrigger>
-										<SelectContent>											
+										<SelectContent>
 											{state__authors && state__authors.map((author) => (
 												<SelectItem key={author.id} value={author.id}>
 													{author.display_name}

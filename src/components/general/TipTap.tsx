@@ -145,7 +145,6 @@ const TipTap = ({
 			const node = $anchor.node($anchor.depth);
 			let value = "Body (normal)";
 
-			console.log(node.type.name)
 			if (node.type.name === 'heading') {
 				value = `Heading ${node.attrs.level}`;
 			} else if (node.type.name === 'blockquote') {

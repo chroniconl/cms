@@ -17,10 +17,8 @@ export async function handleSubscribeToNewsletterFormSubmit(
 
   if (error) {
     // TODO: Add error message
-    console.error(error);
     return;
   }
 
-  console.log("Subscriber added to database");
   redirect("/thank-you?newsletter=true");
 }

@@ -97,7 +97,6 @@ export default function FilterDataForm({
 		const result = await response.json();
 
 		if (result.error) {
-			console.error(result.message)
 			toast({
 				title: "Error",
 				description: "Failed to update filterable data",
