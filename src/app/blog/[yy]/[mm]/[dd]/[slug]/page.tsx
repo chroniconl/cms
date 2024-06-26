@@ -2,8 +2,81 @@ import { supabase } from "@/utils/supabase";
 import Post from "@/components/general/Post";
 import { getPSTDate } from "@/utils/dates";
 import { format } from "date-fns";
-import PublicLayout
-	from "@/components/general/PublicLayout";
+import PublicLayout from "@/components/general/PublicLayout";
+import type { Metadata, ResolvingMetadata } from 'next';
+import { formatTimestampToSlug } from "@/utils/formatTimestampToSlug";
+
+type Props = {
+	params: { yy: string; mm: string; dd: string; slug: string }
+	searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+	{ params }: Props,
+	parent: ResolvingMetadata
+): Promise<Metadata> {
+	const { slug } = params;
+
+	// Fetch data from Supabase
+	const { data, error } = await supabase
+		.from('posts')
+		.select('*, author:authors(id, display_name, href)')
+		.eq('visibility', 'public')
+		.eq('slug', slug)
+		.single();
+
+	if (error || !data) {
+		return {
+			title: 'Error',
+			description: 'An error occurred while fetching the post data.'
+		};
+	}
+
+	// Access and extend parent metadata
+	const previousImages = (await parent).openGraph?.images || [];
+
+	return {
+		title: data.title,
+		description: data.description,
+		openGraph: {
+			type: 'article',
+			url: `https://chroniconl.com/blog/${formatTimestampToSlug(data.publish_date_day)}/${slug}`,
+			title: data.title,
+			description: data.description,
+			images: [
+				{
+					url: data.image_url,
+					width: 800,
+					height: 600,
+					alt: data.image_alt,
+				},
+				...previousImages
+			],
+		},
+		twitter: {
+			card: 'summary_large_image',
+			title: data.title,
+			description: data.description,
+			images: [data.image_url],
+			site: '@chroniconl_src',
+			creator: '@matthewbub',
+		},
+		alternates: {
+			canonical: `https://chroniconl.com/blog/${formatTimestampToSlug(data.publish_date_day)}/${slug}`,
+		},
+		robots: {
+			index: true,
+			follow: true,
+		},
+		authors: [
+			{
+				name: data.author_name,
+				url: 'https://chroniconl.com/about',
+			},
+		],
+	};
+}
+
 
 export default async function BlogPage({
 	params,
@@ -43,7 +116,25 @@ export default async function BlogPage({
 
 	const { data, error } = await supabase
 		.from('posts')
-		.select('*')
+		.select(`
+			title, 
+			description, 
+			content, 
+			publish_date_day, 
+			publish_date_time, 
+			slug, 
+			tags, 
+			category:categories(id, name, slug, color), 
+			visibility, 
+			description, 
+			publish_date_day, 
+			user_id, 
+			image_url, 
+			image_alt, 
+			image_caption, 
+			image_id, 
+			author:authors(id, display_name, href, avatar_url, twitter_handle)
+		`)
 		.eq('visibility', 'public')
 		.eq('slug', slug)
 		.lte('publish_date_day', formattedPSTDate)
@@ -63,19 +154,20 @@ export default async function BlogPage({
 
 	return (
 		<PublicLayout>
-			<article className="mx-auto w-full md:max-w-3xl">
+			<div className="mx-auto w-full md:max-w-3xl">
 				<Post
 					title={data?.title}
-					date={data?.publish_date}
+					date={data?.publish_date_day}
 					slug={data?.slug}
 					tags={data?.tags}
-					category={data?.category}
+					category={data.category as any}
 					description={data?.description}
 					content={data?.content}
 					imageUrl={data?.image_url}
 					imageAlt={data?.image_alt}
+					author={data.author as any}
 				/>
-			</article>
+			</div>
 		</PublicLayout>
 	);
 }
