@@ -7,9 +7,9 @@ export async function PUT(request: Request) {
 
   const schema = joi.object({
     id: joi.string().required(),
-		title: joi.string().optional(),
+    title: joi.string().optional(),
     description: joi.string().optional(),
-		author_id: joi.string().optional(),
+    author_id: joi.string().optional(),
   });
 
   const { error: validationError } = schema.validate(requestData);
@@ -21,9 +21,9 @@ export async function PUT(request: Request) {
   const { error } = await supabase
     .from("posts")
     .update({
-			title: requestData?.title || null,
+      title: requestData?.title || null,
       description: requestData?.description || null,
-			author_id: requestData?.author_id || "",
+      author_id: requestData?.author_id || "",
     })
     .match({ id: requestData?.id });
 
