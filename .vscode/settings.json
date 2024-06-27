@@ -1,16 +1,17 @@
 {
-	"cSpell.words": [
-		"Chroniconl",
-		"heroicons",
-		"hljs",
-		"Lowlight",
-		"lucide",
-		"nextjs",
-		"supabase",
-		"Thingys",
-		"Tiptap",
-		"Uploadthing",
-		"upsert",
-		"utapi"
-	]
+  "cSpell.words": [
+    "Chroniconl",
+    "heroicons",
+    "hljs",
+    "Lowlight",
+    "lucide",
+    "nextjs",
+    "posthog",
+    "supabase",
+    "Thingys",
+    "Tiptap",
+    "Uploadthing",
+    "upsert",
+    "utapi"
+  ]
 }

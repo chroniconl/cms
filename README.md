@@ -2,11 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
-This is the open-source website for [Chroniconl](https://chroniconl.com). 
-
-A (soon-to-be-complete) content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. 
-
-This project is an active work in progress, I'd love to hear your suggestions and feedback. :coffee:
+This is the public source code for a content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. **NOTE: This project used premium features in the services we use. Please be aware of the costs before using this project.**
 
 ## Table of Contents
 
@@ -24,17 +20,18 @@ Why build a CMS when you could use one of the many alternatives?
 2. To build a writers experience that doesn't suck.
 3. To provide all the benefits of a highly secured CMS out of the box.
 
-
 ## Getting Started
 
-### Prerequisites
+### Prerequisites and accounts required
+
 - Node.js 18.x
 - Pnpm 7.x
-- Vercel account
 - GitHub account (Some knowledge of Git is required)
-- Supabase account (API keys required)
-- Clerk account (API keys required)
-- UploadThing account (API keys required)
+- $ Vercel account (Hosting)
+- $ Supabase account (API keys required)
+- $ Clerk account (API keys required)
+- $ UploadThing account (API keys required)
+- $ PostHog account (API keys required)
 
 ### Installation
 
@@ -57,7 +54,7 @@ pnpm install
 
 #### 3. Create a `.env.local` file in the root directory
 
-You can use the `example.env.local` file as a template for your `.env.local` file. Note the comments in the file, follow the links provided to obtain your API keys. **If you try to start the project without these keys, you'll run into errors.**
+You can use the `example.env.local` file as a template for your `.env.local` file. Note the comments in the file, follow the links provided to obtain your API keys. **If you try to start the project without these keys, you'll run into errors or at the least, unexpected behavior.**
 
 ```shell
 # Development Options
@@ -71,7 +68,7 @@ NEXT_PUBLIC_SITE_URL=
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 
-# You don't need to change these! 
+# You don't need to change these!
 # They map to files we've defined in the app router `./src/app/*`
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
@@ -82,29 +79,20 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-# If you decide to opt-in to premium features in TipTap  
-OPEN_AI=
-
 # https://uploadthing.com/dashboard/<project-id>/api-keys
 UPLOADTHING_SECRET=
 UPLOADTHING_APP_ID=
+
+# https://posthog.com/settings/api-key
+NEXT_PUBLIC_POSTHOG_KEY=
+NEXT_PUBLIC_POSTHOG_HOST=
 ```
 
-### Initialize Supabase 
+### Initialize Supabase
 
 In order to use Supabase, you'll need to create a new project and add a few tables. From the SQL tab, copy and paste the following SQL into the Supabase console and run it.1
 
 ```sql
-create table
-  public.users (
-    id uuid not null default gen_random_uuid (),
-    created_at timestamp with time zone not null default now(),
-    user_id text null,
-    provider text null,
-    constraint users_pkey primary key (id),
-    constraint users_user_id_key unique (user_id)
-  ) tablespace pg_default;
-
 create table
   public.users (
     id uuid not null default gen_random_uuid (),
@@ -132,23 +120,27 @@ create table
     image_alt text null,
     image_caption text null,
     image_id text null,
+    publish_date_day date null,
+    publish_date_time time without time zone null,
+    author_id uuid null,
     constraint wgu_docs_duplicate_pkey primary key (id),
     constraint wgu_docs_duplicate_slug_key unique (slug),
+    constraint posts_author_id_fkey foreign key (author_id) references authors (id),
     constraint posts_category_id_fkey foreign key (category_id) references categories (id),
     constraint posts_user_id_fkey foreign key (user_id) references users (id)
   ) tablespace pg_default;
 
 create table
-  public.orgs (
+  public.post_tag_relationship (
     id uuid not null default gen_random_uuid (),
     created_at timestamp with time zone not null default now(),
-    last_updated timestamp with time zone null default now(),
-    name text null,
-    slug text null,
-    owner_id uuid not null,
-    short_code text null,
-    constraint org_pkey primary key (id),
-    constraint orgs_owner_id_fkey foreign key (owner_id) references users (id)
+    tag_id uuid null,
+    post_id uuid null,
+    created_by uuid null,
+    constraint post_tag_relationship_pkey primary key (id),
+    constraint post_tag_relationship_created_by_fkey foreign key (created_by) references users (id),
+    constraint post_tag_relationship_post_id_fkey foreign key (post_id) references posts (id),
+    constraint post_tag_relationship_tag_id_fkey foreign key (tag_id) references tags (id)
   ) tablespace pg_default;
 
 create table
@@ -171,6 +163,34 @@ create table
     description text null,
     constraint categories_pkey primary key (id)
   ) tablespace pg_default;
+
+create table
+  public.authors (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    updated_at timestamp with time zone null default now(),
+    display_name text null,
+    href text null,
+    avatar_url text null,
+    created_by uuid null,
+    avatar_id text null,
+    twitter_handle text null,
+    constraint authors_pkey primary key (id),
+    constraint authors_created_by_fkey foreign key (created_by) references users (id)
+  ) tablespace pg_default;
+
+create table
+  public.tags (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    last_updated timestamp with time zone null default now(),
+    name text null,
+    slug text null,
+    created_by uuid null,
+    constraint tags_pkey primary key (id),
+    constraint tags_slug_key unique (slug),
+    constraint tags_created_by_fkey foreign key (created_by) references users (id)
+  ) tablespace pg_default;
 ```
 
 ### Start the project
@@ -192,10 +212,9 @@ Once you're ready to deploy, you can use Vercel to deploy the project to your ow
 3. Click the "Deploy" button.
 4. Follow the prompts to deploy the project to your own domain.
 
+## About the Stack
 
-## About the Stack 
-
-Next.js (app router) x TypeScript, TailwindCSS x shadcn/ui, Zustand, Supabase, Clerk, UploadThing, Vercel, TipTap is a pretty integral part of this app's interface too. 
+Next.js (app router) x TypeScript, TailwindCSS x shadcn/ui, Zustand, Supabase, Clerk, UploadThing, Vercel, TipTap is a pretty integral part of this app's interface too.
 
 ### Why Clerk, isn't that expensive?
 
@@ -219,7 +238,7 @@ Static blogs are cool for solo developers or teams that publish relatively infre
 
 ### Why Zustand?
 
-Because Redux seems mildly unnecessary for this project. 
+Because Redux seems mildly unnecessary for this project.
 
 ### Why Supabase?
 
@@ -239,7 +258,7 @@ This project requires Node.js and pnpm to be installed. If needed, you can insta
 2. Clone the forked repository to your local machine, or open a new Code Space
 3. Checkout to a clean branch. e.g git checkout feature/addSomeCode (Please be more descriptive)
 4. (Follow the steps in [Getting Started](#getting-started) to install dependencies)
-5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/matthewbub/chroniconl-cms/issues 🙂 
+5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/matthewbub/chroniconl-cms/issues 🙂
 
 ## FAQ
 
