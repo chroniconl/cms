@@ -12,6 +12,7 @@
     "Tiptap",
     "Uploadthing",
     "upsert",
-    "utapi"
+    "utapi",
+    "zustand"
   ]
 }
