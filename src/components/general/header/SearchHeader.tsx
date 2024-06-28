@@ -18,6 +18,7 @@ import React, { useCallback, useEffect } from "react";
 import { create } from "zustand";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useForm, Controller } from "react-hook-form";
 
 interface IDocument {
 	id: string;
@@ -91,6 +92,13 @@ const SearchCard = ({ result }: { result: IDocument }) => {
 };
 
 export function SearchHeader() {
+	const { control, handleSubmit } = useForm({
+		defaultValues: {
+			include_titles: true,
+			include_content: true,
+		},
+	});
+
 	const search = searchHeaderStore((state) => state.search);
 	const setSearch = searchHeaderStore((state) => state.setSearch);
 	const results = searchHeaderStore((state) => state.results);
@@ -98,7 +106,7 @@ export function SearchHeader() {
 	const loading = searchHeaderStore((state) => state.loading);
 	const setLoading = searchHeaderStore((state) => state.setLoading);
 
-	const sendSearchRequest = useCallback(async () => {
+	const sendSearchRequest = useCallback(async (data: any) => {
 		if (!search) {
 			setResults({
 				searchResultCount: 0,
@@ -111,14 +119,16 @@ export function SearchHeader() {
 
 		const searchRequest = await fetch("/api/v0/search", {
 			method: "POST",
-			body: JSON.stringify({ search }),
+			body: JSON.stringify({
+				search,
+				include_titles: data.include_titles,
+				include_content: data.include_content,
+			}),
 		});
 
-		// TODO add error handling here
 		const searchResponse = await searchRequest.json();
 
 		if (searchResponse?.error) {
-			// gracefully let down the error
 			setLoading(false);
 			return;
 		}
@@ -127,7 +137,7 @@ export function SearchHeader() {
 		setLoading(false);
 	}, [search, setLoading, setResults]);
 
-	const debounceSearch = useCallback(debounce(sendSearchRequest, 500), [
+	const debounceSearch = useCallback(debounce(handleSubmit(sendSearchRequest), 500), [
 		sendSearchRequest,
 	]);
 
@@ -169,25 +179,48 @@ export function SearchHeader() {
 						</div>
 					</div>
 
-					<div>
-						<Label htmlFor="search">
-							Include results from
-						</Label>
-						<div className="flex items-center gap-4 flex-wrap rounded-md border px-2 py-4 mt-2">
-							<div className="flex items-center gap-2">
-								<span className="text-sm text-muted-foreground">
-									Titles
-								</span>
-								<Checkbox />
-							</div>
-							<div className="flex items-center gap-2">
-								<span className="text-sm text-muted-foreground">
-									Content
-								</span>
-								<Checkbox />
+					<form>
+						<div>
+							<Label htmlFor="search">
+								Include results from
+							</Label>
+							<div className="flex items-center gap-4 flex-wrap rounded-md border px-2 py-4 mt-2">
+								<div className="flex items-center gap-2">
+									<span className="text-sm text-muted-foreground">
+										Titles
+									</span>
+									<Controller
+										name="include_titles"
+										control={control}
+										render={({ field }) => (
+											<Checkbox
+												onCheckedChange={(value: boolean) => {
+													field.onChange(value);
+												}}
+											/>
+										)}
+									/>
+								</div>
+								<div className="flex items-center gap-2">
+									<span className="text-sm text-muted-foreground">
+										Content
+									</span>
+									<Controller
+										name="include_content"
+										control={control}
+										render={({ field }) => (
+											<Checkbox
+												onCheckedChange={(value: boolean) => {
+													field.onChange(value);
+												}}
+											/>
+										)}
+									/>
+								</div>
 							</div>
 						</div>
-					</div>
+					</form>
+
 					<ScrollArea className="h-72 rounded-md border">
 						<div className="p-2">
 							{loading && (

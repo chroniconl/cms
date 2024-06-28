@@ -1,38 +1,65 @@
 import { failResponse, okResponse } from "@/utils/response";
 import { supabase } from "@/utils/supabase";
+import { currentUser } from "@clerk/nextjs/server";
+import joi from "joi";
 
 export async function POST(request: Request) {
-	// TODO - add Joi validation
-	const requestData = await request.json();
-	const searchTerm = requestData.search;
+	const user = await currentUser();
 
-	if (!searchTerm) {
+	if (!user) {
+		return failResponse("User not found");
+	}
+
+	const requestData = await request.json();
+
+	const schema = joi.object({
+		search: joi.string().required(),
+		include_titles: joi.boolean().optional(),
+		include_content: joi.boolean().optional(),
+	});
+
+	const { error: validationError } = schema.validate(requestData);
+
+	if (validationError) {
+		return failResponse(validationError.message);
+	}
+
+	const { search, include_titles, include_content } = requestData;
+
+	if (!search) {
 		return failResponse("No search term provided.");
 	}
 
-	const { data: titleSearchResults, error: titleSearchError } = await supabase
-		.from("posts")
-		.select("*")
-		.textSearch("title", searchTerm);
+	let results: any[] = [];
 
-	if (titleSearchError) {
-		return failResponse(titleSearchError.message);
+	if (include_titles) {
+		const { data: titleSearchResults, error: titleSearchError } = await supabase
+			.from("posts")
+			.select("*")
+			.textSearch("title", search);
+
+		if (titleSearchError) {
+			return failResponse(titleSearchError.message);
+		}
+
+		results = [...results, ...titleSearchResults];
 	}
 
-	const { data: contentSearchResults, error: contentSearchError } =
-		await supabase.from("posts").select("*").textSearch("content", searchTerm);
+	if (include_content) {
+		const { data: contentSearchResults, error: contentSearchError } = await supabase
+			.from("posts")
+			.select("*")
+			.textSearch("content", search);
 
-	if (contentSearchError) {
-		return failResponse(contentSearchError.message);
+		if (contentSearchError) {
+			return failResponse(contentSearchError.message);
+		}
+
+		results = [...results, ...contentSearchResults];
 	}
-
-	const results = [
-		...titleSearchResults,
-		...contentSearchResults,
-	];
 
 	return okResponse({
 		searchResults: results,
-		searchResultCount: Object.keys(results).length,
+		searchResultCount: results.length,
 	});
 }
