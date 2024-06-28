@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,174 +16,237 @@ import { File, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useCallback, useEffect } from "react";
 import { create } from "zustand";
+import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useForm, Controller } from "react-hook-form";
 
 interface IDocument {
-  id: string;
-  created_at: string;
-  content: string;
-  title: string;
-  slug: string;
-  class: string;
-  tags: string;
-  category: string;
-  content_json: string;
+	id: string;
+	created_at: string;
+	content: string;
+	title: string;
+	slug: string;
+	class: string;
+	tags: string;
+	category: string;
+	content_json: string;
 }
 
-export const searchHeaderStore = create<{
-  search: string;
-  setSearch: (search: string) => void;
-  results: {
-    searchResultCount: number;
-    searchResults: IDocument[];
-  };
-  setResults: (results: {
-    searchResultCount: number | null;
-    searchResults: IDocument[];
-  }) => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-}>((set) => ({
-  search: "",
-  setSearch: (search: string) => set({ search }),
-  results: {
-    searchResultCount: 0,
-    searchResults: [],
-  },
-  setResults: (results: {
-    searchResultCount: number | null;
-    searchResults: IDocument[];
-    // @ts-ignore
-  }) => set({ results }),
-  loading: false,
-  setLoading: (loading: boolean) => set({ loading }),
+interface SearchResults {
+	searchResults: IDocument[];
+	searchResultCount: number;
+}
+
+interface SearchHeaderStore {
+	search: string;
+	setSearch: (search: string) => void;
+	results: SearchResults;
+	setResults: (results: SearchResults) => void;
+	loading: boolean;
+	setLoading: (loading: boolean) => void;
+}
+
+export const searchHeaderStore = create<SearchHeaderStore>((set) => ({
+	search: "",
+	setSearch: (search: string) => set({ search }),
+	results: {
+		searchResultCount: 0,
+		searchResults: [],
+	},
+	setResults: (results: SearchResults) => set({
+		results: {
+			searchResults: results.searchResults,
+			searchResultCount: results.searchResultCount || 0,
+		}
+	}),
+	loading: false,
+	setLoading: (loading: boolean) => set({ loading }),
 }));
 
+const SearchCard = ({ result }: { result: IDocument }) => {
+	const router = useRouter();
+
+	const handleClick = () => {
+		router.push(`/dashboard/posts/${result.slug}`);
+	};
+
+	return (
+		<button
+			className="p-2 bg-secondary hover:bg-secondary flex items-center space-x-2 overflow-ellipsis"
+			key={result.id}
+			onClick={handleClick}
+		>
+			<div>
+				<File className="h-6 w-6 text-secondary-foreground" />
+			</div>
+			<div>
+				<span className="block text-sm font-bold text-secondary-foreground text-nowrap overflow-ellipsis">
+					{result.title}
+				</span>
+				<span className="block text-sm text-secondary-foreground">
+					{formatDate(result.created_at)}
+				</span>
+			</div>
+		</button>
+	);
+};
+
 export function SearchHeader() {
-  const search = searchHeaderStore((state) => state.search);
-  const setSearch = searchHeaderStore((state) => state.setSearch);
-  const results = searchHeaderStore((state) => state.results);
-  const setResults = searchHeaderStore((state) => state.setResults);
-  const loading = searchHeaderStore((state) => state.loading);
-  const setLoading = searchHeaderStore((state) => state.setLoading);
+	const { control, handleSubmit } = useForm({
+		defaultValues: {
+			include_titles: true,
+			include_content: true,
+		},
+	});
 
-  const sendSearchRequest = async () => {
-    if (!search) {
-      setResults({
-        searchResultCount: 0,
-        searchResults: [],
-      });
-      return;
-    }
+	const search = searchHeaderStore((state) => state.search);
+	const setSearch = searchHeaderStore((state) => state.setSearch);
+	const results = searchHeaderStore((state) => state.results);
+	const setResults = searchHeaderStore((state) => state.setResults);
+	const loading = searchHeaderStore((state) => state.loading);
+	const setLoading = searchHeaderStore((state) => state.setLoading);
 
-    setLoading(true);
+	const sendSearchRequest = useCallback(async (data: any) => {
+		if (!search) {
+			setResults({
+				searchResultCount: 0,
+				searchResults: [],
+			});
+			return;
+		}
 
-    const searchRequest = await fetch("/api/v0/search", {
-      method: "POST",
-      body: JSON.stringify({ search }),
-    });
+		setLoading(true);
 
-    // TODO add error handling here
-    const searchResponse = await searchRequest.json();
+		const searchRequest = await fetch("/api/v0/search", {
+			method: "POST",
+			body: JSON.stringify({
+				search,
+				include_titles: data.include_titles,
+				include_content: data.include_content,
+			}),
+		});
 
-    if (searchResponse?.error) {
-      // gracefully let down the error
-      setLoading(false);
-      return;
-    }
+		const searchResponse = await searchRequest.json();
 
-    setResults(searchResponse?.data);
-    setLoading(false);
-    return;
-  };
+		if (searchResponse?.error) {
+			setLoading(false);
+			return;
+		}
 
-  const debounceSearch = useCallback(debounce(sendSearchRequest, 500), [
-    sendSearchRequest,
-  ]);
+		setResults(searchResponse?.data);
+		setLoading(false);
+	}, [search, setLoading, setResults]);
 
-  const handleSearchModal = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
+	const debounceSearch = useCallback(debounce(handleSubmit(sendSearchRequest), 500), [
+		sendSearchRequest,
+	]);
 
-  useEffect(() => {
-    debounceSearch();
-  }, [search, debounceSearch]);
+	const handleSearchModal = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(e.target.value);
+	};
 
-  return (
-    <>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div className="relative flex-1 sm:flex-initial flex items-center">
-            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-stone-500 dark:text-stone-400" />
-            <div
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              // onClick={handleSearchModal}
-            >
-              Search documents...
-            </div>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Search</DialogTitle>
-          </DialogHeader>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-2">
-              <Label htmlFor="search" className="sr-only">
-                Search documents, media and more...
-              </Label>
-              <Input
-                id="search"
-                defaultValue="Search documents, media and more..."
-                onChange={handleSearchModal}
-              />
-            </div>
-          </div>
+	useEffect(() => {
+		debounceSearch();
+	}, [search, debounceSearch]);
 
-          <ScrollArea className="h-72 rounded-md border">
-            <div className="p-2">
-              {loading && (
-                <p className="text-sm text-muted-foreground">Loading...</p>
-              )}
+	return (
+		<>
+			<Dialog>
+				<DialogTrigger asChild>
+					<div className="relative flex-1 sm:flex-initial flex items-center">
+						<SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-stone-500 dark:text-stone-400" />
+						<div
+							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+						>
+							Search documents...
+						</div>
+					</div>
+				</DialogTrigger>
+				<DialogContent className="sm:max-w-md">
+					<DialogHeader>
+						<DialogTitle>Search</DialogTitle>
+					</DialogHeader>
+					<div className="flex items-center space-x-2">
+						<div className="grid flex-1 gap-2">
+							<Label htmlFor="search" className="sr-only">
+								Search documents, media and more...
+							</Label>
+							<Input
+								id="search"
+								placeholder="Search documents, media and more..."
+								onChange={handleSearchModal}
+							/>
+						</div>
+					</div>
 
-              {!loading && results?.searchResultCount > 0 && (
-                <p className="text-sm text-muted-foreground">
-                  {results?.searchResultCount} results found for "{search}"
-                </p>
-              )}
+					<form>
+						<div>
+							<Label htmlFor="search">
+								Include results from
+							</Label>
+							<div className="flex items-center gap-4 flex-wrap rounded-md border px-2 py-4 mt-2">
+								<div className="flex items-center gap-2">
+									<span className="text-sm text-muted-foreground">
+										Titles
+									</span>
+									<Controller
+										name="include_titles"
+										control={control}
+										render={({ field }) => (
+											<Checkbox
+												onCheckedChange={(value: boolean) => {
+													field.onChange(value);
+												}}
+											/>
+										)}
+									/>
+								</div>
+								<div className="flex items-center gap-2">
+									<span className="text-sm text-muted-foreground">
+										Content
+									</span>
+									<Controller
+										name="include_content"
+										control={control}
+										render={({ field }) => (
+											<Checkbox
+												onCheckedChange={(value: boolean) => {
+													field.onChange(value);
+												}}
+											/>
+										)}
+									/>
+								</div>
+							</div>
+						</div>
+					</form>
 
-              {!loading && results?.searchResultCount === 0 && (
-                <p className="text-sm text-muted-foreground">
-                  No results found.
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col gap-2 p-2">
-              {Object.values(results.searchResults).length > 0 &&
-                Object.values(results.searchResults).map((result) => (
-                  // This is only accounting for documents
-                  // We haven't built the media aspect yet
-                  <Link
-                    className="p-2 bg-secondary hover:bg-secondary flex items-center space-x-2 overflow-ellipsis"
-                    key={result.id}
-                    href={`/dashboard/posts/${result.slug}`}
-                  >
-                    <div>
-                      <File className="h-6 w-6 text-secondary-foreground" />
-                    </div>
-                    <div>
-                      <span className="block text-sm font-bold text-secondary-foreground text-nowrap overflow-ellipsis">
-                        {result.title}
-                      </span>
-                      <span className="block text-sm text-secondary-foreground">
-                        {formatDate(result.created_at)}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </ScrollArea>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
+					<ScrollArea className="h-72 rounded-md border">
+						<div className="p-2">
+							{loading && (
+								<p className="text-sm text-muted-foreground">Loading...</p>
+							)}
+
+							{!loading && results?.searchResultCount > 0 && (
+								<p className="text-sm text-muted-foreground">
+									{results?.searchResultCount} results found for "{search}"
+								</p>
+							)}
+
+							{!loading && results?.searchResultCount === 0 && (
+								<p className="text-sm text-muted-foreground">
+									No results found.
+								</p>
+							)}
+						</div>
+						<div className="flex flex-col gap-2 p-2">
+							{results?.searchResults?.map((result) => (
+								<SearchCard result={result} />
+							))}
+						</div>
+					</ScrollArea>
+				</DialogContent>
+			</Dialog>
+		</>
+	);
 }
