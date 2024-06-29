@@ -1,16 +1,16 @@
-import { Text } from "@/components/ui/text";
-import { Heading } from "@/components/ui/heading";
-import NewDocumentButton from "./_posts_components/NewDocumentButton";
-import CategoryFilterOptionOnServer from "./_posts_components/CategoryFilterOption.server";
-import { getPostsAction } from "./_posts_utils/getPostsAction";
-import PostsList from "./_posts_components/PostsList";
+import { Text } from '@/components/ui/text'
+import { Heading } from '@/components/ui/heading'
+import NewDocumentButton from './_posts_components/NewDocumentButton'
+import CategoryFilterOptionOnServer from './_posts_components/CategoryFilterOption.server'
+import { getPostsAction } from './_posts_utils/getPostsAction'
+import PostsList from './_posts_components/PostsList'
 
 export default async function PostsPage() {
-  const data = await getPostsAction();
+  const data = await getPostsAction()
 
   return (
     <>
-      <section className="grid grid-cols-12 gap-4 mb-20">
+      <section className="mb-20 grid grid-cols-12 gap-4">
         <div className="col-span-12 md:col-span-6">
           <Heading>Your Posts</Heading>
           <Text>
@@ -18,13 +18,13 @@ export default async function PostsPage() {
             settings.
           </Text>
         </div>
-        <div className="col-span-12 md:col-span-6 flex md:justify-end gap-2">
+        <div className="col-span-12 flex gap-2 md:col-span-6 md:justify-end">
           <NewDocumentButton url={process.env.NEXT_PUBLIC_SITE_URL as string} />
         </div>
       </section>
       <main className="grid grid-cols-12 gap-12">
-        <section className="hidden md:block md:col-span-4">
-          <div className="sticky top-8 space-y-4 mb-16">
+        <section className="hidden md:col-span-4 md:block">
+          <div className="sticky top-8 mb-16 space-y-4">
             <CategoryFilterOptionOnServer />
           </div>
         </section>
@@ -33,5 +33,5 @@ export default async function PostsPage() {
         </section>
       </main>
     </>
-  );
+  )
 }

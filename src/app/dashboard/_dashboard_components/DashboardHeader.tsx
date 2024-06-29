@@ -1,19 +1,19 @@
-import { SearchHeader } from "@/components/general/header/SearchHeader";
-import Avatar from "@/components/general/Avatar";
-import Link from "next/link";
+import { SearchHeader } from '@/components/general/header/SearchHeader'
+import Avatar from '@/components/general/Avatar'
+import Link from 'next/link'
 
 const navItems = [
-  { label: "Dashboard", url: "/dashboard" },
-  { label: "Posts", url: "/dashboard/posts" },
-  { label: "Media", url: "/dashboard/media" },
-  { label: "Settings", url: "/dashboard/settings" },
-  { label: "Docs", url: "/documentation" },
-];
+  { label: 'Dashboard', url: '/dashboard' },
+  { label: 'Posts', url: '/dashboard/posts' },
+  { label: 'Media', url: '/dashboard/media' },
+  { label: 'Settings', url: '/dashboard/settings' },
+  { label: 'Docs', url: '/documentation' },
+]
 
 export default async function DashboardHeader() {
   return (
-    <header className="px-4 h-[80px] flex items-center w-full">
-      <div className="flex items-center gap-4 w-full">
+    <header className="flex h-[80px] w-full items-center px-4">
+      <div className="flex w-full items-center gap-4">
         <div className="flex flex-grow">
           {navItems.map(({ label, url }) => (
             <Link
@@ -25,11 +25,11 @@ export default async function DashboardHeader() {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-4 flex-grow-0">
+        <div className="flex flex-grow-0 items-center gap-4">
           <SearchHeader />
           <Avatar />
         </div>
       </div>
     </header>
-  );
+  )
 }

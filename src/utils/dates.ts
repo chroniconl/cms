@@ -1,25 +1,25 @@
-import { addDays, format, isBefore, parse, parseISO } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
+import { addDays, format, isBefore, parse, parseISO } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 
-const PST_TIMEZONE = "America/Los_Angeles";
+const PST_TIMEZONE = 'America/Los_Angeles'
 
 export function isValidDate(dateString: string | Date): boolean {
-  if (!dateString) return false;
+  if (!dateString) return false
 
   if (dateString instanceof Date) {
-    return !Number.isNaN(dateString.getTime());
+    return !Number.isNaN(dateString.getTime())
   }
 
-  const date = new Date(dateString);
-  return !Number.isNaN(date.getTime());
+  const date = new Date(dateString)
+  return !Number.isNaN(date.getTime())
 }
 
 export function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  return new Date(dateString).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
 }
 
 /**
@@ -27,16 +27,16 @@ export function formatDate(dateString: string) {
  */
 export function isPublished(publicationTime: string): boolean {
   // Parse the publication time
-  const pubTime = parseISO(publicationTime);
+  const pubTime = parseISO(publicationTime)
 
   // Get the current time
-  const currentTime = new Date();
+  const currentTime = new Date()
 
   // Compare the publication time with the current time
   if (isBefore(pubTime, currentTime)) {
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 /**
  * @deprecated
@@ -45,24 +45,24 @@ export function isPublished(publicationTime: string): boolean {
  * @returns {Date} - The converted date in PST
  */
 export function toPST(date: string | Date | null): Date {
-  let dateObj: Date;
+  let dateObj: Date
 
   if (!date) {
-    dateObj = new Date();
+    dateObj = new Date()
   }
 
-  if (typeof date === "string") {
+  if (typeof date === 'string') {
     // Assuming the string is in ISO format (YYYY-MM-DD)
-    dateObj = parseISO(date);
+    dateObj = parseISO(date)
   } else if (date instanceof Date) {
-    dateObj = date;
+    dateObj = date
   } else {
-    throw new Error("Invalid date format");
+    throw new Error('Invalid date format')
   }
 
   // Convert the date to PST
-  const zonedDate = utcToZonedTime(dateObj, PST_TIMEZONE);
-  return zonedDate;
+  const zonedDate = utcToZonedTime(dateObj, PST_TIMEZONE)
+  return zonedDate
 }
 
 /**
@@ -72,25 +72,25 @@ export function toPST(date: string | Date | null): Date {
  */
 export function convertTimeString(timeString: string): string {
   // Parse the time string to a Date object
-  const date = parse(timeString, "HH:mm:ss", new Date());
+  const date = parse(timeString, 'HH:mm:ss', new Date())
 
   // Format the Date object to the desired format
-  const formattedTime = format(date, "h:mm a");
+  const formattedTime = format(date, 'h:mm a')
 
-  return formattedTime;
+  return formattedTime
 }
 
 export function getPSTDate(date = new Date()) {
-  const now = date;
-  const timeZone = "America/Los_Angeles";
-  const zonedDate = utcToZonedTime(now, timeZone);
-  return zonedDate;
+  const now = date
+  const timeZone = 'America/Los_Angeles'
+  const zonedDate = utcToZonedTime(now, timeZone)
+  return zonedDate
 }
 
 export function getPSTDaySevenDaysFromNow() {
-  const now = new Date();
-  const timeZone = "America/Los_Angeles";
-  const zonedDate = utcToZonedTime(now, timeZone);
-  const sevenDaysFromNow = addDays(zonedDate, 7);
-  return sevenDaysFromNow;
+  const now = new Date()
+  const timeZone = 'America/Los_Angeles'
+  const zonedDate = utcToZonedTime(now, timeZone)
+  const sevenDaysFromNow = addDays(zonedDate, 7)
+  return sevenDaysFromNow
 }

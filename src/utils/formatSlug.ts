@@ -8,27 +8,27 @@
  */
 export function formatSlug(slug: string): string {
   if (!slug) {
-    return "";
+    return ''
   }
 
-  let s = slug;
+  let s = slug
   // Trim trailing and leading whitespace
-  s = s.trim();
+  s = s.trim()
 
   // Remove any non-alphanumeric characters
-  s = s.replace(/[^a-zA-Z0-9]/g, " ");
+  s = s.replace(/[^a-zA-Z0-9]/g, ' ')
 
   // Remove special characters
-  s = s.replace(/[^\w\s]/gi, "");
+  s = s.replace(/[^\w\s]/gi, '')
 
   // Replace multiple spaces with a single space
-  s = s.replace(/\s+/g, " ");
+  s = s.replace(/\s+/g, ' ')
 
   // Replace spaces with a hyphen
-  s = s.replace(/\s/g, "-");
+  s = s.replace(/\s/g, '-')
 
   // Convert to lowercase
-  s = s.toLowerCase();
+  s = s.toLowerCase()
 
-  return s;
+  return s
 }

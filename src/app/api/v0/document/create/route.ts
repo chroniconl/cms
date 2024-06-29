@@ -1,66 +1,66 @@
-import { formatSlug } from "@/utils/formatSlug";
+import { formatSlug } from '@/utils/formatSlug'
 import {
   bypassOkResponse,
   failResponse,
   okResponse,
   skirtFailedResponse,
-} from "@/utils/response";
-import { supabase } from "@/utils/supabase";
-import { currentUser } from "@clerk/nextjs/server";
+} from '@/utils/response'
+import { supabase } from '@/utils/supabase'
+import { currentUser } from '@clerk/nextjs/server'
 
 async function createDocumentWithTitle(title: string): Promise<any> {
   try {
-    const user = await currentUser();
+    const user = await currentUser()
 
     if (!user) {
-      console.error("Missing user");
-      return;
+      console.error('Missing user')
+      return
     }
 
     const { data: userData, error: userError } = await supabase
-      .from("users")
-      .select("*")
-      .eq("user_id", user?.id)
-      .single();
+      .from('users')
+      .select('*')
+      .eq('user_id', user?.id)
+      .single()
 
     if (userError) {
-      console.error(userError);
-      return;
+      console.error(userError)
+      return
     }
 
     const { data, error } = await supabase
-      .from("posts")
+      .from('posts')
       .insert({
         title: title,
-        content: "<p>Nothing here yet</p>",
+        content: '<p>Nothing here yet</p>',
         slug: formatSlug(title),
         user_id: userData?.id,
       })
-      .select();
+      .select()
 
     if (error) {
-      if (error.code === "23505") {
-        return skirtFailedResponse("Document with that title already exists");
+      if (error.code === '23505') {
+        return skirtFailedResponse('Document with that title already exists')
       }
 
-      console.error(error);
-      return skirtFailedResponse("Failed to create document");
+      console.error(error)
+      return skirtFailedResponse('Failed to create document')
     }
-    return bypassOkResponse(data[0].slug);
+    return bypassOkResponse(data[0].slug)
   } catch (error) {
-    console.error(error);
-    return skirtFailedResponse("Failed to create document");
+    console.error(error)
+    return skirtFailedResponse('Failed to create document')
   }
 }
 
 export async function POST(request: Request) {
-  const data = await request.json();
+  const data = await request.json()
 
-  const responseObject = await createDocumentWithTitle(data.title);
+  const responseObject = await createDocumentWithTitle(data.title)
 
   if (responseObject?.error === true) {
-    return failResponse(responseObject.message);
+    return failResponse(responseObject.message)
   }
 
-  return okResponse(responseObject.data);
+  return okResponse(responseObject.data)
 }

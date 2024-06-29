@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Logo } from "@/components/general/Logo";
-import { GithubIcon, TwitterIcon } from "./icons";
+import Link from 'next/link'
+import { Logo } from '@/components/general/Logo'
+import { GithubIcon, TwitterIcon } from './icons'
 
 export default function Footer() {
   return (
@@ -59,5 +59,5 @@ export default function Footer() {
         &copy; 2024 Chroniconl. All rights reserved.
       </div>
     </footer>
-  );
+  )
 }

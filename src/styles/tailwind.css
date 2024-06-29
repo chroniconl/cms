@@ -36,32 +36,32 @@
 
   .dark {
     --background: #151210;
-	--foreground: #F1F7FB;
+    --foreground: #f1f7fb;
 
-	--card: #151210;
-	--card-foreground: #F1F7FB;
+    --card: #151210;
+    --card-foreground: #f1f7fb;
 
-	--popover: #151210;
-	--popover-foreground: #F1F7FB;
+    --popover: #151210;
+    --popover-foreground: #f1f7fb;
 
-	--primary: #F1F7FB;
-	--primary-foreground: #0C1C25;
+    --primary: #f1f7fb;
+    --primary-foreground: #0c1c25;
 
-	--secondary: #2c2826;
-	--secondary-foreground: #F1F7FB;
+    --secondary: #2c2826;
+    --secondary-foreground: #f1f7fb;
 
-	--muted: #2c2826;
-	--muted-foreground: #9BA7B2;
+    --muted: #2c2826;
+    --muted-foreground: #9ba7b2;
 
-	--accent: #2c2826;
-	--accent-foreground: #F1F7FB;
+    --accent: #2c2826;
+    --accent-foreground: #f1f7fb;
 
-	--destructive: #ff0000;
-	--destructive-foreground: #F1F7FB;
+    --destructive: #ff0000;
+    --destructive-foreground: #f1f7fb;
 
-	--border: #2A2422;
-	--input: #2A2422;
-	--ring: #F1580A;
+    --border: #2a2422;
+    --input: #2a2422;
+    --ring: #f1580a;
   }
 }
 
@@ -79,34 +79,34 @@
   @apply rounded-full border-2 border-black dark:border-white;
 }
 
-.tiptap > ol > li > p, 
+.tiptap > ol > li > p,
 .tiptap > ul > li > p {
-	@apply my-0.5;
+  @apply my-0.5;
 }
 
 .special-border {
-	border: solid 3px #242424;
+  border: solid 3px #242424;
 
-	@media (min-width: 768px) {
-		background: transparent;
-		padding: 0.5rem 0.5rem;
-		margin: 0 0.5rem;
-		font-size: 1rem;
-		border-top-left-radius: 255px 15px;
-		border-top-right-radius: 15px 225px;
-		border-bottom-right-radius: 225px 15px;
-		border-bottom-left-radius: 15px 255px;
-	}
+  @media (min-width: 768px) {
+    background: transparent;
+    padding: 0.5rem 0.5rem;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    border-bottom-right-radius: 225px 15px;
+    border-bottom-left-radius: 15px 255px;
+  }
 }
 
 .chroniconl-p {
-	@apply text-base md:text-lg text-stone-500 dark:text-stone-400;
+  @apply text-base text-stone-500 dark:text-stone-400 md:text-lg;
 }
 
 .chroniconl-label {
-	@apply text-base md:text-lg text-stone-700 dark:text-stone-200 font-bold;
+  @apply text-base font-bold text-stone-700 dark:text-stone-200 md:text-lg;
 }
 
 .chroniconl-textarea {
-	@apply w-full rounded-md border border-input bg-background px-2.5 py-2 text-base md:text-lg text-stone-500 dark:text-stone-400 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px];
+  @apply min-h-[100px] w-full rounded-md border border-input bg-background px-2.5 py-2 text-base text-stone-500 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-stone-400 md:text-lg;
 }

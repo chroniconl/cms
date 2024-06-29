@@ -1,30 +1,32 @@
-import { supabase } from "@/utils/supabase";
-import { currentUser } from "@clerk/nextjs/server";
-import DashboardHeader from "./DashboardHeader";
+import { supabase } from '@/utils/supabase'
+import { currentUser } from '@clerk/nextjs/server'
+import DashboardHeader from './DashboardHeader'
 
 export default async function DashboardShell({
   children,
-}: { children: React.ReactNode }) {
-  const user = await currentUser();
+}: {
+  children: React.ReactNode
+}) {
+  const user = await currentUser()
 
   if (!user) {
-    return <div>Please sign in</div>;
+    return <div>Please sign in</div>
   }
 
-  const { error: upsertError } = await supabase.from("users").upsert(
+  const { error: upsertError } = await supabase.from('users').upsert(
     {
       user_id: user?.id,
-      provider: "clerk",
+      provider: 'clerk',
     },
-    { onConflict: "user_id" },
-  );
+    { onConflict: 'user_id' },
+  )
 
   if (upsertError) {
-    return <div>Error creating or fetching user</div>;
+    return <div>Error creating or fetching user</div>
   }
 
   return (
-    <div className="relative isolate flex min-h-svh w-full flex-col bg-white lg:bg-stone-100 dark:bg-stone-900 dark:lg:bg-stone-950">
+    <div className="relative isolate flex min-h-svh w-full flex-col bg-white dark:bg-stone-900 lg:bg-stone-100 dark:lg:bg-stone-950">
       <DashboardHeader />
       <main className="flex flex-1 flex-col pb-3 lg:px-3">
         <div className="grow px-4 py-6 md:px-6 lg:rounded-md lg:bg-white lg:p-10 lg:shadow-sm lg:ring-1 lg:ring-stone-950/5 dark:lg:bg-stone-900 dark:lg:ring-white/10">
@@ -32,5 +34,5 @@ export default async function DashboardShell({
         </div>
       </main>
     </div>
-  );
+  )
 }

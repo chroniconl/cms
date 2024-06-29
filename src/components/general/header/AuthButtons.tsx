@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from 'next/link'
+import { SignedIn, SignedOut } from '@clerk/nextjs'
 
 export function AuthButtons() {
   return (
-    <nav className="flex gap-12 items-center">
+    <nav className="flex items-center gap-12">
       <SignedIn>
         <Link
           href="/dashboard"
-          className="h-11 rounded-md px-8 bg-[#CC0000] text-white flex items-center font-bold text-lg"
+          className="flex h-11 items-center rounded-md bg-[#CC0000] px-8 text-lg font-bold text-white"
         >
           My Dashboard
         </Link>
@@ -15,11 +15,11 @@ export function AuthButtons() {
       <SignedOut>
         <Link
           href="/sign-in"
-          className="h-11 rounded-md px-8 bg-[#CC0000] text-white flex items-center font-bold text-lg"
+          className="flex h-11 items-center rounded-md bg-[#CC0000] px-8 text-lg font-bold text-white"
         >
           Sign In
         </Link>
       </SignedOut>
     </nav>
-  );
+  )
 }

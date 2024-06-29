@@ -1,36 +1,36 @@
-import { failResponse, okResponse } from "@/utils/response";
-import { supabase } from "@/utils/supabase";
-import joi from "joi";
+import { failResponse, okResponse } from '@/utils/response'
+import { supabase } from '@/utils/supabase'
+import joi from 'joi'
 
 export async function PUT(request: Request) {
-  const requestData = await request.json();
+  const requestData = await request.json()
 
   const schema = joi.object({
     id: joi.string().required(),
     title: joi.string().optional(),
     description: joi.string().optional(),
     author_id: joi.string().optional(),
-  });
+  })
 
-  const { error: validationError } = schema.validate(requestData);
+  const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    return failResponse(validationError.message);
+    return failResponse(validationError.message)
   }
 
   const { error } = await supabase
-    .from("posts")
+    .from('posts')
     .update({
       title: requestData?.title || null,
       description: requestData?.description || null,
-      author_id: requestData?.author_id || "",
+      author_id: requestData?.author_id || '',
     })
-    .match({ id: requestData?.id });
+    .match({ id: requestData?.id })
 
   if (error) {
-    console.error(error);
-    return failResponse(error?.message);
+    console.error(error)
+    return failResponse(error?.message)
   }
 
-  return okResponse("Document updated");
+  return okResponse('Document updated')
 }

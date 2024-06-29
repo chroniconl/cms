@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import { PlusIcon } from "lucide-react";
-import { Label } from "@/components/ui/label";
+import { PlusIcon } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { useForm, Controller } from "react-hook-form";
-import { Category } from "@/utils/types";
-import { Text } from "@/components/ui/text";
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
+import { useForm, Controller } from 'react-hook-form'
+import { Category } from '@/utils/types'
+import { Text } from '@/components/ui/text'
 import {
   Dialog,
   DialogContent,
@@ -23,43 +23,43 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { create } from "zustand";
-import { useEffect } from "react";
-import { toast } from "@/components/ui/use-toast";
+} from '@/components/ui/dialog'
+import { create } from 'zustand'
+import { useEffect } from 'react'
+import { toast } from '@/components/ui/use-toast'
 
 interface FilterDataFormProps {
-  categories: Category[];
+  categories: Category[]
   // Tags as an array of objects
   tags: {
-    name: string;
-    slug: string;
-  }[];
-  id: string;
+    name: string
+    slug: string
+  }[]
+  id: string
   category: {
-    id: string;
-    name: string;
-  };
+    id: string
+    name: string
+  }
 }
 
 interface FilterDataFormState {
-  category: string;
+  category: string
   // Tags as a string separated by commas
-  tags: string;
+  tags: string
 }
 
 const categoryStore = create<{
-  categories: Category[];
-  setCategories: (categories: Category[]) => void;
-  categoryModalOpen: boolean;
-  setCategoryModalOpen: (categoryModalOpen: boolean) => void;
+  categories: Category[]
+  setCategories: (categories: Category[]) => void
+  categoryModalOpen: boolean
+  setCategoryModalOpen: (categoryModalOpen: boolean) => void
 }>((set) => ({
   categories: [],
   setCategories: (categories: Category[]) => set({ categories }),
   categoryModalOpen: false,
   setCategoryModalOpen: (categoryModalOpen: boolean) =>
     set({ categoryModalOpen }),
-}));
+}))
 
 export default function FilterDataForm({
   categories: props__categories,
@@ -67,52 +67,52 @@ export default function FilterDataForm({
   id: props__id,
   category: props__category,
 }: FilterDataFormProps) {
-  const categories = categoryStore((state) => state.categories);
-  const setCategories = categoryStore((state) => state.setCategories);
-  const categoryModalOpen = categoryStore((state) => state.categoryModalOpen);
+  const categories = categoryStore((state) => state.categories)
+  const setCategories = categoryStore((state) => state.setCategories)
+  const categoryModalOpen = categoryStore((state) => state.categoryModalOpen)
   const setCategoryModalOpen = categoryStore(
     (state) => state.setCategoryModalOpen,
-  );
+  )
 
   useEffect(() => {
     if (props__categories) {
-      setCategories(props__categories);
+      setCategories(props__categories)
     }
-  }, [props__categories, setCategories]);
+  }, [props__categories, setCategories])
 
   const { control, handleSubmit } = useForm<FilterDataFormState>({
     defaultValues: {
-      category: props__category?.id || "",
-      tags: props__tags?.map((tag) => tag.name).join(", "),
+      category: props__category?.id || '',
+      tags: props__tags?.map((tag) => tag.name).join(', '),
     },
-  });
+  })
 
   const onSubmit = async (data: FilterDataFormState) => {
-    const response = await fetch("/api/v0.1/document/filterable-data", {
-      method: "POST",
+    const response = await fetch('/api/v0.1/document/filterable-data', {
+      method: 'POST',
       body: JSON.stringify({
         id: props__id,
         category_id: data.category,
         tags: data.tags,
       }),
-    });
+    })
 
-    const result = await response.json();
+    const result = await response.json()
 
     if (result.error) {
       toast({
-        title: "Error",
-        description: "Failed to update filterable data",
-        variant: "destructive",
-      });
-      return;
+        title: 'Error',
+        description: 'Failed to update filterable data',
+        variant: 'destructive',
+      })
+      return
     }
 
     toast({
-      title: "Success",
-      description: "Filterable data updated successfully",
-    });
-  };
+      title: 'Success',
+      description: 'Filterable data updated successfully',
+    })
+  }
 
   const {
     control: categoryControl,
@@ -120,48 +120,46 @@ export default function FilterDataForm({
     reset: resetCategoryForm,
   } = useForm({
     defaultValues: {
-      name: "",
+      name: '',
     },
-  });
+  })
 
-  const handleAddNewCategory = async (data: {
-    name: string;
-  }) => {
-    const response = await fetch("/api/v0/categories", {
-      method: "POST",
+  const handleAddNewCategory = async (data: { name: string }) => {
+    const response = await fetch('/api/v0/categories', {
+      method: 'POST',
       body: JSON.stringify({
         name: data.name,
       }),
-    });
+    })
 
-    const result = await response.json();
+    const result = await response.json()
 
     if (result.error) {
       toast({
-        title: "Error",
-        description: "Failed to create category",
-        variant: "destructive",
-      });
-      return;
+        title: 'Error',
+        description: 'Failed to create category',
+        variant: 'destructive',
+      })
+      return
     }
 
-    setCategories([...categories, result.data]);
-    resetCategoryForm(); // Reset the form after submission
-    setCategoryModalOpen(false); // Close the modal after submission
+    setCategories([...categories, result.data])
+    resetCategoryForm() // Reset the form after submission
+    setCategoryModalOpen(false) // Close the modal after submission
 
     toast({
-      title: "Success",
-      description: "Category created successfully",
-    });
-  };
+      title: 'Success',
+      description: 'Category created successfully',
+    })
+  }
 
   return (
     <Card className="flex flex-col gap-4">
-      <div className="px-4 pt-6 pb-2">
-        <Heading level={3}>{"Filterable Data"}</Heading>
+      <div className="px-4 pb-2 pt-6">
+        <Heading level={3}>{'Filterable Data'}</Heading>
       </div>
       <form
-        className="px-4 pb-6 rounded-md space-y-[20px]"
+        className="space-y-[20px] rounded-md px-4 pb-6"
         role="form"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -173,7 +171,7 @@ export default function FilterDataForm({
               control={control}
               render={({ field }) => (
                 <Select {...field} onValueChange={field.onChange}>
-                  <SelectTrigger className="flex items-center justify-between w-full">
+                  <SelectTrigger className="flex w-full items-center justify-between">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent className="z-10">
@@ -188,7 +186,7 @@ export default function FilterDataForm({
               )}
             />
           </div>
-          <div className="col-span-2 flex items-end justify-end h-full">
+          <div className="col-span-2 flex h-full items-end justify-end">
             <Button
               size="icon"
               variant="outline"
@@ -196,7 +194,7 @@ export default function FilterDataForm({
               type="button"
               onClick={() => setCategoryModalOpen(true)}
             >
-              <PlusIcon className="w-5 h-5" />
+              <PlusIcon className="h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -214,7 +212,7 @@ export default function FilterDataForm({
               <Input
                 {...field}
                 placeholder="Add a tag"
-                className="w-full mt-2"
+                className="mt-2 w-full"
               />
             )}
           />
@@ -262,5 +260,5 @@ export default function FilterDataForm({
         </DialogContent>
       </Dialog>
     </Card>
-  );
+  )
 }

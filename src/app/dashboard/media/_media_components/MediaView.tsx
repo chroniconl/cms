@@ -1,11 +1,11 @@
-import { Input } from "@/components/ui/input";
-import { SearchIcon } from "lucide-react";
+import { Input } from '@/components/ui/input'
+import { SearchIcon } from 'lucide-react'
 
 export default function MediaView() {
   return (
     <div className="flex flex-col gap-4">
-      <div className="px-4 flex items-center gap-2 py-6">
-        <SearchIcon className="w-5 h-5 text-muted-foreground" />
+      <div className="flex items-center gap-2 px-4 py-6">
+        <SearchIcon className="h-5 w-5 text-muted-foreground" />
         <Input
           className="w-full"
           placeholder="Search images..."
@@ -18,7 +18,7 @@ export default function MediaView() {
           Here you can view all the images you have uploaded to your account.
         </p>
       </div>
-      <div className="mb-12 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="mb-12 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3">
         {
           // array with 10 items
           Array.from({ length: 10 }).map((_, index) => (
@@ -27,7 +27,7 @@ export default function MediaView() {
               className="group flex flex-col gap-2 rounded-md border border-stone-200 bg-white p-2 shadow-sm hover:shadow-md dark:border-stone-800 dark:bg-stone-950"
             >
               <div className="relative aspect-video overflow-hidden rounded-md">
-                <img
+                {/* <img
                   alt="Image Preview"
                   className="object-cover transition-all group-hover:scale-110"
                   height={300}
@@ -37,7 +37,7 @@ export default function MediaView() {
                     objectFit: "cover",
                   }}
                   width={500}
-                />
+                /> */}
               </div>
               <div className="flex items-center justify-between gap-2">
                 <div className="line-clamp-1 text-sm font-medium">
@@ -50,5 +50,5 @@ export default function MediaView() {
         }
       </div>
     </div>
-  );
+  )
 }

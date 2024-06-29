@@ -1,43 +1,43 @@
-import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
-import { Info } from "lucide-react";
+import { Heading } from '@/components/ui/heading'
+import { Text } from '@/components/ui/text'
+import { Info } from 'lucide-react'
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
   CardDescription,
-} from "@/components/ui/card";
-import { getPSTDate, getPSTDaySevenDaysFromNow } from "@/utils/dates";
-import { format } from "date-fns";
-import { supabase } from "@/utils/supabase";
-import Link from "next/link";
+} from '@/components/ui/card'
+import { getPSTDate, getPSTDaySevenDaysFromNow } from '@/utils/dates'
+import { format } from 'date-fns'
+import { supabase } from '@/utils/supabase'
+import Link from 'next/link'
 
 async function ComingSoon() {
-  const pstDate = getPSTDate();
-  const pstDateSevenDaysFromNow = getPSTDaySevenDaysFromNow();
+  const pstDate = getPSTDate()
+  const pstDateSevenDaysFromNow = getPSTDaySevenDaysFromNow()
 
-  const formattedPSTDate = format(pstDate, "yyyy-MM-dd");
+  const formattedPSTDate = format(pstDate, 'yyyy-MM-dd')
   const formattedPSTDateSevenDaysFromNow = format(
     pstDateSevenDaysFromNow,
-    "yyyy-MM-dd",
-  );
+    'yyyy-MM-dd',
+  )
 
   const { data, error } = await supabase
-    .from("posts")
-    .select("*, category:categories(id, name, slug, color)")
-    .eq("visibility", "public")
-    .gte("publish_date_day", formattedPSTDate)
-    .lte("publish_date_day", formattedPSTDateSevenDaysFromNow)
-    .order("publish_date_day", { ascending: false })
-    .limit(6);
+    .from('posts')
+    .select('*, category:categories(id, name, slug, color)')
+    .eq('visibility', 'public')
+    .gte('publish_date_day', formattedPSTDate)
+    .lte('publish_date_day', formattedPSTDateSevenDaysFromNow)
+    .order('publish_date_day', { ascending: false })
+    .limit(6)
 
   if (error) {
-    throw Error();
+    throw Error()
   }
 
   return (
-    <Card className="w-full mt-6">
+    <Card className="mt-6 w-full">
       <CardHeader>
         <CardTitle>Upcoming Posts</CardTitle>
         <CardDescription>
@@ -49,7 +49,7 @@ async function ComingSoon() {
           data?.map((post, i) => (
             <Link
               key={post.id}
-              className="flex items-center justify-between h-12 hover:bg-stone-50 dark:hover:bg-stone-800 px-4 border border-stone-200 dark:border-stone-700 rounded-md"
+              className="flex h-12 items-center justify-between rounded-md border border-stone-200 px-4 hover:bg-stone-50 dark:border-stone-700 dark:hover:bg-stone-800"
               href={`/dashboard/posts/${post.slug}`}
             >
               <div className="font-medium">{post.title}</div>
@@ -63,23 +63,23 @@ async function ComingSoon() {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }
 
 async function DraftPosts() {
   const { data, error } = await supabase
-    .from("posts")
-    .select("*, category:categories(id, name, slug, color)")
-    .eq("visibility", "draft")
-    .order("publish_date_day", { ascending: false })
-    .limit(6);
+    .from('posts')
+    .select('*, category:categories(id, name, slug, color)')
+    .eq('visibility', 'draft')
+    .order('publish_date_day', { ascending: false })
+    .limit(6)
 
   if (error) {
-    throw Error();
+    throw Error()
   }
 
   return (
-    <Card className="w-full mt-6">
+    <Card className="mt-6 w-full">
       <CardHeader>
         <CardTitle>Draft Posts</CardTitle>
         <CardDescription>
@@ -91,7 +91,7 @@ async function DraftPosts() {
           data?.map((post, i) => (
             <Link
               key={post.id}
-              className="flex items-center justify-between h-12 hover:bg-stone-50 dark:hover:bg-stone-800 px-4 border border-stone-200 dark:border-stone-700 rounded-md"
+              className="flex h-12 items-center justify-between rounded-md border border-stone-200 px-4 hover:bg-stone-50 dark:border-stone-700 dark:hover:bg-stone-800"
               href={`/dashboard/posts/${post.slug}`}
             >
               <div className="font-medium">{post.title}</div>
@@ -105,7 +105,7 @@ async function DraftPosts() {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }
 
 export default async function DashboardPage() {
@@ -115,5 +115,5 @@ export default async function DashboardPage() {
       <ComingSoon />
       <DraftPosts />
     </section>
-  );
+  )
 }

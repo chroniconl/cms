@@ -1,30 +1,26 @@
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Heading } from "@/components/ui/heading";
-import { ClientImage } from "@/components/ui/image";
-import { Text } from "@/components/ui/text";
-import { formatTimestampToSlug } from "@/utils/formatTimestampToSlug";
+import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
+import { Heading } from '@/components/ui/heading'
+import { ClientImage } from '@/components/ui/image'
+import { Text } from '@/components/ui/text'
+import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
+import { Category } from '@/utils/types'
 
 export default async function BlogPostsGroup({
   posts,
 }: {
   posts: {
-    id: string;
-    title: string;
-    description: string;
-    content: string;
-    publish_date_day: string;
-    publish_date_time: string;
-    slug: string;
-    image_url: string;
-    image_alt: string;
-    category: {
-      id: string;
-      name: string;
-      slug: string;
-      color: string;
-    };
-  }[];
+    id: string
+    title: string
+    description: string
+    content: string
+    publish_date_day: string
+    publish_date_time: string
+    slug: string
+    image_url: string
+    image_alt: string
+    category: Category
+  }[]
 }) {
   return (
     <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -43,13 +39,13 @@ export default async function BlogPostsGroup({
                   {post.title}
                 </Heading>
                 <Text
-                  className="mt-2 text-sm text-stone-500 line-clamp-2"
+                  className="mt-2 line-clamp-2 text-sm text-stone-500"
                   small
                 >
                   {post?.publish_date_day}
                 </Text>
                 <Text
-                  className="mt-2 text-sm text-stone-500 line-clamp-2"
+                  className="mt-2 line-clamp-2 text-sm text-stone-500"
                   small
                 >
                   {post?.description?.slice(0, 200)}
@@ -65,5 +61,5 @@ export default async function BlogPostsGroup({
         </Link>
       ))}
     </section>
-  );
+  )
 }
