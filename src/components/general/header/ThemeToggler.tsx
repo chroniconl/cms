@@ -1,27 +1,27 @@
-"use client";
+'use client'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
-import Link from "next/link";
+} from '@/components/ui/dropdown-menu'
+import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 function ThemeToggler({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
   const switchToLightMode = () => {
-    setTheme("light");
-  };
+    setTheme('light')
+  }
 
   const switchToDarkMode = () => {
-    setTheme("dark");
-  };
+    setTheme('dark')
+  }
 
   const switchToSystemDefault = () => {
-    setTheme("system");
-  };
+    setTheme('system')
+  }
 
   return (
     <DropdownMenu>
@@ -56,7 +56,7 @@ function ThemeToggler({ className }: { className?: string }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
-export default ThemeToggler;
+export default ThemeToggler

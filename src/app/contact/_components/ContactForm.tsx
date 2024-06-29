@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 export default function ContactForm() {
   return (
-    <section className="w-full max-w-2xl mx-auto py-12 md:py-16">
+    <section className="mx-auto w-full max-w-2xl py-12 md:py-16">
       <div className="space-y-4 text-center">
         <h2 className="text-3xl font-bold">Get in Touch</h2>
         <p className="text-stone-500 dark:text-stone-400">
@@ -14,7 +14,7 @@ export default function ContactForm() {
         </p>
       </div>
       <form className="mt-8 space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input id="name" placeholder="Your name" />
@@ -41,5 +41,5 @@ export default function ContactForm() {
         </Button>
       </form>
     </section>
-  );
+  )
 }

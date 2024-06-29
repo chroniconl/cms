@@ -1,5 +1,5 @@
-import PublicLayout from "@/components/general/PublicLayout";
-import FullScreenMessage from "@/components/general/FullScreenMessage";
+import PublicLayout from '@/components/general/PublicLayout'
+import FullScreenMessage from '@/components/general/FullScreenMessage'
 
 export default function ThankYou() {
   return (
@@ -12,5 +12,5 @@ export default function ThankYou() {
         actionHref="/"
       />
     </PublicLayout>
-  );
+  )
 }

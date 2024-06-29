@@ -1,25 +1,25 @@
-import { failResponse, okResponse } from "@/utils/response";
-import { supabase } from "@/utils/supabase";
+import { failResponse, okResponse } from '@/utils/response'
+import { supabase } from '@/utils/supabase'
 
 export async function PUT(request: Request) {
-  const requestData = await request.json();
+  const requestData = await request.json()
 
   if (!requestData.id) {
-    return failResponse("Document ID is required");
+    return failResponse('Document ID is required')
   }
 
   // Remove from Supabase
   const { error } = await supabase
-    .from("posts")
+    .from('posts')
     .update({
-      image_caption: requestData?.image_caption || "",
-      image_alt: requestData?.image_alt || "",
+      image_caption: requestData?.image_caption || '',
+      image_alt: requestData?.image_alt || '',
     })
-    .match({ id: requestData.id });
+    .match({ id: requestData.id })
 
   if (error) {
-    console.error(error);
-    return failResponse(error?.message);
+    console.error(error)
+    return failResponse(error?.message)
   }
 
   return okResponse(
@@ -27,6 +27,6 @@ export async function PUT(request: Request) {
       image_alt: requestData.image_alt,
       image_caption: requestData.image_caption,
     },
-    "Documents image meta updated",
-  );
+    'Documents image meta updated',
+  )
 }

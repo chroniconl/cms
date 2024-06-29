@@ -1,8 +1,8 @@
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Logo } from "@/components/general/Logo";
-import { Menu } from "lucide-react";
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { Logo } from '@/components/general/Logo'
+import { Menu } from 'lucide-react'
 
 export default function Component() {
   return (
@@ -53,5 +53,5 @@ export default function Component() {
       </Link>
       <div className="h-6 w-6" />
     </header>
-  );
+  )
 }

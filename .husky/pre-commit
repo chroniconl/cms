@@ -1,5 +1,7 @@
-pnpm run biome:check
+pnpm run eslint
 
-pnpm run test
+# we deprecated the only tested component we have
+
+# pnpm run test
 
 pnpm run build

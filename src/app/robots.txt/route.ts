@@ -14,7 +14,7 @@ const disallow = `
 	Disallow: /sign-in
 	Disallow: /sign-up
 	Disallow: /user-profile
-`;
+`
 
 export async function GET() {
   const robotsTxt = `User-agent: *
@@ -22,13 +22,13 @@ export async function GET() {
 		${disallow}
 
 		Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL}/sitemap.xml
-	`;
+	`
 
-  return new Response(robotsTxt.replace(/^\s+/gm, ""), {
+  return new Response(robotsTxt.replace(/^\s+/gm, ''), {
     status: 200,
     headers: {
-      "content-type": "text/plain; charset=utf-8",
-      "cache-control": "s-maxage=31556952",
+      'content-type': 'text/plain; charset=utf-8',
+      'cache-control': 's-maxage=31556952',
     },
-  });
+  })
 }

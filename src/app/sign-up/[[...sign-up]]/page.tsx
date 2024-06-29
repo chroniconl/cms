@@ -1,7 +1,7 @@
-import PublicLayout from "@/components/general/PublicLayout";
-import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
-import { SignUp } from "@clerk/nextjs";
+import PublicLayout from '@/components/general/PublicLayout'
+import { Heading } from '@/components/ui/heading'
+import { Text } from '@/components/ui/text'
+import { SignUp } from '@clerk/nextjs'
 
 export default function Page() {
   return (
@@ -12,5 +12,5 @@ export default function Page() {
       </Text>
       {/* <SignUp path="/sign-up" /> */}
     </PublicLayout>
-  );
+  )
 }

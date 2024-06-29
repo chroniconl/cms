@@ -1,28 +1,28 @@
-import { formatDate } from "@/utils/dates";
-import type React from "react";
+import { formatDate } from '@/utils/dates'
+import type React from 'react'
 
 interface TimeGroupProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 interface TimeProps {
-  date: string;
+  date: string
 }
 
 interface TimeTextProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export const TimeGroup = ({ children }: TimeGroupProps) => (
-  <div className="flex items-center text-base text-stone-700 space-x-1.5 dark:text-stone-300">
+  <div className="flex items-center space-x-1.5 text-base text-stone-700 dark:text-stone-300">
     {children}
   </div>
-);
+)
 
 export const Time = ({ date }: TimeProps) => {
-  return <time dateTime={date}>{formatDate(date)}</time>;
-};
+  return <time dateTime={date}>{formatDate(date)}</time>
+}
 
 export const TimeText = ({ children }: TimeTextProps) => {
-  return <span>{children}</span>;
-};
+  return <span>{children}</span>
+}

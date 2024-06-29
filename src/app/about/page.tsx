@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 import {
   Card,
   CardHeader,
@@ -6,15 +6,17 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import PublicLayout from "@/components/general/PublicLayout";
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import PublicLayout from '@/components/general/PublicLayout'
 import {
   GithubIcon,
   LinkedinIcon,
   TwitterIcon,
-} from "@/components/general/icons";
+} from '@/components/general/icons'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Image from 'next/image'
 
 export default function About() {
   return (
@@ -33,7 +35,7 @@ export default function About() {
                   </p>
                 </div>
               </div>
-              <img
+              <Image
                 src="https://azhrbvulmwgxcijoaenn.supabase.co/storage/v1/object/public/my-blog/20240418_060049.jpg"
                 width="550"
                 height="550"
@@ -43,7 +45,7 @@ export default function About() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section className="w-full bg-muted py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -71,19 +73,21 @@ export default function About() {
                   About the Author
                 </h2>
                 <div className="flex items-center gap-4">
-                  <img
-                    src="https://github.com/matthewbub.png"
-                    width="80"
-                    height="80"
-                    alt="Author"
-                    className="rounded-full"
-                  />
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/matthewbub.png"
+                      alt="Author"
+                    />
+                    <AvatarFallback className="h-full w-full">
+                      MB
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <h3 className="text-xl font-bold">Matthew Bub</h3>
                     <p className="text-muted-foreground">
                       Tech enthusiast and writer
                     </p>
-                    <div className="flex gap-2 mt-2">
+                    <div className="mt-2 flex gap-2">
                       <Link
                         href="https://twitter.com/matthew_bub"
                         className="text-muted-foreground hover:underline"
@@ -184,7 +188,7 @@ export default function About() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 border-t">
+        <section className="w-full border-t py-12 md:py-24 lg:py-32">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -213,5 +217,5 @@ export default function About() {
         </section>
       </div>
     </PublicLayout>
-  );
+  )
 }

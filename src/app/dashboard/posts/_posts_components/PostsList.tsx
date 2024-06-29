@@ -1,17 +1,17 @@
-"use client";
-import PostCard from "./PostCard";
-import { getPostsAction } from "../_posts_utils/getPostsAction";
-import { Button } from "@/components/ui/button";
+'use client'
+import PostCard from './PostCard'
+import { getPostsAction } from '../_posts_utils/getPostsAction'
+import { Button } from '@/components/ui/button'
 
 export default function PostsList({ data }: { data: any }) {
   if (!data) {
-    return null;
+    return null
   }
 
   const handleLoadMore = async () => {
-    const newData = await getPostsAction(0, 10);
+    const newData = await getPostsAction(0, 10)
     // setData([...data, ...newData]);
-  };
+  }
 
   return (
     <div>
@@ -34,9 +34,9 @@ export default function PostsList({ data }: { data: any }) {
           ))}
       </div>
 
-      <div className="mt-6 mb-12">
+      <div className="mb-12 mt-6">
         <Button onClick={handleLoadMore}>Load More</Button>
       </div>
     </div>
-  );
+  )
 }
