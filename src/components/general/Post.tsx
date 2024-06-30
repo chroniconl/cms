@@ -16,7 +16,6 @@ interface PostProps {
   content: string
   date: string
   slug: string
-  tags: string
   category: Category
   imageUrl: string | null
   imageAlt: string | null
@@ -33,8 +32,6 @@ export default function Post({
   description,
   content,
   date,
-  slug,
-  tags,
   category,
   imageUrl,
   imageAlt,
@@ -89,7 +86,6 @@ export const PostCardDefaultSize = ({
   description,
   date,
   slug,
-  tags,
   category,
   publish_date_day,
   publish_date_date,
