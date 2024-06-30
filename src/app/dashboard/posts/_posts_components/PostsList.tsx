@@ -44,7 +44,6 @@ export default function PostsList({ data, records }: { data: any, records: numbe
 							title={doc.title}
 							date={doc.created_at}
 							slug={`/dashboard/posts/${doc.slug}`}
-							tags={doc.tags}
 							category={doc.category}
 							imageAlt={doc.image_alt}
 							imageUrl={doc.image_url}

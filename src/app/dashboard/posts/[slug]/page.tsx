@@ -42,7 +42,6 @@ export default async function DocumentsSlugPage({
         title={data.title}
         date={data.publish_date_day}
         slug={data.slug}
-        tags={data.tags}
         category={data.category}
         description={data.description}
         content={data.content}

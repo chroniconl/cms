@@ -126,8 +126,7 @@ export default async function BlogPage({
 			content, 
 			publish_date_day, 
 			publish_date_time, 
-			slug, 
-			tags, 
+			slug,
 			category:categories(id, name, slug, color), 
 			visibility, 
 			description, 
@@ -165,7 +164,6 @@ export default async function BlogPage({
           title={data?.title}
           date={data?.publish_date_day}
           slug={data?.slug}
-          tags={data?.tags}
           category={data.category as any}
           description={data?.description}
           content={data?.content}
