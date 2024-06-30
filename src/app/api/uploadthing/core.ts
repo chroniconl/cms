@@ -2,6 +2,7 @@ import { createUploadthing, type FileRouter } from 'uploadthing/next'
 import { UploadThingError } from 'uploadthing/server'
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { supabase } from '@/utils/supabase'
+import { sign } from 'crypto'
 
 const f = createUploadthing()
 
@@ -25,6 +26,8 @@ export const ourFileRouter = {
 			return { userId: userId }
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
+			console.log(metadata)
+			console.log(file)
 			const { error } = await supabase
 				.from('photo_refs')
 				.insert({
@@ -32,6 +35,7 @@ export const ourFileRouter = {
 					name: file.name,
 					image_url: file.url,
 					image_key: file.key,
+					size: file.size,
 				})
 
 			if (error) {
