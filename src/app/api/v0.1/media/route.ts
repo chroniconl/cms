@@ -1,6 +1,3 @@
-import MediaView from '@/app/dashboard/media/_media_components/MediaView'
-import { supabase } from '@/utils/supabase'
-
 const fetchData = async () => {
 	if (!process.env.UPLOADTHING_SECRET) {
 		return
@@ -28,12 +25,13 @@ const fetchData = async () => {
 	
 }
 
-export default async function Media() {
+export async function GET() {
 	const data = await fetchData()
 
-  return (
-    <section>
-			<MediaView media={data?.files} />
-    </section>
-  )
+	return new Response(JSON.stringify(data), {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
 }

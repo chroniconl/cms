@@ -1,15 +1,13 @@
 import { ClientImage } from '@/components/ui/image'
-import { Input } from '@/components/ui/input'
-import { SearchIcon } from 'lucide-react'
 import { Text } from '@/components/ui/text'
 import { Heading } from '@/components/ui/heading'
+import { cn } from '@/utils/cn'
 
 export default function MediaView({ media }: { media: {
 	id: string
 	name: string
-	image_url: string
-	image_key: string
 	size: number
+	key: string
 }[] }) {
   return (
     <div className="flex flex-col gap-4">
@@ -20,13 +18,17 @@ export default function MediaView({ media }: { media: {
         </Text>
       </div>
       <div className="mb-12 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3">
-        {media && media.map(({ id, name, image_url, size }) => (
+        {media && media.map(({ id, name, key, size }) => (
             <div
               key={id}
-              className="group flex flex-col gap-2 rounded-md border border-stone-200 bg-white p-2 shadow-sm hover:shadow-md dark:border-stone-800 dark:bg-stone-950"
+              className={cn([
+								"group flex flex-col gap-2 rounded-md border border-stone-200 bg-white p-2 shadow-sm",
+								"hover:shadow-md dark:border-stone-800 dark:bg-stone-950",
+								
+							])}
             >
 							<ClientImage 
-								src={image_url} 
+								src={'https://utfs.io/f/' + key} 
 								alt={name}
 							/>
               <div className="flex items-center justify-between gap-2">
