@@ -4,6 +4,11 @@ import NewDocumentButton from './_posts_components/NewDocumentButton'
 import CategoryFilterOptionOnServer from './_posts_components/CategoryFilterOption.server'
 import { getPostsAction } from './_posts_utils/getPostsAction'
 import PostsList from './_posts_components/PostsList'
+import { VisibilityOption } from './_posts_components/VisibilityOption'
+import { DateRageOptions } from './_posts_components/DateRageOptions'
+import { Card } from '@/components/ui/card'
+import AuthorsFilterOption from './_posts_components/AuthorsFilterOption'
+import TagsFilterOptionOnServer from './_posts_components/TagsFilterOption.server'
 
 const DEFAULT_RECORDS = 10;
 export default async function PostsPage({ searchParams }: { searchParams: { records: string } }) {
@@ -12,9 +17,13 @@ export default async function PostsPage({ searchParams }: { searchParams: { reco
 	const records = searchParamsRecords > 0 ? searchParamsRecords : DEFAULT_RECORDS
 
 	const data = await getPostsAction(records)
+
+	if (!data) {
+		return <div>Error fetching posts</div>
+	}
 	return (
 		<>
-			<section className="mb-20 grid grid-cols-12 gap-4">
+			<section className="mb-5 grid grid-cols-12 gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<Heading>Your Posts</Heading>
 					<Text>
@@ -26,17 +35,21 @@ export default async function PostsPage({ searchParams }: { searchParams: { reco
 					<NewDocumentButton url={process.env.NEXT_PUBLIC_SITE_URL as string} />
 				</div>
 			</section>
-			<main className="grid grid-cols-12 gap-12">
-				<section className="hidden md:col-span-4 md:block">
-					<div className="sticky top-8 mb-16 space-y-4">
-						<CategoryFilterOptionOnServer />
-					</div>
-				</section>
+			<main className="grid grid-cols-12 gap-4">
 				<section className="col-span-12 md:col-span-8">
 					<PostsList
 						data={data}
 						records={records}
 					/>
+				</section>
+				<section className="hidden md:col-span-4 md:block">
+					<Card className="mb-16 space-y-4 p-4 gap-4">
+						<AuthorsFilterOption />
+						<VisibilityOption />
+						<DateRageOptions />
+						<CategoryFilterOptionOnServer />
+						<TagsFilterOptionOnServer />
+					</Card>
 				</section>
 			</main>
 		</>

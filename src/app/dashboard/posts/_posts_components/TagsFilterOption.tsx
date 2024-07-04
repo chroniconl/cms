@@ -4,111 +4,116 @@ import { useForm, Controller } from 'react-hook-form'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Card } from '@/components/ui/card'
+import { useTagsStore } from '../_posts_utils/store'
 
-import { useCategoriesStore } from '../_posts_utils/store'
-import { Category } from '../_posts_utils/types'
-
-export default function CategoryFilterOption({
-	categories: categoriesFromServer,
+export default function TagsFilterOption({
+	data: tagsFromServer,
 }: {
-	categories: Category[]
+	data: {
+		id: string
+		name: string
+		slug: string
+	}[]
 }) {
 	const { control, watch, setValue, getValues } = useForm<{
-		categoryFilterAll: boolean
+		tagsFilterAll: boolean
 		[x: string]: boolean
 	}>({
 		defaultValues: {
-			['category-filter-all']: true,
+			['tag-filter-all']: true,
 		},
 	})
-	const categories = useCategoriesStore((state) => state.categories)
-	const setCategories = useCategoriesStore((state) => state.setCategories)
-	const setTouched = useCategoriesStore((state) => state.setTouched)
-	const touched = useCategoriesStore((state) => state.touched)
+	const tags = useTagsStore((state) => state.tags)
+	const setTags = useTagsStore((state) => state.setTags)
+	const setTouched = useTagsStore((state) => state.setTouchedTagsCheckAll)
+	const touched = useTagsStore((state) => state.touchedTagsCheckAll)
 
 	useEffect(() => {
-		if (categoriesFromServer) {
-			setCategories(categoriesFromServer)
-			setValue('category-filter-all', true)
+		if (tagsFromServer) {
+			setTags(tagsFromServer)
+			setValue('tag-filter-all', true)
 		}
-	}, [categoriesFromServer])
+	}, [tagsFromServer])
 
 	// Update query whenever the form state changes
 	useEffect(() => {
 		const subscription = watch((value, { name, type }) => {
 			// Update query here based on the form values
-			const selectedCategories = categories.filter((category) =>
-				getValues(`category-filter-${category.id}`),
+			const selectedTags = tags.filter((tag) =>
+				getValues(`tag-filter-${tag.id}`),
 			)
 		})
 		return () => subscription.unsubscribe()
-	}, [watch, categories, getValues])
+	}, [watch, tags, getValues])
 
 	// Watch individual checkboxes to determine the state of the "All" checkbox
-	const watchCategories = watch(
-		categories.map((category) => `category-filter-${category.id}`),
+	const watchTags = watch(
+		tags.map((tag) => `tag-filter-${tag.id}`),
 	)
 
 	// Determine if "All" checkbox should be checked
 	const isAllChecked =
-		watchCategories.length > 0 &&
-		watchCategories.every((value) => value === true)
+		watchTags.length > 0 &&
+		watchTags.every((value) => value === true)
 
 	return (
 		<div className="">
 			<form>
 				<div className="border border-transparent">
-					<Label htmlFor="category-filter">Filter by Category</Label>
+					<Label htmlFor="tag-filter">Filter by Tags</Label>
 				</div>
 				<div className="mt-4 flex flex-col gap-2">
-					{categories && categories.length > 0 ? (
+					{tags && tags.length > 0 ? (
 						<>
 							<div className="flex items-center gap-2 border border-transparent pl-2">
 								<Controller
-									name="category-filter-all"
+									name="tag-filter-all"
 									control={control}
 									defaultValue={true}
 									render={({ field }) => (
 										<Checkbox
-											id="category-filter-all"
+											id="tag-filter-all"
 											checked={touched ? isAllChecked : true}
 											onCheckedChange={(value: boolean) => {
 												setTouched(true)
 												field.onChange(value)
-												categories.forEach((category: any) => {
-													setValue(`category-filter-${category.id}`, value)
+												tags.forEach((tag: any) => {
+													setValue(`tag-filter-${tag.id}`, value)
 												})
 											}}
 										/>
 									)}
 								/>
-								<Label htmlFor="category-filter-all" className='pb-0'>Select All</Label>
+								<Label htmlFor="tag-filter-all" className='pb-0'>Select All</Label>
 							</div>
 							<ScrollArea className="h-72 rounded-md border border-stone-800 bg-stone-800">
 								<div className="flex flex-col gap-2 px-2 py-3">
-									{categories.map((category: Category) => (
-										<div key={category.id} className="flex items-center gap-2">
+									{tags.map((tag: {
+										id: string
+										name: string
+										slug: string
+									}) => (
+										<div key={tag.id} className="flex items-center gap-2">
 											<Controller
-												name={`category-filter-${category.id}`}
+												name={`tag-filter-${tag.id}`}
 												control={control}
 												defaultValue={true}
 												render={({ field }) => (
 													<Checkbox
-														id={`category-filter-${category.id}`}
+														id={`tag-filter-${tag.id}`}
 														checked={field.value}
 														onCheckedChange={(value: boolean) => {
 															setTouched(true)
 															field.onChange(value)
 															if (value === false) {
-																setValue('category-filter-all', false)
+																setValue('tag-filter-all', false)
 															}
 														}}
 													/>
 												)}
 											/>
-											<Label htmlFor={`category-filter-${category.id}`} className='pb-0'>
-												{category.name}
+											<Label htmlFor={`tag-filter-${tag.id}`} className='pb-0'>
+												{tag.name}
 											</Label>
 										</div>
 									))}
@@ -117,10 +122,10 @@ export default function CategoryFilterOption({
 						</>
 					) : (
 						<>
-							{/* No categories */}
+							{/* No tags */}
 							<div className="flex items-center gap-2">
-								<Checkbox id="category-filter-none" disabled />
-								<Label htmlFor="category-filter-none" className='pb-0'>None</Label>
+								<Checkbox id="tag-filter-none" disabled />
+								<Label htmlFor="tag-filter-none" className='pb-0'>None</Label>
 							</div>
 						</>
 					)}
