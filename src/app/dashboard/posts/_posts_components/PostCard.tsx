@@ -108,7 +108,7 @@ export default function PostCard({
 							<>
 								<div className="col-span-3">
 									<Text small>
-										{'Published '}
+										{isPublished ? 'Published' : 'Set to publish '}
 									</Text>
 								</div>
 								<div className="col-span-9">
