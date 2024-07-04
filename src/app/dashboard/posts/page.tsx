@@ -9,18 +9,27 @@ import { DateRageOptions } from './_posts_components/DateRageOptions'
 import { Card } from '@/components/ui/card'
 import AuthorsFilterOption from './_posts_components/AuthorsFilterOption'
 import TagsFilterOptionOnServer from './_posts_components/TagsFilterOption.server'
+import { sortParamsToSupabaseQuery, validateSort } from './_posts_utils/validateSort'
 
-const DEFAULT_RECORDS = 10;
-export default async function PostsPage({ searchParams }: { searchParams: { records: string } }) {
+const DEFAULT_RECORDS = 0;
+export default async function PostsPage({ searchParams }: {
+	searchParams: {
+		records: string
+		sort: string
+	}
+}) {
 	// try to parse the page number from the URL
 	const searchParamsRecords = parseInt(searchParams.records as string) || DEFAULT_RECORDS
 	const records = searchParamsRecords > 0 ? searchParamsRecords : DEFAULT_RECORDS
-
-	const data = await getPostsAction(records)
+	const sort = sortParamsToSupabaseQuery(validateSort(searchParams.sort as string))
+	const data = await getPostsAction(records, sort)
 
 	if (!data) {
 		return <div>Error fetching posts</div>
 	}
+
+	// get actual records from the data
+	const actualRecords = data.data.length
 	return (
 		<>
 			<section className="mb-5 grid grid-cols-12 gap-4">
@@ -40,6 +49,7 @@ export default async function PostsPage({ searchParams }: { searchParams: { reco
 					<PostsList
 						data={data}
 						records={records}
+						sort={sort}
 					/>
 				</section>
 				<section className="hidden md:col-span-4 md:block">

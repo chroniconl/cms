@@ -2,12 +2,20 @@ import { getPSTDate, isPublished } from '@/utils/dates';
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug';
 import { supabase } from '@/utils/supabase'
 import { currentUser } from '@clerk/nextjs/server'
-import { Category, SafePost } from '@/utils/types';
+import { SafePost } from '@/utils/types';
+const START = 0;
 
 export const getPostsAction = async (
 	records: number = 10,
+	sort: {
+		value: string
+		ascending: boolean
+		visibility?: string
+	} = {
+			value: 'created_at',
+			ascending: false
+		},
 ) => {
-	const START = 0;
 	const user = await currentUser()
 	const { data: userData, error: userError } = await supabase
 		.from('users')
@@ -19,17 +27,56 @@ export const getPostsAction = async (
 		return
 	}
 
-	const { data, error, count } = await supabase
-		.from('posts')
-		.select(`
-			*, 
-			category:categories(id, name, slug, color),
-			author:authors(id, display_name, href, avatar_url, twitter_handle)
-		`, { count: 'exact' })
-		.order('created_at', { ascending: false })
-		.eq('user_id', userData?.id)
-		.range(START, records)
-		.limit(records)
+	let data, error, count
+	/**
+	 * Apply the visibility filter if it exists
+	 * Otherwise, apply the default sort and filter 
+	*/
+	if (sort?.visibility) {
+		const { data: tempData, error: tempError } = await supabase
+			.from('posts')
+			.select(`
+				*, 
+				category:categories(id, name, slug, color),
+				author:authors(id, display_name, href, avatar_url, twitter_handle)
+			`)
+			.order(sort.value, { ascending: sort.ascending })
+			.eq('visibility', sort.visibility)
+			.eq('user_id', userData?.id)
+			.range(START, records)
+			.limit(records)
+
+		if (tempError) {
+			return
+		}
+
+		/** 
+		 * filter data that has no "publish_date_day" 
+		 **/
+		data = tempData.filter((post) => post.publish_date_day)
+		count = data.length
+		error = tempError
+	} else {
+		const { data: tempData, error: tempError, count: tempCount } = await supabase
+			.from('posts')
+			.select(`
+				*, 
+				category:categories(id, name, slug, color),
+				author:authors(id, display_name, href, avatar_url, twitter_handle)
+			`, { count: 'exact' })
+			.order(sort.value, { ascending: sort.ascending })
+			.eq('user_id', userData?.id)
+			.range(START, records)
+			.limit(records)
+
+		if (tempError) {
+			return
+		}
+
+		data = tempData
+		count = tempCount
+		error = tempError
+	}
 
 	if (error) {
 		return

@@ -19,8 +19,7 @@ export function Text({
 			className={cn(
 				className,
 				'text-stone-500 dark:text-stone-400',
-				small ? 'text-sm' : 'text-base md:text-lg',
-				firaSansCondensed.className,
+				small ? 'text-sm' : 'text-base md:text-lg'
 			)}
 		>
 			{children}
