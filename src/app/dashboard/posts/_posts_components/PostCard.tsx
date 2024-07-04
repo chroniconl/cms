@@ -119,6 +119,30 @@ export default function PostCard({
 							</>
 						)}
 
+						{tags.length > 0 && (
+							<>
+								<div className="col-span-3">
+									<Text small>
+										{'Tags '}
+									</Text>
+								</div>
+								<div className="col-span-9">
+									<div className="flex flex-wrap items-center gap-2">
+										{tags.map((tag, i) => (
+											<>
+												<Text small>
+													<Link key={tag.id} href={`/dashboard/posts/${tag.slug}`}>
+														{tag.name}
+														{tags[i + 1] && ', '}
+													</Link>
+												</Text>
+											</>
+										))}
+									</div>
+								</div>
+							</>
+						)}
+
 						{author?.id && (
 							<>
 								<div className="col-span-3">
@@ -149,29 +173,7 @@ export default function PostCard({
 							</>
 						)}
 
-						{tags.length > 0 && (
-							<>
-								<div className="col-span-3">
-									<Text small>
-										{'Tags '}
-									</Text>
-								</div>
-								<div className="col-span-9">
-									<div className="flex flex-wrap items-center gap-2">
-										{tags.map((tag, i) => (
-											<>
-												<Text small>
-													<Link key={tag.id} href={`/dashboard/posts/${tag.slug}`}>
-														{tag.name}
-														{tags[i + 1] && ', '}
-													</Link>
-												</Text>
-											</>
-										))}
-									</div>
-								</div>
-							</>
-						)}
+
 					</div>
 				</div>
 			</div>
