@@ -22,14 +22,12 @@ export default async function PostsPage({ searchParams }: {
 	const searchParamsRecords = parseInt(searchParams.records as string) || DEFAULT_RECORDS
 	const records = searchParamsRecords > 0 ? searchParamsRecords : DEFAULT_RECORDS
 	const sort = sortParamsToSupabaseQuery(validateSort(searchParams.sort as string))
-	const data = await getPostsAction(records, sort)
+	const data = await getPostsAction(records === 0 ? 10 : records, sort)
 
 	if (!data) {
 		return <div>Error fetching posts</div>
 	}
 
-	// get actual records from the data
-	const actualRecords = data.data.length
 	return (
 		<>
 			<section className="mb-5 grid grid-cols-12 gap-4">
@@ -44,11 +42,10 @@ export default async function PostsPage({ searchParams }: {
 					<NewDocumentButton url={process.env.NEXT_PUBLIC_SITE_URL as string} />
 				</div>
 			</section>
-			<main className="grid grid-cols-12 gap-4">
+			<div className="grid grid-cols-12 gap-4">
 				<section className="col-span-12 md:col-span-8">
 					<PostsList
 						data={data}
-						records={records}
 						sort={sort}
 					/>
 				</section>
@@ -61,7 +58,7 @@ export default async function PostsPage({ searchParams }: {
 						<TagsFilterOptionOnServer />
 					</Card>
 				</section>
-			</main>
+			</div>
 		</>
 	)
 }

@@ -10,7 +10,6 @@ import { validateSort } from '../_posts_utils/validateSort'
 
 export default function PostsList({
 	data,
-	records,
 	sort = { value: 'default', ascending: false, formValue: 'default' },
 }: {
 	data: {
@@ -19,7 +18,6 @@ export default function PostsList({
 		next: number,
 		clientSafeData: SafePost[]
 	},
-	records: number
 	sort: {
 		value: string
 		ascending: boolean
@@ -46,7 +44,7 @@ export default function PostsList({
 	}
 
 	const handleLoadMore = async () => {
-		const newQueryParams = updateQueryParams({ records: records + 10 })
+		const newQueryParams = updateQueryParams({ records: data?.clientSafeData?.length + 10 })
 		router.push(`/dashboard/posts?${newQueryParams}`)
 	}
 
@@ -61,7 +59,7 @@ export default function PostsList({
 			<Card className="col-span-12 mb-16 space-y-4 px-4 gap-4 divide-y divide-stone-200/50 dark:divide-stone-700/50">
 				<div className="w-full pt-4 flex items-center justify-between">
 					<Text small>
-						Showing {records} of {data?.count} posts
+						Showing {data?.clientSafeData?.length} of {data?.count} posts
 					</Text>
 
 					<div>

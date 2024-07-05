@@ -33,13 +33,13 @@ export const getPostsAction = async (
 	 * Otherwise, apply the default sort and filter 
 	*/
 	if (sort?.visibility) {
-		const { data: tempData, error: tempError } = await supabase
+		const { data: tempData, error: tempError, count: tempCount } = await supabase
 			.from('posts')
 			.select(`
 				*, 
 				category:categories(id, name, slug, color),
 				author:authors(id, display_name, href, avatar_url, twitter_handle)
-			`)
+			`, { count: 'exact' })
 			.order(sort.value, { ascending: sort.ascending })
 			.eq('visibility', sort.visibility)
 			.eq('user_id', userData?.id)
@@ -54,7 +54,7 @@ export const getPostsAction = async (
 		 * filter data that has no "publish_date_day" 
 		 **/
 		data = tempData.filter((post) => post.publish_date_day)
-		count = data.length
+		count = tempCount
 		error = tempError
 	} else {
 		const { data: tempData, error: tempError, count: tempCount } = await supabase
