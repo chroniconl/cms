@@ -7,7 +7,7 @@ import ImageForm from './_edit_components/ImageForm'
 import PublishDetailsForm from './_edit_components/PublishDetailsForm'
 import FilterDataForm from './_edit_components/FilterDataForm'
 import TipTap from '@/components/general/TipTap'
-import { Card } from '@/components/ui/card'
+import { Card } from '@chroniconl/ui/card'
 import { supabase } from '@/utils/supabase'
 import { getPSTDate } from '@/utils/dates'
 

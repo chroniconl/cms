@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
-import { Heading } from '@/components/ui/heading'
-import { ClientImage } from '@/components/ui/image'
-import { Text } from '@/components/ui/text'
+import { Badge } from '@chroniconl/ui/badge'
+import { Heading } from '@/components/general/heading'
+import { ClientImage } from '@/components/general/image'
+import { Text } from '@/components/general/text'
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
 import { Category } from '@/utils/types'
 

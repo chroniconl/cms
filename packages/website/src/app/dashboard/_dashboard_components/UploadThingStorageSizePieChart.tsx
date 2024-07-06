@@ -1,40 +1,40 @@
 "use client"
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
-import { Text } from '@/components/ui/text';
-import { Heading } from '@/components/ui/heading';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Text } from '@/components/general/text';
+import { Heading } from '@/components/general/heading';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@chroniconl/ui/card';
 
 interface DataProps {
-  totalBytes: number;
-  limitBytes: number;
+	totalBytes: number;
+	limitBytes: number;
 }
 
 interface StorageUsageProps {
-  data: DataProps;
+	data: DataProps;
 }
 
 const UploadThingStorageSizePieChart: React.FC<StorageUsageProps> = ({ data }) => {
-  const usedGB = (data.totalBytes / 1000000000).toFixed(2);
-  const limitGB = (data.limitBytes / 1000000000).toFixed(2);
-  const remainingGB = (Number(limitGB) - Number(usedGB)).toFixed(2);
+	const usedGB = (data.totalBytes / 1000000000).toFixed(2);
+	const limitGB = (data.limitBytes / 1000000000).toFixed(2);
+	const remainingGB = (Number(limitGB) - Number(usedGB)).toFixed(2);
 
-  const pieData = [
-    {
-      id: "Used",
-      label: "Used",
-      value: Number(usedGB),
-      color: "#eab308",
-    },
-    {
-      id: "Remaining",
-      label: "Remaining",
-      value: Number(remainingGB),
-      color: "#22c55e",
-    },
-  ];
+	const pieData = [
+		{
+			id: "Used",
+			label: "Used",
+			value: Number(usedGB),
+			color: "#eab308",
+		},
+		{
+			id: "Remaining",
+			label: "Remaining",
+			value: Number(remainingGB),
+			color: "#22c55e",
+		},
+	];
 
-  return (
+	return (
 		<Card>
 			<CardHeader>
 				<CardTitle>Media Storage Limit</CardTitle>
@@ -43,7 +43,7 @@ const UploadThingStorageSizePieChart: React.FC<StorageUsageProps> = ({ data }) =
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<div className="flex flex-col gap-2 pb-10 relative">					
+				<div className="flex flex-col gap-2 pb-10 relative">
 					<div className="h-40 mt-4">
 						<ResponsivePie
 							data={pieData}
@@ -64,10 +64,10 @@ const UploadThingStorageSizePieChart: React.FC<StorageUsageProps> = ({ data }) =
 							{limitGB} GB Available
 						</Heading>
 					</div>
-				</div>	
+				</div>
 			</CardContent>
 		</Card>
-  );
+	);
 };
 
 export default UploadThingStorageSizePieChart;

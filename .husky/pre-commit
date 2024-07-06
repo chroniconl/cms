@@ -1,4 +1,4 @@
-cd ./workspaces/website && pnpm run eslint
+cd ./packages/website && pnpm run eslint
 
 # we deprecated the only tested component we have
 

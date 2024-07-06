@@ -12,11 +12,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "docs": "pnpm dlx typedoc ./src/**/*.{ts,tsx}",
-    "prepare": "husky",
     "clean": "rm -rf node_modules && rm -rf .next && rm -rf pnpm-lock.yaml && rm -rf .swc"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
+    "@chroniconl/ui": "file:../ui",
     "@clerk/clerk-react": "^5.0.5",
     "@clerk/nextjs": "^5.0.8",
     "@clerk/themes": "^2.1.8",

@@ -1,20 +1,20 @@
-import { Heading } from '@/components/ui/heading'
+import { Heading } from '@/components/general/heading'
 import {
 	Card,
 	CardHeader,
 	CardTitle,
 	CardContent,
 	CardDescription,
-} from '@/components/ui/card'
+} from '@chroniconl/ui/card'
 import { getPSTDate, getPSTDaySevenDaysFromNow } from '@/utils/dates'
 import { supabase } from '@/utils/supabase'
 import Link from 'next/link'
 import UploadThingStorageSizePieChart from './_dashboard_components/UploadThingStorageSizePieChart'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@chroniconl/ui/table'
 import { format, formatDistanceToNow, isWithinInterval, addHours } from 'date-fns';
 import { enUS } from 'date-fns/locale';
-import { Text } from '@/components/ui/text';
-import { Badge } from '@/components/ui/badge'
+import { Text } from '@/components/general/text';
+import { Badge } from '@chroniconl/ui/badge'
 import { ClockIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 

@@ -1,15 +1,15 @@
 import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
-import { Heading } from '@/components/ui/heading'
+import { Badge } from '@chroniconl/ui/badge'
+import { Heading } from '@/components/general/heading'
 import { Time } from '@/components/general/Time'
-import { Text } from '@/components/ui/text'
+import { Text } from '@/components/general/text'
 import TipTap from '@/components/general/TipTap'
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
-import { ClientImage } from '@/components/ui/image'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { ClientImage } from '@/components/general/image'
+import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
 import Image from 'next/image'
 import { Category } from '@/utils/types'
-import { Card } from '@/components/ui/card'
+import { Card } from '@chroniconl/ui/card'
 
 interface PostProps {
 	title: string

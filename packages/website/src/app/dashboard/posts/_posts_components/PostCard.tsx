@@ -2,27 +2,27 @@ import Link from 'next/link'
 import { format } from 'date-fns'
 import { getPSTDate, isPublished } from '@/utils/dates'
 import { ClientPostType, SafePost } from '@/utils/types'
-import { Badge } from '@/components/ui/badge'
-import { Heading } from '@/components/ui/heading'
+import { Badge } from '@chroniconl/ui/badge'
+import { Heading } from '@/components/general/heading'
 import { cn } from '@/utils/cn'
-import { ClientImage } from '@/components/ui/image'
-import { Text } from '@/components/ui/text'
+import { ClientImage } from '@/components/general/image'
+import { Text } from '@/components/general/text'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from '@/components/ui/button'
+} from "@chroniconl/ui/dropdown-menu"
+import { Button } from '@chroniconl/ui/button'
 import { EyeIcon, MoreVertical, PencilIcon, TrashIcon } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
 import Image from 'next/image'
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@chroniconl/ui/tooltip"
 
 export default function PostCard({
 	title = '',
