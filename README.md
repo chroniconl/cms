@@ -1,6 +1,6 @@
 # Chroniconl CMS
 
-[![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](<[./LICENSE](https://github.com/matthewbub/chroniconl-cms/blob/main/LICENSE)>)
 
 This is the public source code for a content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. **NOTE: This project used premium features in the services we use. Please be aware of the costs before using this project.**
 
