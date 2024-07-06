@@ -7,11 +7,9 @@ import { SafePost } from '@/utils/types'
 import { Text } from '@/components/ui/text'
 import { SortOptions } from './SortOptions'
 import { validateSort } from '../_posts_utils/validateSort'
+import { updateQuerySearchParams } from '@/utils/updateQuerySearchParams'
 
-export default function PostsList({
-	data,
-	sort = { value: 'default', ascending: false, formValue: 'default' },
-}: {
+interface PostsListProps {
 	data: {
 		count: number
 		current: number
@@ -24,50 +22,40 @@ export default function PostsList({
 		visibility?: string
 		formValue: string
 	}
-}) {
+}
+
+export default function PostsList({
+	data,
+	sort = { value: 'default', ascending: false, formValue: 'default' },
+}: PostsListProps) {
 	const router = useRouter()
 
 	if (!data) {
-		return null
-	}
-
-	const updateQueryParams = (newParams: any) => {
-		const searchParams = new URLSearchParams(window.location.search)
-		Object.entries(newParams).forEach(([key, value]) => {
-			if (value) {
-				searchParams.set(key, value as string)
-			} else {
-				searchParams.delete(key)
-			}
-		})
-		return searchParams.toString()
+		throw Error('No data')
 	}
 
 	const handleLoadMore = async () => {
-		const newQueryParams = updateQueryParams({ records: data?.clientSafeData?.length + 10 })
+		const newQueryParams = updateQuerySearchParams({ records: data?.clientSafeData?.length + 10 })
 		router.push(`/dashboard/posts?${newQueryParams}`)
 	}
 
 	const handleSort = (value: string) => {
 		value = validateSort(value)
-		const newQueryParams = updateQueryParams({ sort: value })
+		const newQueryParams = updateQuerySearchParams({ sort: value })
 		router.push(`/dashboard/posts?${newQueryParams}`)
 	}
 
 	return (
 		<section className="grid grid-cols-12 gap-2">
-			<Card className="col-span-12 mb-16 space-y-4 px-4 gap-4 divide-y divide-stone-200/50 dark:divide-stone-700/50">
+			<Card className="col-span-12 space-y-4 px-4 gap-4 divide-y divide-stone-200/50 dark:divide-stone-700/50">
 				<div className="w-full pt-4 flex items-center justify-between">
-					<Text small>
+					<Text>
 						Showing {data?.clientSafeData?.length} of {data?.count} posts
 					</Text>
-
-					<div>
-						<SortOptions
-							defaultValue={validateSort(sort?.formValue)}
-							onValueChange={handleSort}
-						/>
-					</div>
+					<SortOptions
+						defaultValue={validateSort(sort?.formValue)}
+						onValueChange={handleSort}
+					/>
 				</div>
 				{data?.clientSafeData?.map((post: SafePost) => (
 					<PostCard

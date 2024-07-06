@@ -1,31 +1,23 @@
 import { getPSTDate, isPublished } from '@/utils/dates';
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug';
 import { supabase } from '@/utils/supabase'
-import { currentUser } from '@clerk/nextjs/server'
 import { SafePost } from '@/utils/types';
+import { getCurrentUser } from '@/server/getCurrentUser';
 const START = 0;
 
+interface Sort {
+	value: string
+	ascending: boolean
+	visibility?: string
+}
 export const getPostsAction = async (
 	records: number = 10,
-	sort: {
-		value: string
-		ascending: boolean
-		visibility?: string
-	} = {
-			value: 'created_at',
-			ascending: false
-		},
+	sort: Sort = {
+		value: 'created_at',
+		ascending: false
+	},
 ) => {
-	const user = await currentUser()
-	const { data: userData, error: userError } = await supabase
-		.from('users')
-		.select('*')
-		.eq('user_id', user?.id)
-		.single()
-
-	if (userError) {
-		return
-	}
+	const userData = await getCurrentUser();
 
 	let data, error, count
 	/**
@@ -46,9 +38,8 @@ export const getPostsAction = async (
 			.range(START, records)
 			.limit(records)
 
-		if (tempError) {
-			return
-		}
+		if (tempError) throw new Error("Error fetching posts")
+
 
 		/** 
 		 * filter data that has no "publish_date_day" 
@@ -69,18 +60,16 @@ export const getPostsAction = async (
 			.range(START, records)
 			.limit(records)
 
-		if (tempError) {
-			return
-		}
+		if (tempError) throw new Error("Error fetching posts")
+
 
 		data = tempData
 		count = tempCount
 		error = tempError
 	}
 
-	if (error) {
-		return
-	}
+	if (error) throw new Error("Error fetching posts")
+
 
 	// map over the data to get the tags
 	const dataWithTags = await Promise.all(
@@ -91,7 +80,7 @@ export const getPostsAction = async (
 				.eq('post_id', curr.id)
 
 			if (tagsError) {
-				return
+				throw new Error("Error fetching tags")
 			}
 
 			return {

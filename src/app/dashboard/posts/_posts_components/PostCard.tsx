@@ -104,7 +104,7 @@ export default function PostCard({
 							</Text>
 						</div>
 
-						{formattedPublishDate && (
+						{formattedPublishDate ? (
 							<>
 								<div className="col-span-3">
 									<Text small>
@@ -114,6 +114,19 @@ export default function PostCard({
 								<div className="col-span-9">
 									<Text small>
 										{format(formattedPublishDate, 'PPP')}
+									</Text>
+								</div>
+							</>
+						) : (
+							<>
+								<div className="col-span-3">
+									<Text small>
+										{'Publish Date '}
+									</Text>
+								</div>
+								<div className="col-span-9">
+									<Text small>
+										{'N/A '}
 									</Text>
 								</div>
 							</>

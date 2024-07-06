@@ -15,11 +15,7 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from '@/components/ui/use-toast'
 
-export default function NewDocumentButton({
-	url = 'chroniconl.com',
-}: {
-	url: string
-}) {
+export default function NewDocumentButton() {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [inputValue, setInputValue] = useState('')
 

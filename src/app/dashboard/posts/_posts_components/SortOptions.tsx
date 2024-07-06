@@ -26,12 +26,10 @@ export function SortOptions({
 				<SelectContent>
 					<SelectGroup>
 						<SelectItem value="default">Sort by (Default)</SelectItem>
+						<SelectItem value="new-created">Newest Created</SelectItem>
+						<SelectItem value="old-created">Oldest Created</SelectItem>
 						<SelectItem value="new-published">Newest Published</SelectItem>
 						<SelectItem value="old-published">Oldest Published</SelectItem>
-						<SelectItem value="new-private">Newest Private</SelectItem>
-						<SelectItem value="old-private">Oldest Private</SelectItem>
-						<SelectItem value="new-draft">Newest Draft</SelectItem>
-						<SelectItem value="old-draft">Oldest Draft</SelectItem>
 					</SelectGroup>
 				</SelectContent>
 			</Select>
