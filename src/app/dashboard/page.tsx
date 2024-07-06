@@ -42,7 +42,7 @@ async function ComingSoon() {
 	}
 
 	return (
-		<Card className="w-full">
+		<Card className="w-full h-full">
 			<CardHeader>
 				<CardTitle>Upcoming Posts</CardTitle>
 				<CardDescription>
