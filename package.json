@@ -1,12 +1,6 @@
 {
-  "name": "nextapp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "name": "chroniconl",
+  "version": "0.0.1",
+  "author": "6matbub@gmail.com",
   "license": "MIT"
 }
