@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@chroniconl/ui':
-        specifier: file:../ui
-        version: file:../ui(@types/react-dom@18.3.0)(@types/react@18.3.3)(date-fns@2.30.0)(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)))
+        specifier: file:../../packages/ui
+        version: file:../../packages/ui(@types/react-dom@18.3.0)(@types/react@18.3.3)(date-fns@2.30.0)(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)))
       '@clerk/clerk-react':
         specifier: ^5.0.5
         version: 5.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -482,8 +482,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@chroniconl/ui@file:../ui':
-    resolution: {directory: ../ui, type: directory}
+  '@chroniconl/ui@file:../../packages/ui':
+    resolution: {directory: ../../packages/ui, type: directory}
 
   '@clerk/backend@1.3.0':
     resolution: {integrity: sha512-WBVQqUgjo8itXQmB9j4vS+6EU4fsEskF1Bof4QMlXiyLazkhkqrlk1HVyDm0iQ3n4PJDkL4wN3IfJo2sBcauFQ==}
@@ -5269,7 +5269,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@chroniconl/ui@file:../ui(@types/react-dom@18.3.0)(@types/react@18.3.3)(date-fns@2.30.0)(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)))':
+  '@chroniconl/ui@file:../../packages/ui(@types/react-dom@18.3.0)(@types/react@18.3.3)(date-fns@2.30.0)(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)))':
     dependencies:
       '@radix-ui/react-alert-dialog': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-aspect-ratio': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
