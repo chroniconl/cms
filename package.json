@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "author": "6matbub@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "build": "pnpm run -r build",
+    "lint": "pnpm run -r lint",
+    "clean": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm run -r clean",
+    "dev": "pnpm --filter website dev"
+  },
   "dependencies": {
     "clsx": "^2.1.0",
     "class-variance-authority": "^0.7.0",
