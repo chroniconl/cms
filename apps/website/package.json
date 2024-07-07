@@ -5,13 +5,12 @@
     "dev": "next dev",
     "build": "next build --no-lint",
     "start": "next start",
-    "eslint": "next lint",
-    "lint": "npx biome lint ./src/**/*.{ts,tsx}",
+    "lint": "next lint",
     "prettier": "npx prettier --write . --ignore-path .gitignore",
     "test": "jest",
     "test:watch": "jest --watch",
     "docs": "pnpm dlx typedoc ./src/**/*.{ts,tsx}",
-    "clean": "rm -rf node_modules && rm -rf .next && rm -rf pnpm-lock.yaml && rm -rf .swc"
+    "clean": "rm -rf node_modules .next .swc"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {

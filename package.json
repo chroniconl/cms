@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "pnpm --filter website start",
-    "build": "pnpm --filter website build",
+    "build": "pnpm run build:ui && pnpm run build:website",
+    "build:website": "pnpm --filter website build",
+    "build:ui": "pnpm --filter ui build",
     "lint": "pnpm run -r lint",
     "clean": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm run -r clean",
     "dev": "pnpm --filter website dev"
