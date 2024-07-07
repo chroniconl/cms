@@ -4,6 +4,7 @@
   "author": "6matbub@gmail.com",
   "license": "MIT",
   "scripts": {
+    "start": "pnpm --filter website start",
     "build": "pnpm --filter website build",
     "lint": "pnpm run -r lint",
     "clean": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm run -r clean",
