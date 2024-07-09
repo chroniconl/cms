@@ -1,7 +1,6 @@
-import React from 'react'
-
 export const fetchCache = 'force-no-store'
 
+import React from 'react'
 import MetaForm from './_edit_components/MetaFormV2'
 import ImageForm from './_edit_components/ImageForm'
 import PublishDetailsForm from './_edit_components/PublishDetailsForm'

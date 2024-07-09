@@ -22,6 +22,7 @@ import { toast } from '@chroniconl/ui/use-toast'
 import { Input } from '@chroniconl/ui/input'
 import { Label } from '@chroniconl/ui/label'
 import { Card } from '@chroniconl/ui/card'
+import { useEffect } from 'react'
 
 export default function ImageForm({
 	id: props__id,
@@ -48,6 +49,19 @@ export default function ImageForm({
 	const state__imageId =
 		useMetaFormStore((state) => state.imageId) || props__imageId
 	const state__setImageId = useMetaFormStore((state) => state.setImageId)
+
+	useEffect(() => {
+		// This useEffect will trigger re-render when image is deleted
+		setValue('imageAlt', state__imageUrl ? props__imageAlt || '' : '');
+		setValue('imageCaption', state__imageUrl ? props__imageCaption || '' : '');
+	}, [state__imageUrl, state__imageId, props__imageAlt, props__imageCaption, setValue]);
+
+	useEffect(() => {
+		// Reset form values when props change
+		setValue('imageAlt', props__imageAlt || '');
+		setValue('imageCaption', props__imageCaption || '');
+	}, [props__imageAlt, props__imageCaption, setValue]);
+
 
 	const handleDeleteImage = async () => {
 		if (!state__imageId) {
