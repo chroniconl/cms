@@ -1,5 +1,5 @@
-import PublicLayout from '@/components/general/PublicLayout'
-import FullScreenMessage from '@/components/general/FullScreenMessage'
+import PublicLayout from '@/components/PublicLayout'
+import FullScreenMessage from '@/components/FullScreenMessage'
 
 export default function ThankYou({ searchParams }: {
 	searchParams: {

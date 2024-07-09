@@ -1,5 +1,5 @@
-import { Text } from '@/components/general/text'
-import { Heading } from '@/components/general/heading'
+import { Text } from '@/components/text'
+import { Heading } from '@/components/heading'
 import NewDocumentButton from './_posts_components/NewDocumentButton'
 import { getPostsAction } from './_posts_utils/getPostsAction'
 import PostsList from './_posts_components/PostsList'

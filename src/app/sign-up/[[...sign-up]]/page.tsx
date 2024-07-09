@@ -1,6 +1,6 @@
-import PublicLayout from '@/components/general/PublicLayout'
-import { Heading } from '@/components/general/heading'
-import { Text } from '@/components/general/text'
+import PublicLayout from '@/components/PublicLayout'
+import { Heading } from '@/components/heading'
+import { Text } from '@/components/text'
 import { SignUp } from '@clerk/nextjs'
 
 export default function Page() {

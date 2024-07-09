@@ -7,7 +7,7 @@ import {
 	DialogBody,
 	DialogDescription,
 	DialogTitle,
-} from '@/components/general/dialogV2'
+} from '@/components/dialogV2'
 import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
 import { formatSlug } from '@/utils/formatSlug'

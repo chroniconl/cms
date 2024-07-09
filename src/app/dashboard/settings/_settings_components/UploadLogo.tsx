@@ -1,6 +1,6 @@
 'use client'
 import { toast } from '@chroniconl/ui/use-toast'
-import { UploadButton } from '@/components/general/UploadThingys'
+import { UploadButton } from '@/components/UploadThingys'
 
 export default function UploadLogo() {
 	return (

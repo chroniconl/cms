@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn'
 import { bangers } from '@/app/fonts'
-import { LinkAsButton } from '@/components/general/button'
+import { LinkAsButton } from '@/components/button'
 
 export default function FullScreenMessage({
 	eyebrow,

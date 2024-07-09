@@ -10,7 +10,7 @@ import {
 } from '@chroniconl/ui/select'
 import { Textarea } from '@chroniconl/ui/textarea'
 import { Button } from '@chroniconl/ui/button'
-import { Heading } from '@/components/general/heading'
+import { Heading } from '@/components/heading'
 import { Input } from '@chroniconl/ui/input'
 import { Card } from '@chroniconl/ui/card'
 import { useForm, Controller } from 'react-hook-form'
@@ -25,7 +25,7 @@ import {
 	DialogTrigger,
 } from '@chroniconl/ui/dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
-import { UploadButton } from '@/components/general/UploadThingys'
+import { UploadButton } from '@/components/UploadThingys'
 import { create } from 'zustand'
 import { useEffect } from 'react'
 import Image from 'next/image'

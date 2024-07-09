@@ -1,10 +1,10 @@
-import PublicLayout from '@/components/general/PublicLayout'
+import PublicLayout from '@/components/PublicLayout'
 import ContactForm from './_components/ContactForm'
 
 export default async function ContactPage() {
-  return (
-    <PublicLayout>
-      <ContactForm />
-    </PublicLayout>
-  )
+	return (
+		<PublicLayout>
+			<ContactForm />
+		</PublicLayout>
+	)
 }

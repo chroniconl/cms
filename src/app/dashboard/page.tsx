@@ -1,4 +1,4 @@
-import { Heading } from '@/components/general/heading'
+import { Heading } from '@/components/heading'
 import {
 	Card,
 	CardHeader,
@@ -13,7 +13,7 @@ import UploadThingStorageSizePieChart from './_dashboard_components/UploadThingS
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@chroniconl/ui/table'
 import { format, formatDistanceToNow, isWithinInterval, addHours } from 'date-fns';
 import { enUS } from 'date-fns/locale';
-import { Text } from '@/components/general/text';
+import { Text } from '@/components/text';
 import { Badge } from '@chroniconl/ui/badge'
 import { ClockIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'

@@ -9,12 +9,12 @@ import {
 } from '@chroniconl/ui/card'
 import { Input } from '@chroniconl/ui/input'
 import { Button } from '@chroniconl/ui/button'
-import PublicLayout from '@/components/general/PublicLayout'
+import PublicLayout from '@/components/PublicLayout'
 import {
 	GithubIcon,
 	LinkedinIcon,
 	TwitterIcon,
-} from '@/components/general/icons'
+} from '@/components/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
 import Image from 'next/image'
 

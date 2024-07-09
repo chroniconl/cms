@@ -1,5 +1,5 @@
-import { SearchHeader } from '@/components/general/header/SearchHeader'
-import Avatar from '@/components/general/Avatar'
+import { SearchHeader } from '@/components/header/SearchHeader'
+import Avatar from '@/components/Avatar'
 import Link from 'next/link'
 import { Sheet, SheetTrigger, SheetContent } from '@chroniconl/ui/sheet'
 import { Menu } from 'lucide-react'

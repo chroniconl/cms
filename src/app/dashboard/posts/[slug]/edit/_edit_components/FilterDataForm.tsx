@@ -10,12 +10,12 @@ import {
 	SelectValue,
 } from '@chroniconl/ui/select'
 import { Button } from '@chroniconl/ui/button'
-import { Heading } from '@/components/general/heading'
+import { Heading } from '@/components/heading'
 import { Input } from '@chroniconl/ui/input'
 import { Card } from '@chroniconl/ui/card'
 import { useForm, Controller } from 'react-hook-form'
 import { Category } from '@/utils/types'
-import { Text } from '@/components/general/text'
+import { Text } from '@/components/text'
 import {
 	Dialog,
 	DialogContent,
