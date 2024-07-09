@@ -6,10 +6,10 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { ScrollArea } from '@/components/ui/scroll-area'
+} from '@chroniconl/ui/dialog'
+import { Input } from '@chroniconl/ui/input'
+import { Label } from '@chroniconl/ui/label'
+import { ScrollArea } from '@chroniconl/ui/scroll-area'
 import { debounce } from '@/utils/debounce'
 import { formatDate } from '@/utils/dates'
 import { File, SearchIcon } from 'lucide-react'
@@ -17,7 +17,7 @@ import Link from 'next/link'
 import React, { useCallback, useEffect } from 'react'
 import { create } from 'zustand'
 import { useRouter } from 'next/navigation'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from '@chroniconl/ui/checkbox'
 import { useForm, Controller } from 'react-hook-form'
 
 interface IDocument {

@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import { Card } from "@chroniconl/ui/card"
+import { Label } from "@chroniconl/ui/label"
 import {
 	Select,
 	SelectContent,
@@ -7,7 +7,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select"
+} from "@chroniconl/ui/select"
 
 export function SortOptions({
 	defaultValue = 'default',

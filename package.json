@@ -17,6 +17,7 @@
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
+    "@chroniconl/ui": "^0.0.2",
     "@clerk/clerk-react": "^5.0.5",
     "@clerk/nextjs": "^5.0.8",
     "@clerk/themes": "^2.1.8",

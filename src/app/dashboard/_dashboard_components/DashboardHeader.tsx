@@ -1,7 +1,7 @@
 import { SearchHeader } from '@/components/general/header/SearchHeader'
 import Avatar from '@/components/general/Avatar'
 import Link from 'next/link'
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
+import { Sheet, SheetTrigger, SheetContent } from '@chroniconl/ui/sheet'
 import { Menu } from 'lucide-react'
 const navItems = [
 	{ label: 'Dashboard', url: '/dashboard' },
