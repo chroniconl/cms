@@ -77,8 +77,16 @@ export default function MetaForm({
 	const setAvatarId = avatarState((state) => state.setAvatarId)
 	const setAvatarModalOpen = avatarState((state) => state.setAvatarModalOpen)
 
-	const state__authors = authorState((state) => state.authors) || authors
+	const state__authors = authorState((state) => state.authors)
 	const setAuthors = authorState((state) => state.setAuthors)
+
+	useEffect(() => {
+		if (!authors) {
+			return
+		}
+
+		setAuthors(authors);
+	}, [])
 
 	const {
 		control,
