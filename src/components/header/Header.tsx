@@ -1,7 +1,7 @@
 import { Sheet, SheetTrigger, SheetContent } from '@chroniconl/ui/sheet'
 import { Button } from '@chroniconl/ui/button'
 import Link from 'next/link'
-import { Logo } from '@/components/general/Logo'
+import { Logo } from '@/components/Logo'
 import { Menu } from 'lucide-react'
 
 export default function Component() {

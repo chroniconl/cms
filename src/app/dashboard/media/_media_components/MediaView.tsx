@@ -1,6 +1,6 @@
-import { ClientImage } from '@/components/general/image'
-import { Text } from '@/components/general/text'
-import { Heading } from '@/components/general/heading'
+import { ClientImage } from '@/components/image'
+import { Text } from '@/components/text'
+import { Heading } from '@/components/heading'
 import { cn } from '@/utils/cn'
 
 export default function MediaView({ media }: {

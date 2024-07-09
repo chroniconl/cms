@@ -1,8 +1,8 @@
 "use client"
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
-import { Text } from '@/components/general/text';
-import { Heading } from '@/components/general/heading';
+import { Text } from '@/components/text';
+import { Heading } from '@/components/heading';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@chroniconl/ui/card';
 
 interface DataProps {

@@ -8,9 +8,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@chroniconl/ui/select'
-import { DatePickerSimple } from '@/components/general/DatePicker'
+import { DatePickerSimple } from '@/components/DatePicker'
 import { Button } from '@chroniconl/ui/button'
-import { Heading } from '@/components/general/heading'
+import { Heading } from '@/components/heading'
 import { Card } from '@chroniconl/ui/card'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from '@chroniconl/ui/use-toast'

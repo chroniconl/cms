@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { useForm, Controller } from 'react-hook-form'
 import { TrashIcon } from 'lucide-react'
 import { Button } from '@chroniconl/ui/button'
-import { Heading } from '@/components/general/heading'
-import { UploadDropzone } from '@/components/general/UploadThingys'
+import { Heading } from '@/components/heading'
+import { UploadDropzone } from '@/components/UploadThingys'
 import { useMetaFormStore } from '../_edit_state/metaFormStore'
 import {
 	AlertDialog,

@@ -3,10 +3,10 @@ import { format } from 'date-fns'
 import { getPSTDate, isPublished } from '@/utils/dates'
 import { ClientPostType, SafePost } from '@/utils/types'
 import { Badge } from '@chroniconl/ui/badge'
-import { Heading } from '@/components/general/heading'
+import { Heading } from '@/components/heading'
 import { cn } from '@/utils/cn'
-import { ClientImage } from '@/components/general/image'
-import { Text } from '@/components/general/text'
+import { ClientImage } from '@/components/image'
+import { Text } from '@/components/text'
 import {
 	DropdownMenu,
 	DropdownMenuContent,

@@ -1,7 +1,7 @@
 import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
-import { Text, Code } from '@/components/general/text'
-import { Heading } from '@/components/general/heading'
+import { Text, Code } from '@/components/text'
+import { Heading } from '@/components/heading'
 import { Button } from '@chroniconl/ui/button'
 import UploadLogo from './_settings_components/UploadLogo'
 

@@ -1,7 +1,7 @@
 import '@/styles/tailwind.css'
 import '@/styles/prose.css'
 import { firaSansCondensed } from '@/app/fonts'
-import ReactQueryClientProvider from '@/components/general/ReactQueryClientProvider'
+import ReactQueryClientProvider from '@/components/ReactQueryClientProvider'
 import { Toaster } from '@chroniconl/ui/toaster'
 import { cn } from '@/utils/cn'
 import { ClerkProvider } from '@clerk/nextjs'
