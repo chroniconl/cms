@@ -81,7 +81,7 @@ export default function PublishDetailsForm({
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<div className="grid grid-cols-12 gap-4">
-					<div className="col-span-8 flex flex-col">
+					<div className="col-span-8">
 						<Label htmlFor="publish_date">Publish Date</Label>
 						<div className="flex w-full gap-2">
 							<Controller
