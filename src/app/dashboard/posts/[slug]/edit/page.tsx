@@ -102,7 +102,7 @@ export default async function DocumentSlugEdit({
 					/>
 					<PublishDetailsForm
 						id={postData.id}
-						publishDateDay={getPSTDate(new Date(postData?.publish_date_day))}
+						publishDateDay={getPSTDate(postData?.publish_date_day)}
 						publishDateTime={postData?.publish_date_time}
 						visibility={postData.visibility}
 					/>
