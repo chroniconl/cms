@@ -1,38 +1,44 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import { utapi } from '@/server/utapi'
+import { getCurrentUser } from '@/server/getCurrentUser';
 
 export async function DELETE(request: Request) {
-  const requestData = await request.json()
+	const { error: userError } = await getCurrentUser();
+	if (userError) {
+		return failResponse('Trouble getting user')
+	}
 
-  if (!requestData.id) {
-    return failResponse('Document ID is required')
-  }
+	const requestData = await request.json()
 
-  if (!requestData.imageId) {
-    return failResponse('Image ID is required')
-  }
+	if (!requestData.id) {
+		return failResponse('Document ID is required')
+	}
 
-  // Remove from UploadThing
-  const { success } = await utapi.deleteFiles(requestData.imageId)
-  if (!success) {
-    return failResponse("Image wasn't deleted. Please contact support.")
-  }
+	if (!requestData.imageId) {
+		return failResponse('Image ID is required')
+	}
 
-  const { error } = await supabase
-    .from('posts')
-    .update({
-      image_url: null,
-      image_id: null,
-      image_alt: null,
-      image_caption: null,
-    })
-    .match({ id: requestData.id })
+	// Remove from UploadThing
+	const { success } = await utapi.deleteFiles(requestData.imageId)
+	if (!success) {
+		return failResponse("Image wasn't deleted. Please contact support.")
+	}
 
-  if (error) {
-    console.error(error)
-    return failResponse(error?.message)
-  }
+	const { error } = await supabase
+		.from('posts')
+		.update({
+			image_url: null,
+			image_id: null,
+			image_alt: null,
+			image_caption: null,
+		})
+		.match({ id: requestData.id })
 
-  return okResponse('Documents image url updated')
+	if (error) {
+		console.error(error)
+		return failResponse(error?.message)
+	}
+
+	return okResponse('Documents image url updated')
 }

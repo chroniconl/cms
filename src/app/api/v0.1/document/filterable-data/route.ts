@@ -3,110 +3,98 @@
  *
  * but it works
  */
+import { getCurrentUser } from '@/server/getCurrentUser'
 import { toPST } from '@/utils/dates'
 import { formatSlug } from '@/utils/formatSlug'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import { tagSeparator } from '@/utils/tagSeparator'
-import { currentUser } from '@clerk/nextjs/server'
 import joi from 'joi'
 
 export async function POST(request: Request) {
-  const user = await currentUser()
+	const { data: userData, error: userError } = await getCurrentUser();
+	if (userError) {
+		return failResponse('Trouble getting user')
+	}
 
-  if (!user) {
-    return failResponse('User not found')
-  }
+	const requestData = await request.json()
 
-  // Check if the user exists in the database
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('user_id', user?.id)
-    .single()
+	const schema = joi.object({
+		id: joi.string().required(),
+		category_id: joi.string().allow('').optional(),
+		tags: joi.string().optional(),
+	})
 
-  if (userError) {
-    return failResponse('Trouble getting user')
-  }
+	const { error: validationError } = schema.validate(requestData)
 
-  const requestData = await request.json()
+	if (validationError) {
+		return failResponse(validationError.message)
+	}
 
-  const schema = joi.object({
-    id: joi.string().required(),
-    category_id: joi.string().allow('').optional(),
-    tags: joi.string().optional(),
-  })
+	// parse tags
+	const tags: string[] = tagSeparator(requestData.tags)
 
-  const { error: validationError } = schema.validate(requestData)
+	// find the tags that already exist in the database
+	const { data: tagsThatExistData, error: tagsThatExistError } = await supabase
+		.from('tags')
+		.select('id, name')
+		.in('name', tags)
 
-  if (validationError) {
-    return failResponse(validationError.message)
-  }
+	if (tagsThatExistError) {
+		return failResponse(tagsThatExistError?.message)
+	}
 
-  // parse tags
-  const tags: string[] = tagSeparator(requestData.tags)
+	// Remove any tags that already exist in the database
+	const tagsToInsert = tags.filter(
+		(tag) => !tagsThatExistData.find((tagData) => tagData.name === tag),
+	)
 
-  // find the tags that already exist in the database
-  const { data: tagsThatExistData, error: tagsThatExistError } = await supabase
-    .from('tags')
-    .select('id, name')
-    .in('name', tags)
+	// create tags in database
+	const { data: tagsData, error: tagsError } = await supabase
+		.from('tags')
+		.upsert(
+			tagsToInsert.map((tag) => ({
+				name: tag,
+				slug: formatSlug(tag),
+				last_updated: toPST(new Date()),
+				created_by: userData?.id,
+			})),
+		)
+		.select()
 
-  if (tagsThatExistError) {
-    return failResponse(tagsThatExistError?.message)
-  }
+	if (tagsError) {
+		return failResponse(tagsError?.message)
+	}
 
-  // Remove any tags that already exist in the database
-  const tagsToInsert = tags.filter(
-    (tag) => !tagsThatExistData.find((tagData) => tagData.name === tag),
-  )
+	// create post_tag_relationship in database
+	const { error: postTagRelationshipError } = await supabase
+		.from('post_tag_relationship')
+		.insert(
+			tagsData.map((tag) => ({
+				tag_id: tag.id,
+				post_id: requestData.id,
+				created_by: userData?.id,
+			})),
+		)
+		.select()
 
-  // create tags in database
-  const { data: tagsData, error: tagsError } = await supabase
-    .from('tags')
-    .upsert(
-      tagsToInsert.map((tag) => ({
-        name: tag,
-        slug: formatSlug(tag),
-        last_updated: toPST(new Date()),
-        created_by: userData?.id,
-      })),
-    )
-    .select()
+	if (postTagRelationshipError) {
+		return failResponse(postTagRelationshipError?.message)
+	}
 
-  if (tagsError) {
-    return failResponse(tagsError?.message)
-  }
+	if (requestData.category_id) {
+		// Update post with new category_id
+		const { error: postError } = await supabase
+			.from('posts')
+			.update({
+				category_id: requestData.category_id,
+			})
+			.match({ id: requestData.id })
 
-  // create post_tag_relationship in database
-  const { error: postTagRelationshipError } = await supabase
-    .from('post_tag_relationship')
-    .insert(
-      tagsData.map((tag) => ({
-        tag_id: tag.id,
-        post_id: requestData.id,
-        created_by: userData?.id,
-      })),
-    )
-    .select()
+		if (postError) {
+			return failResponse(postError?.message)
+		}
+	}
 
-  if (postTagRelationshipError) {
-    return failResponse(postTagRelationshipError?.message)
-  }
-
-  if (requestData.category_id) {
-    // Update post with new category_id
-    const { error: postError } = await supabase
-      .from('posts')
-      .update({
-        category_id: requestData.category_id,
-      })
-      .match({ id: requestData.id })
-
-    if (postError) {
-      return failResponse(postError?.message)
-    }
-  }
-
-  return okResponse('Document updated')
+	return okResponse('Document updated')
 }
