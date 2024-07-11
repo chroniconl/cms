@@ -67,8 +67,7 @@ export default function PostCard({
 							alt={imageAlt || ''}
 						/>
 					) : (
-						<div className='rounded-md border border-input'>
-
+						<div className="rounded-md border border-input">
 							<div className="flex h-[190px] w-full -rotate-45 items-center justify-center">
 								<Heading level={4}>{'No image'}</Heading>
 							</div>
