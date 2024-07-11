@@ -18,7 +18,7 @@ export function Text({
 			className={cn(
 				className,
 				'text-stone-500 dark:text-stone-400',
-				small ? 'text-sm' : 'text-base md:text-lg',
+				small ? 'text-sm' : 'text-base',
 			)}
 		>
 			{children}
