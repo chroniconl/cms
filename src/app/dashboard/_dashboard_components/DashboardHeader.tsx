@@ -8,13 +8,6 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@chroniconl/ui/dropdown-menu"
 
@@ -24,8 +17,8 @@ const navItems = [
 	{ label: 'Media', url: '/dashboard/media' },
 	{ label: 'Settings', url: '/dashboard/settings' },
 	{ label: 'Docs', url: '/documentation' },
-	// { label: 'Website', url: '/' },
-	{ label: 'Docs', url: '/documentation' },
+	{ label: 'Website', url: 'https://chroniconl.com' },
+	{ label: 'Form Submissions', url: '/dashboard/form-submissions' },
 ]
 
 export default async function DashboardHeader() {
