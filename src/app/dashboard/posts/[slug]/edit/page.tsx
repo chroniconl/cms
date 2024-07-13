@@ -9,112 +9,124 @@ import TipTap from '@/components/TipTap'
 import { Card } from '@chroniconl/ui/card'
 import { supabase } from '@/utils/supabase'
 import { getPSTDate } from '@/utils/dates'
+import { cn } from '@/utils/cn'
 
 export default async function DocumentSlugEdit({
-  params,
+	params,
 }: {
-  params: {
-    slug: string
-  }
+	params: {
+		slug: string
+	}
 }) {
-  try {
-    const [postResult, categoriesResult, authorsResult] = await Promise.all([
-      supabase
-        .from('posts')
-        .select(`*, category:categories(id, name, slug, color)`)
-        .eq('slug', params.slug)
-        .single(),
-      supabase.from('categories').select(`*`),
-      supabase.from('authors').select(`*`),
-    ])
+	try {
+		const [postResult, categoriesResult, authorsResult] = await Promise.all([
+			supabase
+				.from('posts')
+				.select(`*, category:categories(id, name, slug, color)`)
+				.eq('slug', params.slug)
+				.single(),
+			supabase.from('categories').select(`*`),
+			supabase.from('authors').select(`*`),
+		])
 
-    const { data: postData, error: postError } = postResult
-    const { data: categoriesData, error: categoriesError } = categoriesResult
-    const { data: authorsData, error: authorsError } = authorsResult
+		const { data: postData, error: postError } = postResult
+		const { data: categoriesData, error: categoriesError } = categoriesResult
+		const { data: authorsData, error: authorsError } = authorsResult
 
-    if (postError) {
-      throw new Error('Error fetching post')
-    }
+		if (postError) {
+			throw new Error('Error fetching post')
+		}
 
-    if (categoriesError) {
-      throw new Error('Error fetching categories')
-    }
+		if (categoriesError) {
+			throw new Error('Error fetching categories')
+		}
 
-    if (authorsError) {
-      throw new Error('Error fetching authors')
-    }
+		if (authorsError) {
+			throw new Error('Error fetching authors')
+		}
 
-    const { data: tagsData, error: tagsError } = await supabase
-      .from('post_tag_relationship')
-      .select(`tag:tags(id, name, slug)`)
-      .eq('post_id', postData.id)
+		const { data: tagsData, error: tagsError } = await supabase
+			.from('post_tag_relationship')
+			.select(`tag:tags(id, name, slug)`)
+			.eq('post_id', postData.id)
 
-    if (tagsError) {
-      throw new Error('Error fetching tags')
-    }
+		if (tagsError) {
+			throw new Error('Error fetching tags')
+		}
 
-    // TS will yell if I don't do this
-    const tsSucksForThis = tagsData as any
+		// TS will yell if I don't do this
+		const tsSucksForThis = tagsData as any
 
-    const formattedTags = tsSucksForThis.map(
-      (tag: {
-        tag: {
-          id: string
-          name: string
-          slug: string
-        }
-      }) => ({
-        name: tag.tag?.name,
-        slug: tag.tag?.slug,
-        id: tag.tag?.id,
-      }),
-    )
+		const formattedTags = tsSucksForThis.map(
+			(tag: {
+				tag: {
+					id: string
+					name: string
+					slug: string
+				}
+			}) => ({
+				name: tag.tag?.name,
+				slug: tag.tag?.slug,
+				id: tag.tag?.id,
+			}),
+		)
 
-    // Use postData and categoriesData as needed
-    return (
-      <div className="grid w-full grid-cols-12 gap-4 rounded-md md:gap-6">
-        <section className="prose col-span-12 flex max-w-full flex-col gap-1 dark:prose-invert md:col-span-8">
-          <Card>
-            <h2 className="mt-6 w-full px-4 text-2xl font-bold">
-              {postData.title}
-            </h2>
-          </Card>
-          <Card className="p-2">
-            <TipTap defaultValue={postData.content} params={params} />
-          </Card>
-        </section>
-        <section className="col-span-12 flex h-full flex-col gap-5 md:col-span-4">
-          {/* pass as props cause server components */}
-          <MetaForm
-            id={postData.id}
-            title={postData.title}
-            description={postData.description}
-            authors={authorsData}
-            author_id={postData.author_id}
-          />
-          <ImageForm
-            id={postData.id}
-            imageUrl={postData.image_url}
-            imageId={postData.image_id}
-            imageAlt={postData.image_alt}
-            imageCaption={postData.image_caption}
-          />
-          <PublishDetailsForm
-            id={postData.id}
-            publishDateDay={getPSTDate(postData?.publish_date_day)}
-            publishDateTime={postData?.publish_date_time}
-            visibility={postData.visibility}
-          />
-          <FilterDataForm
-            id={postData.id}
-            categories={categoriesData}
-            tags={formattedTags}
-            category={postData.category}
-          />
-        </section>
-      </div>
-    )
-  } catch (error) {
-    throw new Error('Error executing queries')
-  }
+		// Use postData and categoriesData as needed
+		return (
+			<div className="grid w-full grid-cols-12 gap-4 rounded-md md:gap-6">
+				<section className="col-span-12 flex max-w-full flex-col gap-1 md:col-span-8">
+					<Card>
+						<h2 className="my-6 w-full px-4 text-2xl font-bold dark:text-white">
+							{postData.title}
+						</h2>
+					</Card>
+					<Card className="p-2">
+						<TipTap
+							defaultValue={postData.content}
+							params={params}
+							className={cn([
+								"prose:w-full prose-sm dark:prose-invert",
+								"max-w-full prose-ol:list-decimal prose-ul:list-disc",
+								"prose-a:text-blue-500 prose-a:underline",
+								"prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3",
+								"prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400",
+								"dark:prose-strong:text-white prose-strong:text-black"
+							])}
+						/>
+					</Card>
+				</section>
+				<section className="col-span-12 flex h-full flex-col gap-5 md:col-span-4">
+					{/* pass as props cause server components */}
+					<MetaForm
+						id={postData.id}
+						title={postData.title}
+						description={postData.description}
+						authors={authorsData}
+						author_id={postData.author_id}
+					/>
+					<ImageForm
+						id={postData.id}
+						imageUrl={postData.image_url}
+						imageId={postData.image_id}
+						imageAlt={postData.image_alt}
+						imageCaption={postData.image_caption}
+					/>
+					<PublishDetailsForm
+						id={postData.id}
+						publishDateDay={getPSTDate(postData?.publish_date_day)}
+						publishDateTime={postData?.publish_date_time}
+						visibility={postData.visibility}
+					/>
+					<FilterDataForm
+						id={postData.id}
+						categories={categoriesData}
+						tags={formattedTags}
+						category={postData.category}
+					/>
+				</section>
+			</div>
+		)
+	} catch (error) {
+		throw new Error('Error executing queries')
+	}
 }
