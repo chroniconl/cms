@@ -3,14 +3,11 @@
 import { Button } from '@chroniconl/ui/button'
 import {
   Dialog,
-  DialogActions,
   DialogBody,
-  DialogDescription,
   DialogTitle,
 } from '@/components/dialogV2'
 import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
-import { formatSlug } from '@/utils/formatSlug'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from '@chroniconl/ui/use-toast'

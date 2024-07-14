@@ -70,7 +70,7 @@ export default function Message({
 					<CardDescription>Manage customer inquiries</CardDescription>
 				</div>
 				<div className="flex gap-2 mb-8">
-					<Button variant="outline" size="sm" onClick={handleMarkAsSeen}>
+					<Button variant="outline" onClick={handleMarkAsSeen}>
 						Mark as {status === 'SEEN' ? 'Unseen' : 'Seen'}
 					</Button>
 					<LinkAsButton size="sm" href={
