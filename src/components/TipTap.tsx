@@ -12,6 +12,7 @@ import ListItem from '@tiptap/extension-list-item'
 import OrderedList from '@tiptap/extension-ordered-list'
 import Strike from '@tiptap/extension-strike'
 import Underline from '@tiptap/extension-underline'
+import Code from '@tiptap/extension-code'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
@@ -24,6 +25,7 @@ import {
 import { Button } from '@chroniconl/ui/button'
 import {
 	BoldIcon,
+	CodeIcon,
 	ImageIcon,
 	ItalicIcon,
 	Link2Icon,
@@ -63,6 +65,17 @@ hljs.registerLanguage('typescript', ts)
 hljs.registerLanguage('xml', html)
 hljs.registerLanguage('go', go)
 
+export const proseClassNames = cn([
+	"prose:w-full prose-sm dark:prose-invert",
+	"max-w-full prose-ol:list-decimal prose-ul:list-disc",
+	"prose-a:text-blue-500 prose-a:underline",
+	"prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3",
+	"prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400",
+	"dark:prose-strong:text-white prose-strong:text-black",
+	"prose-code:bg-stone-800 prose-code:text-stone-50 prose-code:rounded-sm prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3 prose-code:border prose-code:border-stone-950/10 prose-code:dark:border-white/10"
+])
+
+
 const TipTap = ({
 	defaultValue,
 	params,
@@ -96,6 +109,7 @@ const TipTap = ({
 				hardBreak: false,
 				horizontalRule: false,
 				listItem: false,
+				code: false,
 			}),
 			Underline,
 			Link.configure({
@@ -116,7 +130,8 @@ const TipTap = ({
 			}),
 			HorizontalRule,
 			OrderedList,
-			CharacterCount
+			CharacterCount,
+			Code,
 		],
 		content: defaultValue || '',
 	})
@@ -374,6 +389,17 @@ const TipTap = ({
 					>
 						<ImageIcon className="h-5 w-5" />
 						<span className="sr-only">Image</span>
+					</Button>
+					<Button
+						size={'icon'}
+						variant={'ghost'}
+						onClick={() => editor.chain().focus().toggleCode().run()}
+						className={
+							editor.isActive('code') ? 'bg-accent text-accent-foreground' : ''
+						}
+					>
+						<CodeIcon className="h-5 w-5" />
+						<span className="sr-only">Code</span>
 					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger>

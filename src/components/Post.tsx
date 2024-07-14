@@ -1,16 +1,11 @@
-import Link from 'next/link'
 import { Badge } from '@chroniconl/ui/badge'
 import { Heading } from '@/components/heading'
 import { Time } from '@/components/Time'
-import { Text } from '@/components/text'
-import TipTap from '@/components/TipTap'
-import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
+import TipTap, { proseClassNames } from '@/components/TipTap'
 import { ClientImage } from '@/components/image'
 import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
 import Image from 'next/image'
 import { Category } from '@/utils/types'
-import { Card } from '@chroniconl/ui/card'
-import { cn } from '@/utils/cn'
 
 interface PostProps {
 	title: string
@@ -31,7 +26,6 @@ interface PostProps {
 }
 export default function Post({
 	title,
-	description,
 	content,
 	date,
 	category,
@@ -79,14 +73,7 @@ export default function Post({
 				<TipTap
 					defaultValue={content}
 					editable={false}
-					className={cn([
-						"prose:w-full prose-sm dark:prose-invert",
-						"max-w-full prose-ol:list-decimal prose-ul:list-disc",
-						"prose-a:text-blue-500 prose-a:underline",
-						"prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3",
-						"prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400",
-						"dark:prose-strong:text-white prose-strong:text-black"
-					])}
+					className={proseClassNames}
 				/>
 			</div>
 		</div>
