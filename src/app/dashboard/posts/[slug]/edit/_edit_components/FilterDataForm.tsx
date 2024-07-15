@@ -201,7 +201,7 @@ export default function FilterDataForm({
 
         <div className="flex flex-col">
           <Label htmlFor="tags">Tags</Label>
-          <Text small>
+          <Text>
             Tags are used to help categorize your post. They are comma
             separated.
           </Text>

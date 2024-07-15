@@ -1,11 +1,7 @@
 'use client'
 
 import { Button } from '@chroniconl/ui/button'
-import {
-  Dialog,
-  DialogBody,
-  DialogTitle,
-} from '@/components/dialogV2'
+import { Dialog, DialogBody, DialogTitle } from '@/components/dialogV2'
 import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
 import { useState } from 'react'

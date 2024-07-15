@@ -16,5 +16,6 @@
     "upsert",
     "utapi",
     "zustand"
-  ]
+  ],
+  "editor.tabSize": 2
 }
