@@ -13,17 +13,17 @@ import { supabase } from '@/utils/supabase'
  * }>} userData
  */
 export async function getCurrentUser() {
-	const user = await currentUser()
+  const user = await currentUser()
 
-	const { data: userData, error: userError } = await supabase
-		.from('users')
-		.select('*')
-		.eq('user_id', user?.id)
-		.single()
+  const { data: userData, error: userError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('user_id', user?.id)
+    .single()
 
-	if (userError) {
-		throw new Error('Error fetching user')
-	}
+  if (userError) {
+    throw new Error('Error fetching user')
+  }
 
-	return userData
+  return userData
 }

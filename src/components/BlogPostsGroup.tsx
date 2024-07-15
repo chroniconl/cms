@@ -36,12 +36,8 @@ export default async function BlogPostsGroup({
             <div className="mt-4 flex flex-col justify-between">
               <div>
                 <Heading level={3}>{post.title}</Heading>
-                <Text className="mt-2" small>
-                  {post?.publish_date_day}
-                </Text>
-                <Text className="mt-2" small>
-                  {post?.description?.slice(0, 200)}
-                </Text>
+                <Text className="mt-2">{post?.publish_date_day}</Text>
+                <Text className="mt-2">{post?.description?.slice(0, 200)}</Text>
               </div>
               <div className="mt-3 flex items-center text-sm">
                 <Badge color={post.category?.color}>

@@ -33,10 +33,8 @@ export default function MediaView({
             >
               <ClientImage src={'https://utfs.io/f/' + key} alt={name} />
               <div className="flex items-center justify-between gap-2">
-                <Text small className="line-clamp-1 text-sm font-medium">
-                  {name}
-                </Text>
-                <Text small className="whitespace-nowrap">
+                <Text className="line-clamp-1 text-sm font-medium">{name}</Text>
+                <Text className="whitespace-nowrap">
                   {(size / 1000000).toFixed(2)} MB
                 </Text>
               </div>

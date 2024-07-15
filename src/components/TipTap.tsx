@@ -66,15 +66,14 @@ hljs.registerLanguage('xml', html)
 hljs.registerLanguage('go', go)
 
 export const proseClassNames = cn([
-	"prose:w-full prose-sm dark:prose-invert",
-	"max-w-full prose-ol:list-decimal prose-ul:list-disc",
-	"prose-a:text-blue-500 prose-a:underline",
-	"prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3",
-	"prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400",
-	"dark:prose-strong:text-white prose-strong:text-black",
-	"prose-code:bg-stone-800 prose-code:text-stone-50 prose-code:rounded-sm prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3 prose-code:border prose-code:border-stone-950/10 prose-code:dark:border-white/10"
+	'prose:w-full prose-sm dark:prose-invert prose-custom p-1',
+	'max-w-full prose-ol:list-decimal prose-ul:list-disc',
+	'prose-a:text-blue-500 prose-a:underline',
+	'prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3',
+	'prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400',
+	'dark:prose-strong:text-white prose-strong:text-black',
+	'prose-code:bg-stone-800 prose-code:text-stone-50 prose-code:rounded-sm prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3',
 ])
-
 
 const TipTap = ({
 	defaultValue,
@@ -443,21 +442,21 @@ const TipTap = ({
 					</DropdownMenu>
 				</div>
 			)}
-			<div className="mt-1 mb-4" id="tiptap">
+			<div className="mb-4 mt-1" id="tiptap">
 				<EditorContent editor={editor} />
 			</div>
-			{
-				editable && (
-					<div className={cn([
-						"py-3 text-sm text-muted-foreground border-t border-accent",
-						"flex justify-end "
-					])}>
-						<span>{editor.storage.characterCount.characters()} characters</span>
-						<span className="mx-2">|</span>
-						<span>{editor.storage.characterCount.words()} words</span>
-					</div>
-				)
-			}
+			{editable && (
+				<div
+					className={cn([
+						'border-t border-accent py-3 text-sm text-muted-foreground',
+						'flex justify-end ',
+					])}
+				>
+					<span>{editor.storage.characterCount.characters()} characters</span>
+					<span className="mx-2">|</span>
+					<span>{editor.storage.characterCount.words()} words</span>
+				</div>
+			)}
 			<style jsx>{`
         .prose > ul > li > p {
           margin: 0;
