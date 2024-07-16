@@ -1,3 +1,4 @@
+import '@chroniconl/stylist'
 import '@/styles/tailwind.css'
 import '@/styles/prose.css'
 import ReactQueryClientProvider from '@/components/ReactQueryClientProvider'
@@ -32,7 +33,7 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body
         className={cn(
-          'bg-[#FFF] text-[#1a1a1a] dark:bg-[#1a1a1a] dark:text-[#FFF]',
+          'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
           GeistSans.className,
         )}
       >

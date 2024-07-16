@@ -24,7 +24,7 @@ export function Code({ className, ...props }: TextProps) {
       {...props}
       className={clsx(
         className,
-        'rounded border border-stone-950/10 bg-stone-950/[2.5%] px-0.5 text-xs text-stone-950 dark:border-white/20 dark:bg-white/5 dark:text-white',
+        'ch-border rounded-sm bg-stone-800 px-1.5 py-0.5 leading-3 text-stone-50',
       )}
     />
   )

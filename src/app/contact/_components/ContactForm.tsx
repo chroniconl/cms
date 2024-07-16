@@ -6,6 +6,7 @@ import { Label } from '@chroniconl/ui/label'
 import { Textarea } from '@chroniconl/ui/textarea'
 import { toast } from '@chroniconl/ui/use-toast'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface ContactFormProps {
   name: string
@@ -43,16 +44,16 @@ export default function ContactForm() {
 
   return (
     <section className="mx-auto w-full max-w-2xl py-12 md:py-16">
-      <div className="space-y-4 text-center">
-        <h2 className="text-3xl font-bold">Get in Touch</h2>
-        <p className="text-stone-500 dark:text-stone-400">
+      <div className="text-center">
+        <h2 className="ch-heading ch-primary">Get in Touch</h2>
+        <p className="ch-body ch-secondary">
           Have a project in mind? Fill out the form and I'll get back to you as
           soon as possible.
         </p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
+          <div>
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
@@ -61,7 +62,7 @@ export default function ContactForm() {
             />
             {errors.name && <span>{errors.name.message}</span>}
           </div>
-          <div className="space-y-2">
+          <div>
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -72,7 +73,7 @@ export default function ContactForm() {
             {errors.email && <span>{errors.email.message}</span>}
           </div>
         </div>
-        <div className="space-y-2">
+        <div>
           <Label htmlFor="phone">Phone</Label>
           <Input
             id="phone"
@@ -81,7 +82,7 @@ export default function ContactForm() {
           />
           {errors.phone && <span>{errors.phone.message}</span>}
         </div>
-        <div className="space-y-2">
+        <div>
           <Label htmlFor="message">Message</Label>
           <Textarea
             className="min-h-[120px]"
@@ -91,9 +92,11 @@ export default function ContactForm() {
           />
           {errors.message && <span>{errors.message.message}</span>}
         </div>
-        <Button className="w-full" type="submit">
-          Submit
-        </Button>
+        <div className="flex justify-end gap-2">
+          <button className="ch-button-secondary-marketing" type="submit">
+            Get in Touch
+          </button>
+        </div>
       </form>
     </section>
   )

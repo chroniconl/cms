@@ -26,7 +26,7 @@ export default async function DashboardShell({
   }
 
   return (
-    <div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#1a1a1a]">
+    <div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#0f0f0f]">
       <DashboardHeader />
       <main className="flex flex-1 flex-col pb-3">
         <div className="grow py-6">

@@ -32,13 +32,14 @@
     --input: #e5e4e1;
     --ring: #ffa145;
     --radius: 0.75rem;
+    --prime-text: #000;
   }
 
   .dark {
-    --background: #151210;
-    --foreground: #f1f7fb;
+    --background: #0f0f0f;
+    --foreground: #a2a2a2;
 
-    --card: #151210;
+    --card: #1a1a1a;
     --card-foreground: #f1f7fb;
 
     --popover: #151210;
@@ -62,12 +63,7 @@
     --border: #2a2422;
     --input: #2a2422;
     --ring: #f1580a;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
+    --prime-text: #fff;
   }
 }
 
@@ -77,11 +73,6 @@
 
 .SliderSet .border-primary {
   @apply rounded-full border-2 border-black dark:border-white;
-}
-
-.tiptap > ol > li > p,
-.tiptap > ul > li > p {
-  @apply my-0.5;
 }
 
 .special-border {
@@ -99,8 +90,71 @@
   }
 }
 
-.chroniconl-p {
-  @apply text-base text-stone-500 dark:text-stone-400 md:text-lg;
+.ch-heading {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+.ch-text {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ch-text,
+.ch-heading {
+  color: var(--text-primary);
+}
+
+.ch-text.ch-muted {
+  color: var(--text-secondary);
+}
+.ch-heading.ch-muted {
+  color: var(--text-secondary);
+}
+
+.ch-button {
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  width: fit-content;
+}
+
+.ch-button.ch-button-marketing {
+  border-radius: 1000px;
+}
+
+.ch-button.ch-button-primary {
+  background-color: #282828;
+  color: #fff;
+  outline: 1px solid #2a2422; /* outside */
+  border: 1px solid #0f0f0f; /* inside */
+}
+.ch-button.ch-button-primary:hover {
+  background-color: #2a2422;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.ch-button.ch-button-secondary {
+  outline: 1px solid transparent; /* outside */
+  border: 1px solid transparent; /* inside */
+}
+.ch-button.ch-button-secondary:hover {
+  outline: 1px solid #2a2422; /* outside */
+  border: 1px solid #0f0f0f; /* inside */
+  transition: all 0.2s ease-in-out;
+}
+
+.ch-button.ch-button-marketing-secondary:hover {
+  background-color: #e9edf6;
+  cursor: pointer;
 }
 
 .chroniconl-label {
@@ -108,5 +162,5 @@
 }
 
 .chroniconl-textarea {
-  @apply min-h-[100px] w-full rounded-md border border-input bg-background px-2.5 py-2 text-base text-stone-500 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-stone-400 md:text-lg;
+  @apply min-h-[100px] w-full rounded-md border bg-background px-2.5 py-2 text-base text-stone-500 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-stone-400 md:text-lg;
 }
