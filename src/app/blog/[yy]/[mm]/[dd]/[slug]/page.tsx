@@ -100,17 +100,17 @@ export default async function BlogPage({
     const day: number = parseInt(dd, 10)
 
     if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
-      new Error('Invalid date')
+      throw new Error('Something went wrong, please try again later')
     }
 
     const date = new Date(year, month, day)
     safeDate = format(date, 'yyyy-MM-dd')
   } catch (error) {
-    return <div>Error parsing date</div>
+    throw new Error('Something went wrong, please try again later')
   }
 
   if (!safeDate) {
-    return <div>Error parsing date</div>
+    throw new Error('Something went wrong, please try again later')
   }
 
   const pstDate = getPSTDate()
@@ -145,7 +145,7 @@ export default async function BlogPage({
     .single()
 
   if (error) {
-    return <div>Error fetching post</div>
+    throw new Error('Something went wrong, please try again later')
   }
 
   const postGotPublishedToday = data.publish_date_day === formattedPSTDate
@@ -154,7 +154,7 @@ export default async function BlogPage({
   const postGotPublishedTodayWithinTime =
     data.publish_date_time > formattedPSTTime
   if (postGotPublishedToday && postGotPublishedTodayWithinTime) {
-    return <div>This post is not published yet</div>
+    throw new Error('Something went wrong, please try again later')
   }
 
   return (
