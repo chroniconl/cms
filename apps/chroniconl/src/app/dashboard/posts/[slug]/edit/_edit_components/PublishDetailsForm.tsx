@@ -1,19 +1,19 @@
 'use client'
 
-import { Label } from '@chroniconl/ui/label'
+import { Label } from '@repo/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@chroniconl/ui/select'
+} from '@repo/ui/select'
 import { DatePickerSimple } from '@/components/DatePicker'
-import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@repo/ui/button'
 import { Heading } from '@/components/heading'
-import { Card } from '@chroniconl/ui/card'
+import { Card } from '@repo/ui/card'
 import { useForm, Controller } from 'react-hook-form'
-import { toast } from '@chroniconl/ui/use-toast'
+import { toast } from '@repo/ui/use-toast'
 import { convertTimeString } from '@/utils/dates'
 
 export interface PublishDetailsProps {

@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { useForm, Controller } from 'react-hook-form'
 import { TrashIcon } from 'lucide-react'
-import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@repo/ui/button'
 import { Heading } from '@/components/heading'
 import { UploadDropzone } from '@/components/UploadThingys'
 import { useMetaFormStore } from '../_edit_state/metaFormStore'
@@ -16,12 +16,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@chroniconl/ui/alert-dialog'
-import { AspectRatio } from '@chroniconl/ui/aspect-ratio'
-import { toast } from '@chroniconl/ui/use-toast'
-import { Input } from '@chroniconl/ui/input'
-import { Label } from '@chroniconl/ui/label'
-import { Card } from '@chroniconl/ui/card'
+} from '@repo/ui/alert-dialog'
+import { AspectRatio } from '@repo/ui/aspect-ratio'
+import { toast } from '@repo/ui/use-toast'
+import { Input } from '@repo/ui/input'
+import { Label } from '@repo/ui/label'
+import { Card } from '@repo/ui/card'
 import { useEffect } from 'react'
 
 export default function ImageForm({

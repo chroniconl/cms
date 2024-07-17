@@ -60,7 +60,7 @@ export async function generateMetadata(
       title: data.title,
       description: data.description,
       images: [data.image_url],
-      site: '@chroniconl_src',
+      site: '@repo_src',
       creator: data.author_twitter_handle,
     },
     alternates: {

@@ -21,8 +21,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@chroniconl/ui/dropdown-menu'
-import { Button } from '@chroniconl/ui/button'
+} from '@repo/ui/dropdown-menu'
+import { Button } from '@repo/ui/button'
 import {
   BoldIcon,
   CodeIcon,
@@ -42,7 +42,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from '@chroniconl/ui/select'
+} from '@repo/ui/select'
 
 import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'

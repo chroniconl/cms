@@ -18,7 +18,7 @@
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
     "@repo/stylist": "workspace:*",
-    "@chroniconl/ui": "0.0.4-alpha.8",
+    "@repo/ui": "workspace:*",
     "@clerk/clerk-react": "^5.0.5",
     "@clerk/nextjs": "^5.0.8",
     "@clerk/themes": "^2.1.8",

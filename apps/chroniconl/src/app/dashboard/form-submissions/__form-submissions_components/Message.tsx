@@ -6,13 +6,13 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@chroniconl/ui/card'
-import { Button } from '@chroniconl/ui/button'
-import { Label } from '@chroniconl/ui/label'
-import { Input } from '@chroniconl/ui/input'
-import { Textarea } from '@chroniconl/ui/textarea'
+} from '@repo/ui/card'
+import { Button } from '@repo/ui/button'
+import { Label } from '@repo/ui/label'
+import { Input } from '@repo/ui/input'
+import { Textarea } from '@repo/ui/textarea'
 import { LinkAsButton } from '@/components/button'
-import { toast } from '@chroniconl/ui/use-toast'
+import { toast } from '@repo/ui/use-toast'
 import { useFormSubmissionsStore } from '../__form-submission_state/form-submissions-state'
 import { useEffect } from 'react'
 

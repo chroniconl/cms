@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@chroniconl/ui/dropdown-menu'
+} from '@repo/ui/dropdown-menu'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 

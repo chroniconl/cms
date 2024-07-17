@@ -4,9 +4,9 @@ import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import * as React from 'react'
 
-import { ChButtonPrimary } from '@chroniconl/ui/button'
-import { Calendar } from '@chroniconl/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@chroniconl/ui/popover'
+import { ChButtonPrimary } from '@repo/ui/button'
+import { Calendar } from '@repo/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@repo/ui/popover'
 import { cn } from '@/utils/cn'
 import { isValidDate } from '@/utils/dates'
 

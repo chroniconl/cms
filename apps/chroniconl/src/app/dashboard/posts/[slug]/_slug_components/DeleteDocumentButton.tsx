@@ -1,6 +1,6 @@
 'use client'
-import { ChButtonPrimary } from '@chroniconl/ui/button'
-import { toast } from '@chroniconl/ui/use-toast'
+import { ChButtonPrimary } from '@repo/ui/button'
+import { toast } from '@repo/ui/use-toast'
 
 export default function DeleteDocumentButton({ id }: { id: string }) {
   const handleDeleteDocumentPrompt = () => {

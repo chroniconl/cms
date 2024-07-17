@@ -1,12 +1,12 @@
 'use client'
 
-import { Button, ChButtonPrimary, ChButtonSecondary } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary, ChButtonSecondary } from '@repo/ui/button'
 import { Dialog, DialogBody, DialogTitle } from '@/components/dialogV2'
-import { Label } from '@chroniconl/ui/label'
-import { Input } from '@chroniconl/ui/input'
+import { Label } from '@repo/ui/label'
+import { Input } from '@repo/ui/input'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { toast } from '@chroniconl/ui/use-toast'
+import { toast } from '@repo/ui/use-toast'
 
 export default function NewDocumentButton() {
   const [modalOpen, setModalOpen] = useState(false)
