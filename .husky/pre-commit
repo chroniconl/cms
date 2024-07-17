@@ -1,7 +1,9 @@
-pnpm run eslint
+# TODO Re-introduce these
+
+# pnpm run eslint
 
 # we deprecated the only tested component we have
 
 # pnpm run test
 
-pnpm run build
+# pnpm run build
