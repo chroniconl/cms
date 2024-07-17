@@ -61,7 +61,7 @@ export async function generateMetadata(
       description: data.description,
       images: [data.image_url],
       site: '@chroniconl_src',
-      creator: '@matthewbub',
+      creator: data.author_twitter_handle,
     },
     alternates: {
       canonical: `https://chroniconl.com/blog/${formatTimestampToSlug(

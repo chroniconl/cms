@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary, ChButtonSecondary } from '@chroniconl/ui/button'
 import { Dialog, DialogBody, DialogTitle } from '@/components/dialogV2'
 import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
@@ -47,9 +47,9 @@ export default function NewDocumentButton() {
 
   return (
     <>
-      <Button onClick={() => setModalOpen(true)} className="h-fit">
+      <ChButtonPrimary onClick={() => setModalOpen(true)} className="h-fit">
         Create Post
-      </Button>
+      </ChButtonPrimary>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
         <DialogTitle>Create New Post</DialogTitle>
         <DialogBody>
@@ -73,17 +73,16 @@ export default function NewDocumentButton() {
               />
             </div>
             <div className="mt-4 flex gap-2">
-              <Button type="submit" className="w-fit">
+              <ChButtonPrimary type="submit" className="w-fit">
                 Create Post
-              </Button>
-              <Button
+              </ChButtonPrimary>
+              <ChButtonSecondary
                 type="button"
-                variant="outline"
                 onClick={() => setModalOpen(false)}
                 className="w-fit"
               >
                 Cancel
-              </Button>
+              </ChButtonSecondary>
             </div>
           </form>
         </DialogBody>

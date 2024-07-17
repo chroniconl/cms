@@ -8,11 +8,11 @@ import {
   CardFooter,
 } from '@chroniconl/ui/card'
 import { Input } from '@chroniconl/ui/input'
-import { Button } from '@chroniconl/ui/button'
 import PublicLayout from '@/components/PublicLayout'
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
 import Image from 'next/image'
+import { ChButtonSecondaryMarketing } from '@chroniconl/ui/button'
 
 export default function About() {
   return (
@@ -111,7 +111,7 @@ export default function About() {
                 <p className="text-muted-foreground">
                   Matthew Bub is a tech enthusiast and writer with a passion for
                   exploring the latest advancements in technology. He has been
-                  covering the tech industry for over a decade, sharing his
+                  covering the tech industry for over 4 years, sharing his
                   insights and analysis on Chroniconl. When he's not writing,
                   you can find him tinkering with the latest gadgets or
                   exploring the world of emerging technologies.
@@ -125,25 +125,21 @@ export default function About() {
                   <Card>
                     <CardHeader>
                       <CardTitle>
-                        The Future of Artificial Intelligence
+												Just Enough Server React to Keep It Moving
                       </CardTitle>
-                      <CardDescription>
+                      {/* <CardDescription>
                         Exploring the latest advancements and potential
                         implications of AI technology.
-                      </CardDescription>
+                      </CardDescription> */}
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground">
-                        Artificial intelligence has been a topic of fascination
-                        and debate for decades. In this article, we delve into
-                        the latest advancements in AI technology and discuss the
-                        potential implications for various industries and our
-                        daily lives.
+												React's server components haven't had the warmest welcoming into the ecosystem. There's still a lot of room for improvement in the developer experience, but doesn't that technically make it a gold mine for React developers?
                       </p>
                     </CardContent>
                     <CardFooter>
                       <Link
-                        href="#"
+                        href="/blog/2024/07/16/just-enough-server-react-to-keep-it-moving"
                         className="text-primary hover:underline"
                         prefetch={false}
                       >
@@ -151,7 +147,7 @@ export default function About() {
                       </Link>
                     </CardFooter>
                   </Card>
-                  <Card>
+                  {/* <Card>
                     <CardHeader>
                       <CardTitle>
                         The Rise of 5G: Transforming the Digital Landscape
@@ -178,7 +174,7 @@ export default function About() {
                         Read more
                       </Link>
                     </CardFooter>
-                  </Card>
+                  </Card> */}
                 </div>
               </div>
             </div>
@@ -202,7 +198,7 @@ export default function About() {
                   placeholder="Enter your email"
                   className="max-w-lg flex-1"
                 />
-                <Button type="submit">Subscribe</Button>
+                <ChButtonSecondaryMarketing type="submit">Subscribe</ChButtonSecondaryMarketing>
               </form>
               <p className="text-xs text-muted-foreground">
                 We respect your privacy. Your email will never be shared with

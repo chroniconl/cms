@@ -1,6 +1,6 @@
 'use client'
 import { useForm } from 'react-hook-form'
-import { Button } from '@chroniconl/ui/button'
+import { ChButtonPrimaryMarketing } from '@chroniconl/ui/button'
 import { Input } from '@chroniconl/ui/input'
 import { Label } from '@chroniconl/ui/label'
 import { Textarea } from '@chroniconl/ui/textarea'
@@ -93,9 +93,9 @@ export default function ContactForm() {
           {errors.message && <span>{errors.message.message}</span>}
         </div>
         <div className="flex justify-end gap-2">
-          <button className="ch-button-secondary-marketing" type="submit">
+          <ChButtonPrimaryMarketing type="submit">
             Get in Touch
-          </button>
+          </ChButtonPrimaryMarketing>
         </div>
       </form>
     </section>

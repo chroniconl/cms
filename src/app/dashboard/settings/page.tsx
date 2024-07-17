@@ -2,7 +2,7 @@ import { Label } from '@chroniconl/ui/label'
 import { Input } from '@chroniconl/ui/input'
 import { Text, Code } from '@/components/text'
 import { Heading } from '@/components/heading'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary, ChButtonSecondary } from '@chroniconl/ui/button'
 import UploadLogo from './_settings_components/UploadLogo'
 
 export default function SettingsPage() {
@@ -40,10 +40,12 @@ export default function SettingsPage() {
               </div>
             </div>
             <div className="flex items-center justify-end gap-x-6 border-t border-stone-900/10 px-4 py-4 sm:px-8">
-              <Button type="button">Cancel</Button>
-              <Button type="submit" color="teal">
+              <ChButtonSecondary type="button">
+								Cancel
+							</ChButtonSecondary>
+              <ChButtonPrimary type="submit">
                 Save
-              </Button>
+              </ChButtonPrimary>
             </div>
           </form>
         </div>

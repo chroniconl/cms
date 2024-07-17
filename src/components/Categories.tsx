@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ScrollArea } from '@chroniconl/ui/scroll-area'
 import { supabase } from '@/utils/supabase'
 import { Category } from '@/utils/types'
+import { ChButtonSecondary } from '@chroniconl/ui/button'
 
 export async function Categories() {
   // TODO Get Categories with most published posts
@@ -30,7 +31,7 @@ export async function Categories() {
           </li>
         ))}
         <li className="mt-2 flex w-full items-center justify-center hover:underline">
-          <button className="w-fit py-2.5">View all categories</button>
+          <ChButtonSecondary className="w-fit py-2.5">View all categories</ChButtonSecondary>
         </li>
       </ul>
     </div>

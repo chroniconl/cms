@@ -73,10 +73,10 @@ export default async function DocumentSlugEdit({
 
     // Use postData and categoriesData as needed
     return (
-      <div className="grid w-full grid-cols-12 gap-4 rounded-md md:gap-6">
-        <section className="col-span-12 flex max-w-full flex-col gap-1 md:col-span-8">
+      <div className="grid w-full grid-cols-12 gap-2 rounded-md">
+        <section className="col-span-12 flex max-w-full flex-col gap-2 md:col-span-8">
           <Card>
-            <h2 className="my-6 w-full px-4 text-2xl font-bold dark:text-white">
+            <h2 className="my-6 px-4 ch-heading ch-primary">
               {postData.title}
             </h2>
           </Card>
@@ -88,7 +88,7 @@ export default async function DocumentSlugEdit({
             />
           </Card>
         </section>
-        <section className="col-span-12 flex h-full flex-col gap-5 md:col-span-4">
+        <section className="col-span-12 flex h-full flex-col gap-2 md:col-span-4">
           {/* pass as props cause server components */}
           <MetaForm
             id={postData.id}

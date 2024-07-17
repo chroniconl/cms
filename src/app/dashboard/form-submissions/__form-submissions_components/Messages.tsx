@@ -194,10 +194,6 @@ export default function Messages({ messages }: MessagesProps) {
                     {new Date(message.date).toLocaleString()}
                   </TableCell>
                   <TableCell>
-                    {/* <Button variant="ghost" size="icon" onClick={() => handleMarkSeen(message.id)}>
-											<EyeIcon className="w-5 h-5" />
-											<span className="sr-only">Mark as seen</span>
-										</Button> */}
                     <Button
                       variant="ghost"
                       size="icon"

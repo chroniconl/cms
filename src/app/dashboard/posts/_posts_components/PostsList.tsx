@@ -14,7 +14,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import * as React from 'react'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
 import {
   Table,
   TableHeader,
@@ -155,20 +155,18 @@ export default function PostsList({ data, count }: PostsListProps) {
             </TableBody>
           </Table>
           <div className="mb-4 mt-2 flex items-center justify-end space-x-2">
-            <Button
-              variant="outline"
+            <ChButtonPrimary
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               Previous
-            </Button>
-            <Button
-              variant="outline"
+            </ChButtonPrimary>
+            <ChButtonPrimary
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
               Next
-            </Button>
+            </ChButtonPrimary>
           </div>
         </div>
       </Card>

@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@chroniconl/ui/select'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
 import { Heading } from '@/components/heading'
 import { Input } from '@chroniconl/ui/input'
 import { Card } from '@chroniconl/ui/card'
@@ -219,7 +219,7 @@ export default function FilterDataForm({
         </div>
 
         <div className="flex flex-col">
-          <Button type="submit">Update Filter Data</Button>
+          <ChButtonPrimary type="submit">Update Filter Data</ChButtonPrimary>
         </div>
       </form>
 
@@ -254,7 +254,7 @@ export default function FilterDataForm({
               />
             </div>
             <DialogFooter>
-              <Button type="submit">Add Category</Button>
+              <ChButtonPrimary type="submit">Add Category</ChButtonPrimary>
             </DialogFooter>
           </form>
         </DialogContent>

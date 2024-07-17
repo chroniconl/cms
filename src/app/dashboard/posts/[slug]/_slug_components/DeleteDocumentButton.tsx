@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@chroniconl/ui/button'
+import { ChButtonPrimary } from '@chroniconl/ui/button'
 import { toast } from '@chroniconl/ui/use-toast'
 
 export default function DeleteDocumentButton({ id }: { id: string }) {
@@ -51,5 +51,5 @@ export default function DeleteDocumentButton({ id }: { id: string }) {
     deleteDocument()
   }
 
-  return <Button onClick={handleDeleteDocumentPrompt}>Delete</Button>
+  return <ChButtonPrimary onClick={handleDeleteDocumentPrompt}>Delete</ChButtonPrimary>
 }

@@ -232,7 +232,7 @@ const TipTap = ({
   return (
     <div>
       {editable && (
-        <div className="sticky top-0 z-10 flex flex-wrap items-center gap-1 border-b border-accent bg-background pb-2">
+        <div className="sticky top-0 z-10 flex flex-wrap items-center gap-1 border-b border-accent pb-2 pt-1 bg-card">
           <Controller
             name="text"
             control={control}

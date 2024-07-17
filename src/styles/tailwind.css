@@ -113,50 +113,6 @@
   color: var(--text-secondary);
 }
 
-.ch-button {
-  font-size: 14px;
-  line-height: 20px;
-  border-radius: 8px;
-  outline: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 8px 16px;
-  width: fit-content;
-}
-
-.ch-button.ch-button-marketing {
-  border-radius: 1000px;
-}
-
-.ch-button.ch-button-primary {
-  background-color: #282828;
-  color: #fff;
-  outline: 1px solid #2a2422; /* outside */
-  border: 1px solid #0f0f0f; /* inside */
-}
-.ch-button.ch-button-primary:hover {
-  background-color: #2a2422;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.ch-button.ch-button-secondary {
-  outline: 1px solid transparent; /* outside */
-  border: 1px solid transparent; /* inside */
-}
-.ch-button.ch-button-secondary:hover {
-  outline: 1px solid #2a2422; /* outside */
-  border: 1px solid #0f0f0f; /* inside */
-  transition: all 0.2s ease-in-out;
-}
-
-.ch-button.ch-button-marketing-secondary:hover {
-  background-color: #e9edf6;
-  cursor: pointer;
-}
-
 .chroniconl-label {
   @apply text-base font-bold text-stone-700 dark:text-stone-200 md:text-lg;
 }

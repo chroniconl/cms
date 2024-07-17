@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@chroniconl/ui/select'
 import { Textarea } from '@chroniconl/ui/textarea'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
 import { Heading } from '@/components/heading'
 import { Input } from '@chroniconl/ui/input'
 import { Card } from '@chroniconl/ui/card'
@@ -268,7 +268,7 @@ export default function MetaForm({
         </div>
 
         <div className="flex flex-col">
-          <Button type="submit">Update Metadata</Button>
+          <ChButtonPrimary type="submit">Update Metadata</ChButtonPrimary>
         </div>
       </form>
       <Dialog open={avatarModalOpen} onOpenChange={setAvatarModalOpen}>
@@ -379,7 +379,7 @@ export default function MetaForm({
               />
             </div>
             <DialogFooter>
-              <Button type="submit">Add author</Button>
+              <ChButtonPrimary type="submit">Add author</ChButtonPrimary>
             </DialogFooter>
           </form>
         </DialogContent>

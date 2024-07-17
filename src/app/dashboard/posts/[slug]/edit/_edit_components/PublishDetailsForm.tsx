@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@chroniconl/ui/select'
 import { DatePickerSimple } from '@/components/DatePicker'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
 import { Heading } from '@/components/heading'
 import { Card } from '@chroniconl/ui/card'
 import { useForm, Controller } from 'react-hook-form'
@@ -83,7 +83,7 @@ export default function PublishDetailsForm({
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8">
             <Label htmlFor="publish_date">Publish Date</Label>
-            <div className="flex w-full gap-2">
+            <div className="flex w-full">
               <Controller
                 name="publishDateDay"
                 control={control}
@@ -156,7 +156,7 @@ export default function PublishDetailsForm({
           </div>
         </div>
         <div className="flex flex-col">
-          <Button type="submit">Update Publishing Details</Button>
+          <ChButtonPrimary type="submit">Update Publishing Details</ChButtonPrimary>
         </div>
       </form>
     </Card>

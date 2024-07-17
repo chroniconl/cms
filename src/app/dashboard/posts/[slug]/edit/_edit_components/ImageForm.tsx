@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { useForm, Controller } from 'react-hook-form'
 import { TrashIcon } from 'lucide-react'
-import { Button } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
 import { Heading } from '@/components/heading'
 import { UploadDropzone } from '@/components/UploadThingys'
 import { useMetaFormStore } from '../_edit_state/metaFormStore'
@@ -239,9 +239,9 @@ export default function ImageForm({
                     )}
                   />
                 </div>
-                <Button className="mt-4" type="submit">
+                <ChButtonPrimary className="mt-4" type="submit">
                   Update Image Meta
-                </Button>
+                </ChButtonPrimary>
               </form>
             </div>
           ) : (
