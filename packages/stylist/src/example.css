@@ -1,0 +1,28 @@
+:root {
+  --black: #000;
+  --blue: #007bff;
+}
+
+@define-mixin fontstyle {
+  color: var(--black);
+}
+
+@custom-media --screen-tablet (min-width: 768px);
+@custom-media --screen-desktop (min-width: 1024px);
+
+body {
+  background: var(--primary-color);
+  @mixin fontstyle;
+
+  &.dark {
+    background: var(--blue);
+  }
+
+  @media (--screen-tablet) {
+    background: var(--black);
+  }
+
+  @media (--screen-desktop) {
+    background: var(--blue);
+  }
+}

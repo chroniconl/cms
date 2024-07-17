@@ -1,0 +1,41 @@
+@define-mixin BaseTypography {
+  font-family: inherit;
+}
+
+@define-mixin BaseHeadingTypography {
+  @mixin BaseTypography;
+
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+@define-mixin BaseBodyTypography {
+  @mixin BaseTypography;
+
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.ch-heading {
+  @mixin BaseHeadingTypography;
+
+  &.ch-primary {
+    color: var(--text-primary);
+  }
+  &.ch-secondary {
+    color: var(--text-secondary);
+  }
+}
+
+.ch-body {
+  @mixin BaseBodyTypography;
+
+  &.ch-primary {
+    color: var(--text-primary);
+  }
+  &.ch-secondary {
+    color: var(--text-secondary);
+  }
+}

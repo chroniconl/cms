@@ -1,0 +1,24 @@
+.ch-border-outline {
+  outline: 1px solid #2a2422;
+  border: 1px solid #0f0f0f;
+}
+
+.ch-border {
+  border: 1px solid #2a2422;
+}
+
+.ch-border-top {
+  border-top: 1px solid #2a2422;
+}
+
+.ch-border-bottom {
+  border-bottom: 1px solid #2a2422;
+}
+
+.ch-border-left {
+  border-left: 1px solid #2a2422;
+}
+
+.ch-border-right {
+  border-right: 1px solid #2a2422;
+}

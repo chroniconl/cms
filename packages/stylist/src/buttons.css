@@ -1,0 +1,90 @@
+@define-mixin BaseButton {
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+@define-mixin ButtonPrimary {
+  @mixin BaseButton;
+
+  background-color: #282828;
+  color: #fff;
+  outline: 1px solid #2a2422; /* outside */
+  border: 1px solid #0f0f0f; /* inside */
+
+  &:hover {
+    background-color: #2a2422;
+  }
+}
+
+@define-mixin ButtonSecondary {
+  @mixin BaseButton;
+
+  outline: 1px solid transparent; /* outside */
+  border: 1px solid transparent; /* inside */
+
+  &:hover {
+    outline: 1px solid #2a2422; /* outside */
+    border: 1px solid #0f0f0f; /* inside */
+  }
+}
+
+@define-mixin ButtonPrimaryMarketing {
+  @mixin ButtonPrimary;
+
+  border-radius: 1000px;
+}
+
+@define-mixin ButtonSecondaryMarketing {
+  @mixin ButtonSecondary;
+
+  color: #000;
+  background-color: #fff;
+  outline: 1px solid transparent; /* outside */
+  border: 1px solid transparent; /* inside */
+  border-radius: 1000px;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+@define-mixin ButtonPrimaryOutline {
+  @mixin ButtonPrimary;
+
+  border: 1px solid #2a2422; /* inside */
+
+  &:hover {
+    border: 1px solid #0f0f0f; /* inside */
+    background-color: #2a2422;
+  }
+}
+
+.ch-button {
+  @mixin ButtonPrimary;
+}
+
+.ch-button-secondary {
+  @mixin ButtonSecondary;
+}
+
+.ch-button-primary-marketing {
+  @mixin ButtonPrimaryMarketing;
+}
+
+.ch-button-secondary-marketing {
+  @mixin ButtonSecondaryMarketing;
+}
+
+.ch-button-primary-outline {
+  @mixin ButtonPrimaryOutline;
+}
