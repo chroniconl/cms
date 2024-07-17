@@ -7,8 +7,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@chroniconl/ui/card'
-import { Input } from '@chroniconl/ui/input'
+} from '@repo/ui/card'
+import { Input } from '@repo/ui/input'
 import {
   Table,
   TableHeader,
@@ -16,10 +16,10 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from '@chroniconl/ui/table'
-import { Badge } from '@chroniconl/ui/badge'
-import { Button } from '@chroniconl/ui/button'
-import { Dialog, DialogContent } from '@chroniconl/ui/dialog'
+} from '@repo/ui/table'
+import { Badge } from '@repo/ui/badge'
+import { Button } from '@repo/ui/button'
+import { Dialog, DialogContent } from '@repo/ui/dialog'
 import { EyeIcon, InfoIcon } from 'lucide-react'
 import Message from './Message'
 

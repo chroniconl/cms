@@ -1,5 +1,5 @@
 'use client'
-import { Card } from '@chroniconl/ui/card'
+import { Card } from '@repo/ui/card'
 import { SafePost } from '@/utils/types'
 import { Text } from '@/components/text'
 import {
@@ -14,7 +14,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import * as React from 'react'
-import { Button, ChButtonPrimary } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary } from '@repo/ui/button'
 import {
   Table,
   TableHeader,
@@ -22,7 +22,7 @@ import {
   TableCell,
   TableBody,
   TableHead,
-} from '@chroniconl/ui/table'
+} from '@repo/ui/table'
 
 interface PostsListProps {
   data: SafePost[]

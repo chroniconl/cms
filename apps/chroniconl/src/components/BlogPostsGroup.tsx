@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Badge } from '@chroniconl/ui/badge'
+import { Badge } from '@repo/ui/badge'
 import { Heading } from '@/components/heading'
 import { ClientImage } from '@/components/image'
 import { Text } from '@/components/text'

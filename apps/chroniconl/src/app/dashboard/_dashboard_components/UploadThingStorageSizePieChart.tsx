@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@chroniconl/ui/card'
+} from '@repo/ui/card'
 
 interface DataProps {
   totalBytes: number

@@ -6,13 +6,13 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '@chroniconl/ui/card'
-import { Input } from '@chroniconl/ui/input'
+} from '@repo/ui/card'
+import { Input } from '@repo/ui/input'
 import PublicLayout from '@/components/PublicLayout'
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@chroniconl/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/avatar'
 import Image from 'next/image'
-import { ChButtonSecondaryMarketing } from '@chroniconl/ui/button'
+import { ChButtonSecondaryMarketing } from '@repo/ui/button'
 
 export default function About() {
   return (

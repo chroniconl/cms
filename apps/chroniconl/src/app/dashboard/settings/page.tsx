@@ -1,8 +1,8 @@
-import { Label } from '@chroniconl/ui/label'
-import { Input } from '@chroniconl/ui/input'
+import { Label } from '@repo/ui/label'
+import { Input } from '@repo/ui/input'
 import { Text, Code } from '@/components/text'
 import { Heading } from '@/components/heading'
-import { Button, ChButtonPrimary, ChButtonSecondary } from '@chroniconl/ui/button'
+import { Button, ChButtonPrimary, ChButtonSecondary } from '@repo/ui/button'
 import UploadLogo from './_settings_components/UploadLogo'
 
 export default function SettingsPage() {

@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { ScrollArea } from '@chroniconl/ui/scroll-area'
+import { ScrollArea } from '@repo/ui/scroll-area'
 import { supabase } from '@/utils/supabase'
 import { Category } from '@/utils/types'
-import { ChButtonSecondary } from '@chroniconl/ui/button'
+import { ChButtonSecondary } from '@repo/ui/button'
 
 export async function Categories() {
   // TODO Get Categories with most published posts

@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '@chroniconl/ui/card'
+} from '@repo/ui/card'
 
 export default function UnseenFormSubmissionCard({
   count = 0,

@@ -8,7 +8,7 @@ module.exports = withUt({
     './components/**/*.{ts,tsx,js,jsx}',
     './app/**/*.{ts,tsx,js,jsx}',
     './src/**/*.{ts,tsx,js,jsx}',
-    './node_modules/@chroniconl/ui/**/*.{js,jsx}',
+    './node_modules/@repo/ui/**/*.{js,jsx}',
   ],
   prefix: '',
 
