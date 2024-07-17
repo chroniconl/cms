@@ -1,6 +1,6 @@
 {
   "name": "chroniconl.com",
-  "version": "0.3.0-alpha.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,7 +17,7 @@
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
-    "@chroniconl/stylist": "0.0.1-alpha.7",
+    "@repo/stylist": "workspace:*",
     "@chroniconl/ui": "0.0.4-alpha.8",
     "@clerk/clerk-react": "^5.0.5",
     "@clerk/nextjs": "^5.0.8",

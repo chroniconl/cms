@@ -1,6 +1,6 @@
 {
-  "name": "@chroniconl/stylist",
-  "version": "0.0.1-alpha.7",
+  "name": "@repo/stylist",
+  "version": "0.3.0",
   "private": false,
   "main": "dist/chroniconl-ui.css",
   "exports": {
