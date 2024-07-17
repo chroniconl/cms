@@ -10,6 +10,7 @@ import { Analytics } from '@vercel/analytics/react'
 import type React from 'react'
 import { Providers } from './providers'
 import { GeistSans } from 'geist/font/sans'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata = {
   title: {
@@ -50,6 +51,7 @@ export default function RootLayout({
             </Providers>
           </ReactQueryClientProvider>
         </ClerkProvider>
+				<GoogleAnalytics gaId="G-R8Z92CFCBM" />
       </body>
     </html>
   )

@@ -4,6 +4,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+		"dev:ui": "turbo dev --filter=@repo/ui",
+		"dev:chroniconl": "turbo dev --filter=chroniconl",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
