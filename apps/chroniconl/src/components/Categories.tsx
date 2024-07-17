@@ -31,7 +31,9 @@ export async function Categories() {
           </li>
         ))}
         <li className="mt-2 flex w-full items-center justify-center hover:underline">
-          <ChButtonSecondary className="w-fit py-2.5">View all categories</ChButtonSecondary>
+          <ChButtonSecondary className="w-fit py-2.5">
+            View all categories
+          </ChButtonSecondary>
         </li>
       </ul>
     </div>

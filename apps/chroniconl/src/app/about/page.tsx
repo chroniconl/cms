@@ -125,7 +125,7 @@ export default function About() {
                   <Card>
                     <CardHeader>
                       <CardTitle>
-												Just Enough Server React to Keep It Moving
+                        Just Enough Server React to Keep It Moving
                       </CardTitle>
                       {/* <CardDescription>
                         Exploring the latest advancements and potential
@@ -134,7 +134,11 @@ export default function About() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground">
-												React's server components haven't had the warmest welcoming into the ecosystem. There's still a lot of room for improvement in the developer experience, but doesn't that technically make it a gold mine for React developers?
+                        React's server components haven't had the warmest
+                        welcoming into the ecosystem. There's still a lot of
+                        room for improvement in the developer experience, but
+                        doesn't that technically make it a gold mine for React
+                        developers?
                       </p>
                     </CardContent>
                     <CardFooter>
@@ -198,7 +202,9 @@ export default function About() {
                   placeholder="Enter your email"
                   className="max-w-lg flex-1"
                 />
-                <ChButtonSecondaryMarketing type="submit">Subscribe</ChButtonSecondaryMarketing>
+                <ChButtonSecondaryMarketing type="submit">
+                  Subscribe
+                </ChButtonSecondaryMarketing>
               </form>
               <p className="text-xs text-muted-foreground">
                 We respect your privacy. Your email will never be shared with

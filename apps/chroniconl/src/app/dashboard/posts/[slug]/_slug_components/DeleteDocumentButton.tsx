@@ -51,5 +51,9 @@ export default function DeleteDocumentButton({ id }: { id: string }) {
     deleteDocument()
   }
 
-  return <ChButtonPrimary onClick={handleDeleteDocumentPrompt}>Delete</ChButtonPrimary>
+  return (
+    <ChButtonPrimary onClick={handleDeleteDocumentPrompt}>
+      Delete
+    </ChButtonPrimary>
+  )
 }

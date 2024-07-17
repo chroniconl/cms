@@ -76,7 +76,7 @@ export default async function DocumentSlugEdit({
       <div className="grid w-full grid-cols-12 gap-2 rounded-md">
         <section className="col-span-12 flex max-w-full flex-col gap-2 md:col-span-8">
           <Card>
-            <h2 className="my-6 px-4 ch-heading ch-primary">
+            <h2 className="ch-heading ch-primary my-6 px-4">
               {postData.title}
             </h2>
           </Card>

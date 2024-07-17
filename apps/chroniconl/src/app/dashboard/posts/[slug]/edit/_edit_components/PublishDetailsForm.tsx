@@ -156,7 +156,9 @@ export default function PublishDetailsForm({
           </div>
         </div>
         <div className="flex flex-col">
-          <ChButtonPrimary type="submit">Update Publishing Details</ChButtonPrimary>
+          <ChButtonPrimary type="submit">
+            Update Publishing Details
+          </ChButtonPrimary>
         </div>
       </form>
     </Card>

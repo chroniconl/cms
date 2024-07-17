@@ -65,7 +65,12 @@ export default function Post({
               <span className="text-sm font-medium">
                 {author?.display_name}
               </span>
-              <a className="text-xs text-muted-foreground" href={'https://x.com/' + author?.twitter_handle} target="_blank" rel="noopener noreferrer">
+              <a
+                className="text-xs text-muted-foreground"
+                href={'https://x.com/' + author?.twitter_handle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 @{author?.twitter_handle}
               </a>
             </div>

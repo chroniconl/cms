@@ -40,12 +40,8 @@ export default function SettingsPage() {
               </div>
             </div>
             <div className="flex items-center justify-end gap-x-6 border-t border-stone-900/10 px-4 py-4 sm:px-8">
-              <ChButtonSecondary type="button">
-								Cancel
-							</ChButtonSecondary>
-              <ChButtonPrimary type="submit">
-                Save
-              </ChButtonPrimary>
+              <ChButtonSecondary type="button">Cancel</ChButtonSecondary>
+              <ChButtonPrimary type="submit">Save</ChButtonPrimary>
             </div>
           </form>
         </div>
