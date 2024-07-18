@@ -32,7 +32,7 @@
     --input: #e5e4e1;
     --ring: #ffa145;
     --radius: 0.75rem;
-    --prime-text: #000;
+    --text-primary: #000;
   }
 
   .dark {
@@ -63,7 +63,7 @@
     --border: #2a2422;
     --input: #2a2422;
     --ring: #f1580a;
-    --prime-text: #fff;
+    --text-primary: #fff;
   }
 }
 
