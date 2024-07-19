@@ -7,7 +7,7 @@ const schema = joi.object({
 })
 
 export async function POST(request: Request) {
-	const requestData = await request.json()
+  const requestData = await request.json()
 
   const { error: validationError } = schema.validate(requestData)
   if (validationError) {
@@ -18,11 +18,11 @@ export async function POST(request: Request) {
     email: requestData.email,
   })
 
-	if (error?.code === '23505') {
-		return failResponse('Email already subscribed')
-	} else if (error) {
-		console.error(error)
-    return failResponse("Something went wrong")
+  if (error?.code === '23505') {
+    return failResponse('Email already subscribed')
+  } else if (error) {
+    console.error(error)
+    return failResponse('Something went wrong')
   }
 
   return okResponse('You have successfully subscribed to our newsletter.')

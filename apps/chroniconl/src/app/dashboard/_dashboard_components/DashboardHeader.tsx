@@ -71,7 +71,15 @@ export default async function DashboardHeader() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href="https://chroniconl.com" className="text-sm">
+                    <Link
+                      href="/dashboard/admin/legal-doc-manager"
+                      className="text-sm"
+                    >
+                      Legal Document Manager
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/" className="text-sm">
                       Live Site
                     </Link>
                   </DropdownMenuItem>

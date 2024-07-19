@@ -1,10 +1,8 @@
-import { useEffect, useRef } from 'react';
-import confetti from 'canvas-confetti';
+import { useEffect, useRef } from 'react'
+import confetti from 'canvas-confetti'
 
-const Confetti = ({ trigger }: {
-	trigger: boolean;
-}) => {
-  const canvasRef = useRef(null);
+const Confetti = ({ trigger }: { trigger: boolean }) => {
+  const canvasRef = useRef(null)
 
   useEffect(() => {
     if (trigger) {
@@ -13,11 +11,11 @@ const Confetti = ({ trigger }: {
         spread: 70,
         origin: { y: 0.6 },
         disableForReducedMotion: true,
-      });
+      })
     }
-  }, [trigger]);
+  }, [trigger])
 
-  return <canvas ref={canvasRef}  />;
-};
+  return <canvas ref={canvasRef} />
+}
 
-export default Confetti;
+export default Confetti

@@ -9,14 +9,14 @@ import { Category } from '@/utils/types'
 
 interface PostProps {
   title: string
-  description: string
+  description?: string
   content: string
   date: string
   slug: string
   category: Category
-  imageUrl: string | null
-  imageAlt: string | null
-  author: {
+  imageUrl?: string | null
+  imageAlt?: string | null
+  author?: {
     id: string
     display_name: string
     href: string

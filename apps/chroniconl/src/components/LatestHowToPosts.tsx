@@ -19,50 +19,52 @@ export default async function BlogPostsGroup({
     image_url: string
     image_alt: string
     category: Category
-		author: {
-			id: string
-			display_name: string
-			href: string
-			avatar_url: string
-			twitter_handle: string
-		}
-		tags?: {
-			id: string
-			name: string
-			slug: string
-		}[]
+    author: {
+      id: string
+      display_name: string
+      href: string
+      avatar_url: string
+      twitter_handle: string
+    }
+    tags?: {
+      id: string
+      name: string
+      slug: string
+    }[]
   }[]
 }) {
   return (
-		<div>
-			<div className="mb-4">
-				<Heading level={2}>Latest How-To Posts</Heading>
-				<div className="mt-4 mb-4" >
-					<BorderBottom height={1} borderColor="#FFF" />
-				</div>
-			</div>
-			<section className="flex flex-col divide-y divide-stone-200/50 dark:divide-stone-700/50">
-				{posts?.slice(0, 6)?.map((post, i) => (
-					<Link
-						className='px-2 group hover:bg-stone-200 dark:hover:bg-stone-800 pb-4'
-						key={post.id}
-						href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
-							post.slug
-						}`}
-					>
-						<article key={post.id} className="group flex items-center gap-4">
-							<div className="mt-4 flex flex-col justify-between">
-								<div>
-									<p className="ch-text">{post.title}</p>
-									{/* <p className="ch-text ch-muted">{post?.author?.display_name && post?.author?.display_name + " · "}{formatDate(post?.publish_date_day)}</p> 									 */}
-									{/* Theres only 1 author for now, dont need to show the author name */}
-									<p className="ch-text ch-muted">{formatDate(post?.publish_date_day)}</p>
-								</div>
-							</div>
-						</article>
-					</Link>
-				))}
-			</section>
-		</div>
+    <div>
+      <div className="mb-4">
+        <Heading level={2}>Latest How-To Posts</Heading>
+        <div className="mb-4 mt-4">
+          <BorderBottom height={1} borderColor="#FFF" />
+        </div>
+      </div>
+      <section className="flex flex-col divide-y divide-stone-200/50 dark:divide-stone-700/50">
+        {posts?.slice(0, 6)?.map((post, i) => (
+          <Link
+            className="group px-2 pb-4 hover:bg-stone-200 dark:hover:bg-stone-800"
+            key={post.id}
+            href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
+              post.slug
+            }`}
+          >
+            <article key={post.id} className="group flex items-center gap-4">
+              <div className="mt-4 flex flex-col justify-between">
+                <div>
+                  <p className="ch-text">{post.title}</p>
+                  {/* <p className="ch-text ch-muted">{post?.author?.display_name && post?.author?.display_name + " · "}{formatDate(post?.publish_date_day)}</p> 									 */}
+                  {/* Theres only 1 author for now, dont need to show the author name */}
+                  <p className="ch-text ch-muted">
+                    {formatDate(post?.publish_date_day)}
+                  </p>
+                </div>
+              </div>
+            </article>
+          </Link>
+        ))}
+      </section>
+    </div>
   )
 }

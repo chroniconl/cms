@@ -20,18 +20,18 @@ export default async function BlogPostsGroup({
     image_url: string
     image_alt: string
     category: Category
-		author: {
-			id: string
-			display_name: string
-			href: string
-			avatar_url: string
-			twitter_handle: string
-		}
-		tags?: {
-			id: string
-			name: string
-			slug: string
-		}[]
+    author: {
+      id: string
+      display_name: string
+      href: string
+      avatar_url: string
+      twitter_handle: string
+    }
+    tags?: {
+      id: string
+      name: string
+      slug: string
+    }[]
   }[]
 }) {
   return (

@@ -51,7 +51,7 @@ export default function RootLayout({
             </Providers>
           </ReactQueryClientProvider>
         </ClerkProvider>
-				<GoogleAnalytics gaId="G-R8Z92CFCBM" />
+        <GoogleAnalytics gaId="G-R8Z92CFCBM" />
       </body>
     </html>
   )

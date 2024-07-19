@@ -25,5 +25,8 @@ export async function getCurrentUser() {
     throw new Error('Error fetching user')
   }
 
-  return userData
+  return {
+		data: userData,
+		error: userError,
+	}
 }

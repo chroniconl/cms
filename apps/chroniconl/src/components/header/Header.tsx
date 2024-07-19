@@ -3,6 +3,7 @@ import { Button } from '@repo/ui/button'
 import Link from 'next/link'
 import { Logo } from '@/components/Logo'
 import { Menu } from 'lucide-react'
+import { cn } from '@/utils/cn'
 
 export default function Component() {
   return (
@@ -13,29 +14,13 @@ export default function Component() {
           className="mr-10 flex items-center gap-2"
           prefetch={false}
         >
-          <Logo className="h-6 w-6" />
-          <span className="text-xl font-semibold">Chroniconl</span>
+          <h1 className="ch-heading ch-primary">Chroniconl</h1>
         </Link>
-        <Link
-          href="/about"
-          className="flex items-center gap-2 rounded-md p-2 transition-all"
-          prefetch={false}
-        >
+        <Link href="/about" className="ch-text ch-muted" prefetch={false}>
           About
         </Link>
-        <Link
-          href="/contact"
-          className="flex items-center gap-2 rounded-md p-2 transition-all"
-          prefetch={false}
-        >
+        <Link href="/contact" className="ch-text ch-muted" prefetch={false}>
           Contact
-        </Link>
-        <Link
-          href="/categories"
-          className="flex items-center gap-2 rounded-md p-2 transition-all"
-          prefetch={false}
-        >
-          Categories
         </Link>
       </div>
 
@@ -55,13 +40,6 @@ export default function Component() {
                 prefetch={false}
               >
                 Home
-              </Link>
-              <Link
-                href="/categories"
-                className="flex w-full items-center py-2 text-lg font-semibold"
-                prefetch={false}
-              >
-                Categories
               </Link>
               <Link
                 href="/about"

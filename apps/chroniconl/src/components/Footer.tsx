@@ -5,33 +5,107 @@ import { GithubIcon, TwitterIcon } from './icons'
 export default function Footer() {
   return (
     <footer className="bg-muted py-12">
-      <div className="container mx-auto grid grid-cols-1 gap-8 px-4 md:grid-cols-3 md:gap-12 md:px-6">
-        <div className="space-y-4">
+      <div className="container mx-auto grid grid-cols-1 gap-8 px-4 md:grid-cols-12 md:gap-12 md:px-6">
+        <div className="col-span-12 space-y-4 md:col-span-4">
           <div className="flex items-center gap-2">
-            <Logo className="h-6 w-6" />
-            <h3 className="text-2xl font-bold">Chroniconl</h3>
+            <h3 className="ch-heading ch-primary">Chroniconl</h3>
           </div>
-          <p className="text-muted-foreground">
-            Hanging out on the technical side of entrepreneurship.
+          <p className="ch-body ch-muted">
+            Hanging out on the technical side of entrepreneurship, application
+            development and more.
           </p>
         </div>
-        <div className="grid gap-4">
-          <h4 className="text-lg font-medium">Quick Links</h4>
-          <nav className="grid gap-2">
-            <Link href="/" className="hover:underline" prefetch={false}>
+        <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+          <h4 className="ch-text ch-primary">Quick Links</h4>
+          <nav className="flex flex-col gap-2">
+            <Link
+              href="/"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
               Home
             </Link>
-            <Link href="/about" className="hover:underline" prefetch={false}>
+            <Link href="/about" className="ch-text ch-muted hover:underline">
               About
             </Link>
-            <Link href="/contact" className="hover:underline" prefetch={false}>
+            <Link href="/contact" className="ch-text ch-muted hover:underline">
               Contact
+            </Link>
+            <Link
+              href="/categories"
+              className="ch-text ch-muted hover:underline"
+            >
+              Categories
             </Link>
           </nav>
         </div>
-        <div className="grid gap-4">
-          <h4 className="text-lg font-medium">Follow Us</h4>
-          <div className="flex gap-4">
+        <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+          <h4 className="ch-text ch-primary">Site</h4>
+          <nav className="flex flex-col gap-2">
+            <Link
+              href="/feed.xml"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              RSS Feed
+            </Link>
+            <Link
+              href="/sitemap.xml"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              Sitemap
+            </Link>
+            <Link
+              href="/robots.txt"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              Robots.txt
+            </Link>
+          </nav>
+        </div>
+				<div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+          <h4 className="ch-text ch-primary">Community</h4>
+          <nav className="flex flex-col gap-2">
+            <Link
+              href="https://github.com/chroniconl/cms"
+              className="ch-text ch-muted hover:underline"
+							prefetch={false}
+            >
+              We're open source!
+            </Link>            
+          </nav>
+        </div>
+        {/* <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+          <h4 className="ch-text ch-primary">Legal</h4>
+          <nav className="flex flex-col gap-2">
+            <Link
+              href="/legal/privacy"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/legal/terms"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              Terms of Service
+            </Link>
+            <Link
+              href="/legal/disclaimer"
+              className="ch-text ch-muted hover:underline"
+              prefetch={false}
+            >
+              Disclaimer
+            </Link>
+          </nav>
+        </div> */}
+        <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+          <h4 className="ch-text ch-primary">Follow Us</h4>
+          <div className="flex gap-x-4">
             <Link
               href="https://x.com/chroniconl_src"
               className="text-muted-foreground hover:text-primary"
