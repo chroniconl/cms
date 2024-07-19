@@ -5,7 +5,10 @@ import { SafePost } from '@/utils/types'
 import { getCurrentUser } from '@/server/getCurrentUser'
 
 export const getPostsAction = async () => {
-  const userData = await getCurrentUser()
+  const {data: userData, error: userError} = await getCurrentUser()
+  if (userError) {
+    throw new Error('Error fetching user')
+  }
 
   // TODO: Make this a query
   // just f**king snatch it all and filter it later
