@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 	}
 
 	// TODO: TEST that we got the tags back at this point
-	console.log('newTagsData', newTagsData)
+	// console.log('newTagsData', newTagsData)
 	
 	// find the tags that already exist in the database
 	const tagsToRetrieveFromDatabase = tags.filter(

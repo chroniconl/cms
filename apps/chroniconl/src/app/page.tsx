@@ -8,7 +8,6 @@ export default async function Page() {
   const posts = await getAllPublishedPosts()
 	
 	const howToPosts = posts.reduce((acc, curr) => {
-		console.log(curr)
 		if (curr?.tags?.length > 0) {
 			const tag = curr?.tags[0]?.tag?.name
 			if (tag === "how-to") {

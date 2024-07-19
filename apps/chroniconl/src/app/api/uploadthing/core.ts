@@ -26,8 +26,8 @@ export const ourFileRouter = {
       return { userId: userId }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log(metadata)
-      console.log(file)
+      // console.log(metadata)
+      // console.log(file)
       const { error } = await supabase.from('photo_refs').insert({
         id: file.key,
         name: file.name,
