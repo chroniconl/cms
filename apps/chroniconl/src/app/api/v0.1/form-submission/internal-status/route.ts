@@ -9,8 +9,8 @@ const schema = joi.object({
 })
 
 export async function PUT(request: Request) {
-  const userData = await getCurrentUser()
-  if (!userData?.id) {
+  const {error: userError} = await getCurrentUser()
+  if (userError) {
     return failResponse('Trouble getting user')
   }
 
