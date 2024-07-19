@@ -36,7 +36,7 @@ export default async function BlogPostsGroup({
 }) {
   return (
     <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {posts?.map((post, i) => (
+      {posts?.slice(0, 6)?.map((post, i) => (
         <Link
           key={post.id}
           href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${

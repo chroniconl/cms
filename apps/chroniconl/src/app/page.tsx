@@ -1,6 +1,7 @@
 import BlogPostsGroup from '@/components/BlogPostsGroup'
 import LatestHowToPosts from '@/components/LatestHowToPosts'
 import PublicLayout from '@/components/PublicLayout'
+import SubscribeToNewsletter from '@/components/SubscribeToNewsletter'
 import { getAllPublishedPosts } from '@/server/getAllPublishedPosts'
 
 export default async function Page() {
@@ -25,6 +26,7 @@ export default async function Page() {
 				</div>
 				<div className="col-span-12 md:col-span-6 lg:col-span-3">
 					<LatestHowToPosts posts={howToPosts} />
+					<SubscribeToNewsletter />
 				</div>
 			</div>
     </PublicLayout>
