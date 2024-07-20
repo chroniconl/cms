@@ -77,6 +77,14 @@ export default function PostsList({ data, count }: PostsListProps) {
     onColumnFiltersChange: setColumnFilters,
   })
 
+	if (data.length === 0) {
+		return (
+			<div className="mt-4 flex items-center justify-center">
+				<p className="ch-text ch-muted">No posts found</p>
+			</div>
+		)
+	}
+	
   return (
     <section className="grid grid-cols-12 gap-2">
       <Card className="col-span-12 gap-4 space-y-4 divide-y divide-stone-200/50 px-4 dark:divide-stone-700/50">
