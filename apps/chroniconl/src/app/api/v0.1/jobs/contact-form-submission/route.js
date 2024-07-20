@@ -18,6 +18,10 @@ export async function GET(request) {
     return failResponse(supabaseError.message)
   }
 
+	if (count === 0) {
+		return okResponse('No unread forms')
+	}
+
   const { error } = await resend.emails.send({
     from: 'info@noreply.chroniconl.com',
     to: process.env.ADMIN_EMAIL,
