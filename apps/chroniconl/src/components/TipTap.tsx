@@ -66,20 +66,22 @@ hljs.registerLanguage('xml', html)
 hljs.registerLanguage('go', go)
 
 export const proseClassNames = cn([
-  'prose:w-full prose-sm dark:prose-invert prose-custom p-1',
+  'prose:w-full prose-sm md:prose-base dark:prose-invert prose-custom p-1',
   'max-w-full prose-ol:list-decimal prose-ul:list-disc',
   'prose-a:text-blue-500 prose-a:underline',
   'prose-pre:bg-stone-800 prose-pre:text-stone-50 prose-pre:rounded-md prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3',
   'prose-p:leading-5 prose-p:text-stone-700 dark:prose-p:text-stone-400',
   'dark:prose-strong:text-white prose-strong:text-black',
-  'prose-code:bg-stone-800 prose-code:text-stone-50 prose-code:rounded-sm prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3',
+  'prose-code:bg-stone-800 prose-code:text-stone-50 prose-code:rounded-sm prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3 md:prose-code:leading-4',
+	'prose-headings:text-stone-950 dark:prose-headings:text-white prose-headings:font-bold prose-headings:tracking-tight prose-headings:leading-tight prose-headings:mb-4 prose-headings:mt-8',
+	'prose-hr:border-stone-900/10 dark:prose-hr:border-stone-700/50',
 ])
 
 const TipTap = ({
   defaultValue,
   params,
   editable = true,
-  className = 'min-h-[600px] w-full min-w-full px-4 py-2 prose dark:prose-invert prose-li:py-1 prose:w-full prose-p:0.5 prose-stone',
+  className = proseClassNames
 }: {
   defaultValue?: string
   params?: {

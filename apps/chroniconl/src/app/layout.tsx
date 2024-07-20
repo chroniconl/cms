@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased dark">
       <body
         className={cn(
           'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
