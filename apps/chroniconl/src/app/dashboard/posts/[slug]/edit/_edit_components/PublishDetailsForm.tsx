@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@repo/ui/select'
 import { DatePickerSimple } from '@/components/DatePicker'
-import { Button, ChButtonPrimary } from '@repo/ui/button'
+import { ChButtonPrimary } from '@repo/ui/button'
 import { Heading } from '@/components/heading'
 import { Card } from '@repo/ui/card'
 import { useForm, Controller } from 'react-hook-form'
@@ -38,7 +38,7 @@ export default function PublishDetailsForm({
 }: PublishDetailsProps) {
   const { control, handleSubmit } = useForm<PublishDetailsFormProps>({
     defaultValues: {
-      visibility: visibility || 'public',
+      visibility: visibility || 'draft',
       publishDateDay: publishDateDay ? new Date(publishDateDay) : new Date(),
       publishDateTime: publishDateTime
         ? convertTimeString(publishDateTime)

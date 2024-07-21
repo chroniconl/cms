@@ -67,7 +67,7 @@ const PaginationPrevious = ({
     aria-label="Go to previous page"
     size="default"
     className={cn(
-      'h-10 gap-1 border ch-border bg-background px-4 py-2 pl-2.5 font-bold text-stone-200 hover:bg-accent hover:text-accent-foreground',
+      'h-10 gap-1 ch-border bg-background px-4 py-2 pl-2.5 font-bold text-stone-200 hover:bg-accent hover:text-accent-foreground',
       className,
     )}
     {...props}
@@ -86,7 +86,7 @@ const PaginationNext = ({
     aria-label="Go to next page"
     size="default"
     className={cn(
-      'h-10 gap-1 border ch-border bg-background px-4 py-2 pr-2.5 font-bold text-stone-200 hover:bg-accent hover:text-accent-foreground',
+      'h-10 gap-1 ch-border bg-background px-4 py-2 pr-2.5 font-bold text-stone-200 hover:bg-accent hover:text-accent-foreground',
       className,
     )}
     {...props}
