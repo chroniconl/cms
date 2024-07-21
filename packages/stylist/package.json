@@ -54,5 +54,8 @@
   "files": [
     "dist",
     "readme.md"
-  ]
+  ],
+  "dependencies": {
+    "postcss-import": "^16.1.0"
+  }
 }

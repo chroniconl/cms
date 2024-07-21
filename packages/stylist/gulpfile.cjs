@@ -17,7 +17,10 @@ const cssMixinsPlugin = require('postcss-mixins');
 const calcPlugin = require('postcss-calc');
 const nestingPlugin = require('postcss-nesting');
 const customMediaPlugin = require('postcss-custom-media');
+const atImport = require('postcss-import');
+
 const concat = require('gulp-concat');
+
 function buildStyles() {
   // convert CSS variables to static values for older browsers
   const cssVariablesConfig = cssVariablesPlugin({
@@ -41,6 +44,9 @@ function buildStyles() {
     .pipe(sourcemapsPlugin.init())
     .pipe(
       postcssPlugin([
+        atImport({
+          root: './src/css *'
+        }),
         autoprefixerPlugin,
         cssVariablesConfig,
         cssMixinsConfig,
