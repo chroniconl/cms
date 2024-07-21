@@ -22,7 +22,7 @@ export default async function DashboardPage() {
           </Card>
         </Link>
 
-				<Link href="/dashboard/form-submissions">
+        <Link href="/dashboard/form-submissions">
           <Card className="p-6 hover:bg-accent hover:text-accent-foreground">
             <div className="mb-2 flex w-fit items-center rounded-sm border border-stone-700 p-2 outline outline-stone-900">
               <FlaskConicalIcon className="h-4 w-4" />
