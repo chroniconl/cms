@@ -56,7 +56,7 @@ const CardDescription = React.forwardRef<
     ref={ref}
     className={cn('ch-body', className, {
       'ch-primary': styleType === 'primary',
-      'ch-secondary': styleType === 'secondary',
+      'ch-muted': styleType === 'secondary',
     })}
     {...props}
   />

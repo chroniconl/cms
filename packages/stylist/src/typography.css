@@ -18,24 +18,30 @@
   font-weight: 400;
 }
 
-.ch-heading {
+@define-mixin HeadingStyles {
   @mixin BaseHeadingTypography;
 
   &.ch-primary {
     color: var(--text-primary);
   }
-  &.ch-secondary {
+  &.ch-muted {
     color: var(--text-secondary);
   }
 }
 
-.ch-body {
+@define-mixin BodyStyles {
   @mixin BaseBodyTypography;
+  color: var(--text-secondary);
 
   &.ch-primary {
     color: var(--text-primary);
   }
-  &.ch-secondary {
-    color: var(--text-secondary);
-  }
+}
+
+.ch-heading {
+  @mixin HeadingStyles;
+}
+
+.ch-body {
+  @mixin BodyStyles;
 }

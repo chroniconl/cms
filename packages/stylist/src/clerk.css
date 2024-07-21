@@ -1,0 +1,33 @@
+@import './typography.css';
+
+.cl-cardBox {
+  .cl-card {
+    background-color: #1a1a1a;
+    border-radius: 0;
+    border: none;
+  }
+
+  .cl-footerAction + div {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .cl-footer {
+    background: #1a1a1a;
+  }
+
+  .cl-input {
+    background-color: #0f0f0f;
+  }
+
+  .cl-headerTitle {
+    @mixin HeadingStyles;
+  }
+
+  .cl-headerSubtitle,
+  .cl-formFieldLabel,
+  .cl-footerActionText,
+  .cl-dividerText {
+    @mixin BodyStyles;
+  }
+}

@@ -46,7 +46,7 @@ export default function ContactForm() {
     <section className="mx-auto w-full max-w-2xl py-12 md:py-16">
       <div className="text-center">
         <h2 className="ch-heading ch-primary">Get in Touch</h2>
-        <p className="ch-body ch-secondary">
+        <p className="ch-body ch-muted">
           Have a project in mind? Fill out the form and I'll get back to you as
           soon as possible.
         </p>
