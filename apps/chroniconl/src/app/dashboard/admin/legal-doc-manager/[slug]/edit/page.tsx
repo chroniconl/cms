@@ -4,13 +4,17 @@ import Link from 'next/link'
 
 export const fetchCache = 'force-no-store'
 
-export default async function LegalDocumentEditPage({ params }: { params: { slug: string } }) {
+export default async function LegalDocumentEditPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   return (
     <div>
       <div>
         <h2 className="ch-heading ch-primary">{params?.slug}/edit</h2>
         <p className="ch-text ch-muted">Manage your legal documents</p>
-      </div>      
+      </div>
     </div>
   )
 }

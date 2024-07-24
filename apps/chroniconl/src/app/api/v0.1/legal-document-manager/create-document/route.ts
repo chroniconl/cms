@@ -9,18 +9,18 @@ export async function POST(request: Request) {
     return failResponse('Trouble getting user')
   }
 
-	console.log(userData)
+  console.log(userData)
   const requestData = await request.json()
   const { data, error } = await supabase
     .from('legal_documents')
     .insert({
       title: requestData.title,
-			slug: formatSlug(requestData.slug),
-			user_id: userData?.id,
-			content: '<p>Nothing here yet</p>',
+      slug: formatSlug(requestData.slug),
+      user_id: userData?.id,
+      content: '<p>Nothing here yet</p>',
     })
     .select()
-		.single()
+    .single()
 
   if (error) {
     console.error(error)

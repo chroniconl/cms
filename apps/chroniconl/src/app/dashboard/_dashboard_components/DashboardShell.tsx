@@ -2,28 +2,30 @@ import { supabase } from '@/utils/supabase'
 import { currentUser } from '@clerk/nextjs/server'
 import DashboardHeader from './DashboardHeader'
 
-interface UserEmailInterface {	
-	id: string;
-	emailAddress: string;
+interface UserEmailInterface {
+  id: string
+  emailAddress: string
 }
 
 interface UserInterface {
-	emailAddresses: UserEmailInterface[]
-	id: string;
-	primaryEmailAddressId: string;
+  emailAddresses: UserEmailInterface[]
+  id: string
+  primaryEmailAddressId: string
 }
 
 const tryToGetEmail = (user: UserInterface) => {
-	try {
-		const userEmailData: UserEmailInterface | undefined = user.emailAddresses.find((addy: UserEmailInterface) => addy.id === user.primaryEmailAddressId)
-		return userEmailData?.emailAddress;
-	} catch (e) {
-		console.log(e)
+  try {
+    const userEmailData: UserEmailInterface | undefined =
+      user.emailAddresses.find(
+        (addy: UserEmailInterface) => addy.id === user.primaryEmailAddressId,
+      )
+    return userEmailData?.emailAddress
+  } catch (e) {
+    console.log(e)
 
-		return '';
-	}
+    return ''
+  }
 }
-
 
 export default async function DashboardShell({
   children,
@@ -33,23 +35,23 @@ export default async function DashboardShell({
   const user = await currentUser()
 
   if (!user) {
-    throw new Error("Please sign in")
+    throw new Error('Please sign in')
   }
 
-	// its the same, just what we need
-	const email = tryToGetEmail(user as any as UserInterface);
-	
+  // its the same, just what we need
+  const email = tryToGetEmail(user as any as UserInterface)
+
   const { error: upsertError } = await supabase.from('users').upsert(
     {
       user_id: user?.id,
       provider: 'clerk',
-			email: email
+      email: email,
     },
     { onConflict: 'user_id' },
   )
 
   if (upsertError) {
-		throw new Error("Something went wrong")
+    throw new Error('Something went wrong')
   }
 
   return (

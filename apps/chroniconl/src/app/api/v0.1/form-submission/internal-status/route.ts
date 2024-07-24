@@ -9,7 +9,7 @@ const schema = joi.object({
 })
 
 export async function PUT(request: Request) {
-  const {error: userError} = await getCurrentUser()
+  const { error: userError } = await getCurrentUser()
   if (userError) {
     return failResponse('Trouble getting user')
   }
