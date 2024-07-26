@@ -39,10 +39,10 @@ export default function TrendingRepos() {
 		setOffset((prevOffset) => prevOffset + limit)
 	}
 
-	if (loading) {
+	if (loading && trendingRepositories.length === 0) {
 		return (
 			<div className="container mx-auto px-4 py-8">
-				<div className="mb-6 flex justify-between items-center">
+				<div className="mb-6 flex flex-col gap-4">
 					<h1 className="ch-heading ch-primary">Trending Repositories</h1>
 					<p className="ch-body ch-muted">
 						Loading...
@@ -116,7 +116,11 @@ export default function TrendingRepos() {
           </Card>
         ))}
       </div>
-				<button className="ch-button-secondary-marketing" onClick={handleLoadMore}>View 10 more</button>
+			{filteredRepositories.length !== 0 && loading ? 
+				<p className="mt-4 text-center">Loading...</p>
+				: <button className="mt-4 ch-button-secondary-marketing" onClick={handleLoadMore}>View 10 more</button>
+		}
+			
     </div>
   )
 }
