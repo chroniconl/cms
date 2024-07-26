@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@repo/ui/button"
 import { Card } from "@repo/ui/card"
 import { Badge } from "@repo/ui/badge"
@@ -12,6 +12,8 @@ export default function TrendingRepos() {
   const [trendingRepositories, setTrendingRepositories] = useState<any[]>([])
 	const [offset, setOffset] = useState(0)
 	const limit = 10
+	const observerTarget = useRef(null)
+	
   const filteredRepositories =
     selectedLanguage === "all"
       ? trendingRepositories
@@ -34,6 +36,29 @@ export default function TrendingRepos() {
 				setLoading(false)
 			})
 	}, [offset])
+
+	useEffect(() => {
+		const observer = new IntersectionObserver((entries) => {
+			const [entry] = entries
+			if (entry.isIntersecting && !loading) {
+				setOffset((prevOffset) => prevOffset + limit)
+			}
+		}, {
+			root: null,
+			rootMargin: "0px",
+			threshold: 1.0
+		})
+	
+		if (observerTarget.current) {
+			observer.observe(observerTarget.current)
+		}
+	
+		return () => {
+			if (observerTarget.current) {
+				observer.unobserve(observerTarget.current)
+			}
+		}
+	}, [loading])
 
 	const handleLoadMore = () => {
 		setOffset((prevOffset) => prevOffset + limit)
@@ -116,10 +141,8 @@ export default function TrendingRepos() {
           </Card>
         ))}
       </div>
-			{filteredRepositories.length !== 0 && loading ? 
-				<p className="mt-4 text-center">Loading...</p>
-				: <button className="mt-4 ch-button-secondary-marketing" onClick={handleLoadMore}>View 10 more</button>
-		}
+			<div ref={observerTarget}></div>
+			{filteredRepositories.length !== 0 && loading && <p className="mt-4 text-center">Loading...</p>}
 			
     </div>
   )
