@@ -11,6 +11,7 @@ export default function TrendingRepos() {
   const [selectedLanguage, setSelectedLanguage] = useState("all")
   const [trendingRepositories, setTrendingRepositories] = useState<any[]>([])
 	const [offset, setOffset] = useState(0)
+	const limit = 10
   const filteredRepositories =
     selectedLanguage === "all"
       ? trendingRepositories
@@ -18,21 +19,25 @@ export default function TrendingRepos() {
 
 	useEffect(() => {
 		setLoading(true)
-		fetch("/api/v0.1/trending?limit=10&offset=20")
+		fetch("/api/v0.1/trending?limit=" + limit + "&offset=" + offset)
 			.then((response) => response.json())
 			.then(({data, error}) => {
 				if (error) {
 					console.error(error)
 					return
 				}
-				setTrendingRepositories(data)
+				setTrendingRepositories([...trendingRepositories, ...data])
 				setLoading(false)
 			})
 			.catch((error) => {
 				console.error(error)
 				setLoading(false)
 			})
-	}, [])
+	}, [offset])
+
+	const handleLoadMore = () => {
+		setOffset((prevOffset) => prevOffset + limit)
+	}
 
 	if (loading) {
 		return (
@@ -46,6 +51,7 @@ export default function TrendingRepos() {
 			</div>
 		)
 	}
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex justify-between items-center">
@@ -110,6 +116,7 @@ export default function TrendingRepos() {
           </Card>
         ))}
       </div>
+				<button className="ch-button-secondary-marketing" onClick={handleLoadMore}>View 10 more</button>
     </div>
   )
 }
