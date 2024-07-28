@@ -74,7 +74,7 @@ export default function Footer() {
 							prefetch={false}
             >
               We're open source!
-            </Link>            
+            </Link>
           </nav>
         </div>
         {/* <div className="col-span-12 flex flex-col gap-4 md:col-span-2">

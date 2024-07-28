@@ -84,7 +84,7 @@ export default function PostsList({ data, count }: PostsListProps) {
 			</div>
 		)
 	}
-	
+
   return (
     <section className="grid grid-cols-12 gap-2">
       <Card className="col-span-12 gap-4 space-y-4 divide-y divide-stone-200/50 px-4 dark:divide-stone-700/50">

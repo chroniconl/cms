@@ -1,6 +1,6 @@
-"use client"
-import { useForm, Controller } from "react-hook-form";
-import { ChButtonPrimary } from "@repo/ui/button";
+'use client'
+import { useForm, Controller } from 'react-hook-form'
+import { ChButtonPrimary } from '@repo/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,46 +9,49 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@repo/ui/dialog";
-import { Input } from "@repo/ui/input";
-import { Label } from "@repo/ui/label";
-import { toast } from "@repo/ui/use-toast";
-import { useRouter } from "next/navigation";
+} from '@repo/ui/dialog'
+import { Input } from '@repo/ui/input'
+import { Label } from '@repo/ui/label'
+import { toast } from '@repo/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 export function NewLegalDocModal() {
-	const router = useRouter()
+  const router = useRouter()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      title: "",
+      title: '',
     },
-  });
+  })
 
-  const onSubmit = async (data: { title: string }) => {    
-		console.log(data.title)
-		const response = await fetch('/api/v0.1/legal-document-manager/create-document', {
-			method: 'POST',
-			body: JSON.stringify({
-				title: data.title,
-				slug: data.title,
-			}),
-		})
+  const onSubmit = async (data: { title: string }) => {
+    console.log(data.title)
+    const response = await fetch(
+      '/api/v0.1/legal-document-manager/create-document',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          title: data.title,
+          slug: data.title,
+        }),
+      },
+    )
 
-		const { data: responseData, error, message } = await response.json()
-		if (error) {
-			toast({
-				title: 'Error',
-				description: message,
-				variant: 'destructive',
-			})
-			return
-		}
+    const { data: responseData, error, message } = await response.json()
+    if (error) {
+      toast({
+        title: 'Error',
+        description: message,
+        variant: 'destructive',
+      })
+      return
+    }
 
-		console.log(responseData)
+    console.log(responseData)
 
-		// redirect to the new document
-		// router.push(`/dashboard/admin/legal-doc-manager/${responseData.slug}/edit`)
-    reset(); // Reset the form after saving
-  };
+    // redirect to the new document
+    // router.push(`/dashboard/admin/legal-doc-manager/${responseData.slug}/edit`)
+    reset() // Reset the form after saving
+  }
 
   return (
     <Dialog>
@@ -67,7 +70,9 @@ export function NewLegalDocModal() {
               <Controller
                 name="title"
                 control={control}
-                render={({ field }) => <Input id="title" {...field} className="col-span-3" />}
+                render={({ field }) => (
+                  <Input id="title" {...field} className="col-span-3" />
+                )}
               />
             </div>
           </div>
@@ -77,5 +82,5 @@ export function NewLegalDocModal() {
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

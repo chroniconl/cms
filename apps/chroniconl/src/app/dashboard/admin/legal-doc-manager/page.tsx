@@ -1,19 +1,25 @@
 export const fetchCache = 'force-no-store'
 import { supabase } from '@/utils/supabase'
 import { formatDate } from '@/utils/dates'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@repo/ui/table'
 import { NewLegalDocModal } from './__legal_doc_manager_components/NewLegalDocModal'
 import BorderBottom from '@/components/BorderBottom'
 import Link from 'next/link'
 
 export default async function LegalDocManagerPage() {
-	const { data: legalDocumentsData, error: legalDocumentsError } = await supabase
-		.from('legal_documents')
-		.select('*')
+  const { data: legalDocumentsData, error: legalDocumentsError } =
+    await supabase.from('legal_documents').select('*')
 
-	if (legalDocumentsError) {	
-		throw new Error('Error fetching legal documents')
-	}
+  if (legalDocumentsError) {
+    throw new Error('Error fetching legal documents')
+  }
 
   return (
     <div className="px-4">

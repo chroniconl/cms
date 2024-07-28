@@ -26,7 +26,7 @@ export async function getCurrentUser() {
   }
 
   return {
-		data: userData,
-		error: userError,
-	}
+    data: userData,
+    error: userError,
+  }
 }

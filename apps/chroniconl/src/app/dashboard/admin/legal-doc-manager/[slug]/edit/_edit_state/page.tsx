@@ -1,11 +1,11 @@
 export const fetchCache = 'force-no-store'
 
 export default async function LegalDocManagerPage({
-	params
+  params,
 }: {
-	params: {
-		slug: string
-	}
+  params: {
+    slug: string
+  }
 }) {
   return (
     <div>
