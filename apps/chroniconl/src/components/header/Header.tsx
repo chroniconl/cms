@@ -16,10 +16,10 @@ export default function Component() {
         >
           <h1 className="ch-heading ch-primary">Chroniconl</h1>
         </Link>
-        <Link href="/about" className="ch-text ch-muted" prefetch={false}>
+        <Link href="/about" className="ch-body ch-muted" prefetch={false}>
           About
         </Link>
-        <Link href="/contact" className="ch-text ch-muted" prefetch={false}>
+        <Link href="/contact" className="ch-body ch-muted" prefetch={false}>
           Contact
         </Link>
       </div>

@@ -9,7 +9,7 @@ export default async function DashboardPage() {
     <div>
       <div>
         <h2 className="ch-heading ch-primary">Admin Dashboard</h2>
-        <p className="ch-text ch-muted">Welcome to the admin dashboard</p>
+        <p className="ch-body ch-muted">Welcome to the admin dashboard</p>
       </div>
       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Link href="/dashboard/admin/legal-doc-manager">
@@ -17,8 +17,8 @@ export default async function DashboardPage() {
             <div className="mb-2 flex w-fit items-center rounded-sm border border-stone-700 p-2 outline outline-stone-900">
               <BriefcaseIcon className="h-4 w-4" />
             </div>
-            <h3 className="ch-text ch-primary">Legal Document Manager</h3>
-            <p className="ch-text ch-muted">Manage your legal documents</p>
+            <h3 className="ch-body ch-primary">Legal Document Manager</h3>
+            <p className="ch-body ch-muted">Manage your legal documents</p>
           </Card>
         </Link>
 
@@ -27,8 +27,8 @@ export default async function DashboardPage() {
             <div className="mb-2 flex w-fit items-center rounded-sm border border-stone-700 p-2 outline outline-stone-900">
               <FlaskConicalIcon className="h-4 w-4" />
             </div>
-            <h3 className="ch-text ch-primary">Form Submissions</h3>
-            <p className="ch-text ch-muted">User submitted forms</p>
+            <h3 className="ch-body ch-primary">Form Submissions</h3>
+            <p className="ch-body ch-muted">User submitted forms</p>
           </Card>
         </Link>
       </div>

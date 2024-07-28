@@ -16,49 +16,49 @@ export default function Footer() {
           </p>
         </div>
         <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
-          <h4 className="ch-text ch-primary">Quick Links</h4>
+          <h4 className="ch-body ch-primary">Quick Links</h4>
           <nav className="flex flex-col gap-2">
             <Link
               href="/"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Home
             </Link>
-            <Link href="/about" className="ch-text ch-muted hover:underline">
+            <Link href="/about" className="ch-body ch-muted hover:underline">
               About
             </Link>
-            <Link href="/contact" className="ch-text ch-muted hover:underline">
+            <Link href="/contact" className="ch-body ch-muted hover:underline">
               Contact
             </Link>
             <Link
               href="/categories"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
             >
               Categories
             </Link>
           </nav>
         </div>
         <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
-          <h4 className="ch-text ch-primary">Site</h4>
+          <h4 className="ch-body ch-primary">Site</h4>
           <nav className="flex flex-col gap-2">
             <Link
               href="/feed.xml"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               RSS Feed
             </Link>
             <Link
               href="/sitemap.xml"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Sitemap
             </Link>
             <Link
               href="/robots.txt"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Robots.txt
@@ -66,11 +66,11 @@ export default function Footer() {
           </nav>
         </div>
 				<div className="col-span-12 flex flex-col gap-4 md:col-span-2">
-          <h4 className="ch-text ch-primary">Community</h4>
+          <h4 className="ch-body ch-primary">Community</h4>
           <nav className="flex flex-col gap-2">
             <Link
               href="https://github.com/chroniconl/cms"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
 							prefetch={false}
             >
               We're open source!
@@ -78,25 +78,25 @@ export default function Footer() {
           </nav>
         </div>
         {/* <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
-          <h4 className="ch-text ch-primary">Legal</h4>
+          <h4 className="ch-body ch-primary">Legal</h4>
           <nav className="flex flex-col gap-2">
             <Link
               href="/legal/privacy"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Privacy Policy
             </Link>
             <Link
               href="/legal/terms"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Terms of Service
             </Link>
             <Link
               href="/legal/disclaimer"
-              className="ch-text ch-muted hover:underline"
+              className="ch-body ch-muted hover:underline"
               prefetch={false}
             >
               Disclaimer
@@ -104,7 +104,7 @@ export default function Footer() {
           </nav>
         </div> */}
         <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
-          <h4 className="ch-text ch-primary">Follow Us</h4>
+          <h4 className="ch-body ch-primary">Follow Us</h4>
           <div className="flex gap-x-4">
             <Link
               href="https://x.com/chroniconl_src"

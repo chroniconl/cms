@@ -123,12 +123,12 @@ export default function TrendingRepos() {
               <div className="font-bold text-lg">{repo.name}</div>
               <div className="flex items-center gap-2">
                 <StarIcon className="w-4 h-4" />
-                <span>{repo.stars}</span>
+                <span className="ch-body ch-muted">{repo.stars}</span>
                 <GitBranchIcon className="w-4 h-4" />
-                <span>{repo.forks}</span>
+                <span className="ch-body ch-muted">{repo.forks}</span>
               </div>
             </div>
-            <p className="text-muted-foreground mb-4">{repo.description}</p>
+            <p className="ch-body ch-muted mb-4">{repo.description}</p>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="ch-border px-2 py-1 rounded-md">
                 {repo.language}

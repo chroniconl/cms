@@ -96,17 +96,17 @@
   font-weight: 400;
 }
 
-.ch-text {
+.ch-body {
   font-size: 14px;
   line-height: 20px;
 }
 
-.ch-text,
+.ch-body,
 .ch-heading {
   color: var(--text-primary);
 }
 
-.ch-text.ch-muted {
+.ch-body.ch-muted {
   color: var(--text-secondary);
 }
 .ch-heading.ch-muted {

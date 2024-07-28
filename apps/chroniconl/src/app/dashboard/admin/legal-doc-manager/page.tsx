@@ -21,7 +21,7 @@ export default async function LegalDocManagerPage() {
 				<section className='flex flex-col gap-4 md:flex-row md:justify-between mb-4 pb-2'>
 					<div>
 						<h2 className="ch-heading ch-primary">Legal Document Manager</h2>
-						<p className="ch-text ch-muted">Manage your legal documents</p>
+						<p className="ch-body ch-muted">Manage your legal documents</p>
 					</div>
 					<div>
 						<NewLegalDocModal />
@@ -69,7 +69,7 @@ export default async function LegalDocManagerPage() {
 
 			{legalDocumentsData.length === 0 && (
 				<div className="mt-4 flex items-center justify-center">
-					<p className="ch-text ch-muted">No documents found</p>
+					<p className="ch-body ch-muted">No documents found</p>
 				</div>
 			)}
     </div>

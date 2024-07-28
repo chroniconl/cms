@@ -9,7 +9,7 @@ export default async function LegalDocumentEditPage({ params }: { params: { slug
     <div>
       <div>
         <h2 className="ch-heading ch-primary">{params?.slug}/edit</h2>
-        <p className="ch-text ch-muted">Manage your legal documents</p>
+        <p className="ch-body ch-muted">Manage your legal documents</p>
       </div>      
     </div>
   )
