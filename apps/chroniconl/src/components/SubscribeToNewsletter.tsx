@@ -53,8 +53,8 @@ export default function SubscribeToNewsletter() {
         <div className="mb-2 flex w-fit items-center rounded-sm border border-stone-700 p-2 outline outline-stone-900">
           <MailIcon className="h-4 w-4" />
         </div>
-        <h2 className="ch-text">Subscribe to our Newsletter</h2>
-        <p className="ch-text ch-muted">
+        <h2 className="ch-body">Subscribe to our Newsletter</h2>
+        <p className="ch-body ch-muted">
           Stay up-to-date with the stuff we do. We won't spam ya.
         </p>
       </div>

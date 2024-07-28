@@ -59,10 +59,8 @@ export function NewLegalDocModal() {
         <ChButtonPrimary>Create New Document</ChButtonPrimary>
       </DialogTrigger>
       <DialogContent className="p-6 sm:max-w-[425px]">
-        <h2 className="ch-heading ch-primary">New Document</h2>
-        <p className="ch-text ch-muted">
-          Enter the title for the new document. Click save when you're done.
-        </p>
+				<h2 className="ch-heading ch-primary">New Document</h2>
+				<p className="ch-body ch-muted">Enter the title for the new document. Click save when you're done.</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
