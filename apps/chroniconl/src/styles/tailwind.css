@@ -71,52 +71,7 @@
   @apply select-all rounded border border-stone-200 bg-stone-100 p-0.5 font-mono dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100;
 }
 
+/* wtf is this */
 .SliderSet .border-primary {
   @apply rounded-full border-2 border-black dark:border-white;
-}
-
-.special-border {
-  border: solid 3px #242424;
-
-  @media (min-width: 768px) {
-    background: transparent;
-    padding: 0.5rem 0.5rem;
-    margin: 0 0.5rem;
-    font-size: 1rem;
-    border-top-left-radius: 255px 15px;
-    border-top-right-radius: 15px 225px;
-    border-bottom-right-radius: 225px 15px;
-    border-bottom-left-radius: 15px 255px;
-  }
-}
-
-.ch-heading {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 400;
-}
-
-.ch-body {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.ch-body,
-.ch-heading {
-  color: var(--text-primary);
-}
-
-.ch-body.ch-muted {
-  color: var(--text-secondary);
-}
-.ch-heading.ch-muted {
-  color: var(--text-secondary);
-}
-
-.chroniconl-label {
-  @apply text-base font-bold text-stone-700 dark:text-stone-200 md:text-lg;
-}
-
-.chroniconl-textarea {
-  @apply min-h-[100px] w-full rounded-md border bg-background px-2.5 py-2 text-base text-stone-500 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-stone-400 md:text-lg;
 }
