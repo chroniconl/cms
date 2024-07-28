@@ -1,6 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)'])
+const isProtectedRoute = createRouteMatcher([
+	'/dashboard(.*)',
+	'/explore(.*)',
+])
 
 const options = {
   // debug: process.env.DEV === 'development' || process.env.NODE_ENV === 'development',
