@@ -25,6 +25,7 @@ export async function PUT(request: Request) {
     .update({
       title: requestData.title,
       content: requestData.content,
+			last_updated: new Date()
     })
     .match({ slug: requestData.slug })
 

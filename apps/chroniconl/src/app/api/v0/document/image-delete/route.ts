@@ -59,6 +59,7 @@ export async function DELETE(request: Request) {
       image_id: null,
       image_alt: null,
       image_caption: null,
+			last_updated: new Date()
     })
     .match({ id: requestData.id })
 
@@ -71,5 +72,12 @@ export async function DELETE(request: Request) {
     return failResponse(error?.message)
   }
 
+	const end = performance.now();
+	void logger.logPerformance({
+		message: 'DELETE executed successfully',
+		execution_time: Math.round(end - start),
+		url: '/api/v0/document/image-delete',
+		http_method: 'DELETE'
+	});
   return okResponse('Documents image url updated')
 }

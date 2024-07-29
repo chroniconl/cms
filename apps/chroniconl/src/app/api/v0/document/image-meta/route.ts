@@ -37,6 +37,7 @@ export async function PUT(request: Request) {
     .update({
       image_caption: requestData?.image_caption || '',
       image_alt: requestData?.image_alt || '',
+			last_updated: new Date()
     })
     .match({ id: requestData.id })
 

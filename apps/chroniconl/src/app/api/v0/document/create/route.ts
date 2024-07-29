@@ -33,6 +33,7 @@ async function createDocumentWithTitle(title: string): Promise<any> {
         content: '<p>Nothing here yet</p>',
         slug: formatSlug(title),
         user_id: userData?.id,
+				last_updated: new Date()
       })
       .select()
 
