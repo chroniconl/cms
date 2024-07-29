@@ -5,6 +5,12 @@ import { format } from 'date-fns'
 import PublicLayout from '@/components/PublicLayout'
 import type { Metadata, ResolvingMetadata } from 'next'
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
+import Logger from '@/utils/logger'
+
+const loggerName = 'api.v0.1.document.image-metadata.PUT'
+const applicationName = 'chroniconl'
+const environment = process.env.NODE_ENV as string || 'development'
+const logger = new Logger(loggerName, applicationName, environment)
 
 type Props = {
   params: { yy: string; mm: string; dd: string; slug: string }
@@ -91,6 +97,7 @@ export default async function BlogPage({
     slug: string
   }
 }) {
+	const start = performance.now();
   let safeDate: string | null = null
 
   const { yy, mm, dd, slug } = params
@@ -106,10 +113,20 @@ export default async function BlogPage({
     const date = new Date(year, month, day)
     safeDate = format(date, 'yyyy-MM-dd')
   } catch (error) {
+		void logger.logError({
+			message: 'GET failed - Error formatting date',
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
     throw new Error('Something went wrong, please try again later')
   }
 
   if (!safeDate) {
+		void logger.logError({
+			message: 'GET failed - Error formatting date',
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
     throw new Error('Something went wrong, please try again later')
   }
 
@@ -145,6 +162,11 @@ export default async function BlogPage({
     .single()
 
   if (error) {
+		void logger.logError({
+			message: 'GET failed - Error fetching post' + error.message,
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
     throw new Error('Something went wrong, please try again later')
   }
 
@@ -156,6 +178,14 @@ export default async function BlogPage({
   if (postGotPublishedToday && postGotPublishedTodayWithinTime) {
     throw new Error('Something went wrong, please try again later')
   }
+
+	const end = performance.now();
+	void logger.logPerformance({
+		message: 'GET executed successfully',
+		execution_time: Math.round(end - start),
+		url: '/api/v0.1/document/image-upload',
+		http_method: 'GET'
+	});
 
   return (
     <PublicLayout>

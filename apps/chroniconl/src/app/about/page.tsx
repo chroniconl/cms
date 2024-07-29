@@ -3,16 +3,15 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent,
   CardFooter,
 } from '@repo/ui/card'
-import { Input } from '@repo/ui/input'
+import BorderBottom from '@/components/BorderBottom'
 import PublicLayout from '@/components/PublicLayout'
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/avatar'
 import Image from 'next/image'
-import { ChButtonSecondaryMarketing } from '@repo/ui/button'
+import SubscribeToNewsletter from '@/components/SubscribeToNewsletter'
 
 export default function About() {
   return (
@@ -184,34 +183,9 @@ export default function About() {
             </div>
           </div>
         </section>
-        <section className="w-full border-t py-12 md:py-24 lg:py-32">
-          <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                Stay Updated with Chroniconl
-              </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Subscribe to our newsletter to receive the latest news,
-                insights, and updates from the world of technology.
-              </p>
-            </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-              <form className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="max-w-lg flex-1"
-                />
-                <ChButtonSecondaryMarketing type="submit">
-                  Subscribe
-                </ChButtonSecondaryMarketing>
-              </form>
-              <p className="text-xs text-muted-foreground">
-                We respect your privacy. Your email will never be shared with
-                third parties.
-              </p>
-            </div>
-          </div>
+				<BorderBottom height={1} borderColor="#FFF" />
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <SubscribeToNewsletter />
         </section>
       </div>
     </PublicLayout>

@@ -1,8 +1,15 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
+import Logger from '@/utils/logger'
+
+const loggerName = 'api.v0.1.document.image-metadata.PUT'
+const applicationName = 'chroniconl'
+const environment = process.env.NODE_ENV as string || 'development'
+const logger = new Logger(loggerName, applicationName, environment)
 
 export async function GET(request: Request) {
+	const start = performance.now();
 	const url = new URL(request.url)
 	const params = url.searchParams
 
@@ -19,6 +26,11 @@ export async function GET(request: Request) {
 	})
 
 	if (error) {
+		void logger.logError({
+			message: 'GET failed - Error validating request data' + error.message,
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
 		return failResponse(error?.details[0]?.message)
 	}
 
@@ -33,8 +45,20 @@ export async function GET(request: Request) {
 		.range(offset, offset + limit)
 
 	if (supabaseError) {
+		void logger.logError({
+			message: 'GET failed - Error fetching trends' + supabaseError.message,
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
 		return failResponse(supabaseError?.message)
 	}
 
+	const end = performance.now();
+	void logger.logPerformance({
+		message: 'GET executed successfully',
+		execution_time: Math.round(end - start),
+		url: '/api/v0.1/trending',
+		http_method: 'GET'
+	});
 	return okResponse(data)
 }
