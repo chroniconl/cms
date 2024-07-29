@@ -3,7 +3,7 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 
-export const validateIncomingData = (requestData: any) => {
+const validateIncomingData = (requestData: any) => {
   const schema = joi.object({
     id: joi.string().required(),
     category_id: joi.string().allow('').optional(),
