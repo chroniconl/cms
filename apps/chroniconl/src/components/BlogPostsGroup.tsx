@@ -27,11 +27,6 @@ export default async function BlogPostsGroup({
       avatar_url: string
       twitter_handle: string
     }
-    tags?: {
-      id: string
-      name: string
-      slug: string
-    }[]
   }[]
 }) {
   return (

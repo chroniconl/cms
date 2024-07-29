@@ -1,16 +1,8 @@
 import Link from 'next/link'
 
-interface Tag {
-  name: string
-  count: number
-  href: string
-}
-
 export default function ViewBy({
-  type = 'tags',
   data = {},
 }: {
-  type?: 'tags' | 'categories'
   data?: {
     [key: string]: {
       count: number
@@ -22,18 +14,17 @@ export default function ViewBy({
   return (
     <section className="py-12">
       <h1 className="text-3xl font-extrabold tracking-tight text-primary sm:text-4xl">
-        All {type.charAt(0).toUpperCase() + type.slice(1)}
+        All Categories
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Click on a {type === 'tags' ? 'tag' : 'category'} to view all posts
-        associated with it.
+        Click on a category to view all posts associated with it.
       </p>
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data &&
           Object.keys(data).map((item) => (
             <Link
               key={data[item].name}
-              href={`/${type}/${data[item].slug}`}
+              href={`/categories/${data[item].slug}`}
               className="hover:bg-primary/10 group block overflow-hidden rounded-lg border border-muted bg-background p-4 transition-all hover:border-primary"
               prefetch={false}
             >
