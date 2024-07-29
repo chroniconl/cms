@@ -47,6 +47,7 @@ export async function PUT(request: Request) {
       title: requestData?.title || null,
       description: requestData?.description || null,
       author_id: requestData?.author_id || '',
+			last_updated: new Date()
     })
     .match({ id: requestData?.id })
 

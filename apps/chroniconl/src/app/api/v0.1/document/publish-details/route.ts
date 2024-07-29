@@ -57,6 +57,7 @@ export async function PUT(request: Request) {
         ? toPST(requestData?.publishDateDay)
         : null,
       publish_date_time: requestData?.publishDateTime || null,
+			last_updated: new Date()
     })
     .match({ id: requestData?.id })
 

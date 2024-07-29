@@ -108,6 +108,7 @@ export async function POST(request: Request) {
       .from('posts')
       .update({
         category_id: requestData.category_id,
+				last_updated: new Date()
       })
       .match({ id: requestData.id })
 
