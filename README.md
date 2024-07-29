@@ -2,10 +2,26 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
-> **Pre-Alpha Mode**
-> I wouldn't use this if I were you. There's still hard-coded data pertaining to the original author. Right now, the core of this application is a CMS ready for scheduled mass-publishing. There's still a-lot of work.
 
 This is the public source code for a content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. **NOTE: This project used premium features in the services we use. Please be aware of the costs before using this project.**
+
+## Features
+
+Blog post management
+
+<img src="https://utfs.io/f/de9040b8-09c8-4c22-97b5-016af9032942-8jt8nz.png" width="400px" />
+
+
+Post dashboard 
+
+<img src="https://utfs.io/f/fa6598a9-f42b-41c4-adeb-7772a7773ab0-ft8p6c.png" width="400px" />
+
+
+Media gallery
+
+<img src="https://utfs.io/f/2fb013f8-3ef0-48c2-915c-608ec8b8ac81-vu6z6v.png" width="400px" />
+
+More coming soon...
 
 ## Table of Contents
 
@@ -17,22 +33,24 @@ This is the public source code for a content management system for content heavy
 
 Why build a CMS when you could use one of the many alternatives?
 
-1. A need to remain close to the source code while providing a flexible admin experience.
+1. A desire to remain close to the source code while providing a flexible admin experience.
 2. To build a writers experience that doesn't suck.
 3. To provide all the benefits of a highly secured CMS out of the box.
+4. I'm having fun taking this project as far as it can go.
 
 ## Getting Started
 
 ### Prerequisites and accounts required
 
-- Node.js 18.x
-- Pnpm 7.x
+- Node.js
+- Pnpm
 - GitHub account (Some knowledge of Git is required)
 - $ Vercel account (Hosting)
 - $ Supabase account (API keys required)
 - $ Clerk account (API keys required)
 - $ UploadThing account (API keys required)
-- $ PostHog account (API keys required)
+
+> I'm working on consolidating some of these. Please check back soon or consider contributing if you'd like to help out.
 
 ### Installation
 
