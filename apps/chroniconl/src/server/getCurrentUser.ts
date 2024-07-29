@@ -1,5 +1,12 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { supabase } from '@/utils/supabase'
+import Logger from '@/utils/logger'
+
+const loggerName = 'server.getCurrentUser'
+const applicationName = 'chroniconl'
+const environment = process.env.NODE_ENV as string || 'development'
+
+const logger = new Logger(loggerName, applicationName, environment)
 
 /**
  *
@@ -22,6 +29,11 @@ export async function getCurrentUser() {
     .single()
 
   if (userError) {
+		void logger.logError({
+			message: 'getCurrentUser failed - Error fetching user' + userError.message,
+			error_code: 'E001',
+			exception_type: 'Error',			
+		})
     throw new Error('Error fetching user')
   }
 
