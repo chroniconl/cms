@@ -14,9 +14,6 @@ export interface MetaFormState {
   visibility: string
   setVisibility: (visibility: string) => void
 
-  tags: string
-  setTags: (tags: string) => void
-
   description: string
   setDescription: (description: string) => void
 
@@ -42,9 +39,6 @@ export const useMetaFormStore = create<MetaFormState>((set) => ({
 
   visibility: '',
   setVisibility: (visibility: string) => set({ visibility }),
-
-  tags: '',
-  setTags: (tags: string) => set({ tags }),
 
   description: '',
   setDescription: (description: string) => set({ description }),

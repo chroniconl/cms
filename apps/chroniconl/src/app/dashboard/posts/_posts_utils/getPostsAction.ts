@@ -10,9 +10,6 @@ export const getPostsAction = async () => {
     throw new Error('Error fetching user')
   }
 
-  // TODO: Make this a query
-  // just f**king snatch it all and filter it later
-  // Mat tried to do this in a query but made it too complicated
   const { data, error, count } = await supabase
     .from('posts')
     .select(
@@ -25,25 +22,6 @@ export const getPostsAction = async () => {
     .order('created_at', { ascending: false })
 
   if (error) throw new Error('Error fetching posts')
-
-  // map over the data to get the tags
-  const dataWithTags = await Promise.all(
-    data.map(async (curr) => {
-      const { data: tagsData, error: tagsError } = await supabase
-        .from('post_tag_relationship')
-        .select('tag:tags(id, name, slug)')
-        .eq('post_id', curr.id)
-
-      if (tagsError) {
-        throw new Error('Error fetching tags')
-      }
-
-      return {
-        ...curr,
-        tags: tagsData.map((tag) => tag.tag),
-      }
-    }),
-  )
 
   const findPublishableDate = (
     day: string | null,
@@ -60,7 +38,7 @@ export const getPostsAction = async () => {
         return null
     }
   }
-  const clientSafeData: SafePost[] = dataWithTags.map((post) => {
+  const clientSafeData: SafePost[] = data.map((post) => {
     let formatablePublishDate: string | null = null
     const publishDateDay = findPublishableDate(
       post.publish_date_day,
@@ -109,7 +87,6 @@ export const getPostsAction = async () => {
         slug: post.category?.slug,
         color: post.category?.color,
       },
-      tags: post.tags,
     }
   })
 

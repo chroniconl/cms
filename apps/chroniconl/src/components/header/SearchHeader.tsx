@@ -27,7 +27,6 @@ interface IDocument {
   title: string
   slug: string
   class: string
-  tags: string
   category: string
   content_json: string
 }

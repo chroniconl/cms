@@ -9,7 +9,6 @@ import TipTap, { proseClassNames } from '@/components/TipTap'
 import { Card } from '@repo/ui/card'
 import { supabase } from '@/utils/supabase'
 import { getPSTDate } from '@/utils/dates'
-import { cn } from '@/utils/cn'
 
 export default async function DocumentSlugEdit({
   params,
@@ -44,32 +43,6 @@ export default async function DocumentSlugEdit({
     if (authorsError) {
       throw new Error('Error fetching authors')
     }
-
-    const { data: tagsData, error: tagsError } = await supabase
-      .from('post_tag_relationship')
-      .select(`tag:tags(id, name, slug)`)
-      .eq('post_id', postData.id)
-
-    if (tagsError) {
-      throw new Error('Error fetching tags')
-    }
-
-    // TS will yell if I don't do this
-    const tsSucksForThis = tagsData as any
-
-    const formattedTags = tsSucksForThis.map(
-      (tag: {
-        tag: {
-          id: string
-          name: string
-          slug: string
-        }
-      }) => ({
-        name: tag.tag?.name,
-        slug: tag.tag?.slug,
-        id: tag.tag?.id,
-      }),
-    )
 
     // Use postData and categoriesData as needed
     return (
@@ -113,7 +86,6 @@ export default async function DocumentSlugEdit({
           <FilterDataForm
             id={postData.id}
             categories={categoriesData}
-            tags={formattedTags}
             category={postData.category}
           />
         </section>

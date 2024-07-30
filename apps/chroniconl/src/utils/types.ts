@@ -81,9 +81,4 @@ export type SafePost = {
     slug: string
     color: string
   }
-  tags: {
-    id: string
-    name: string
-    slug: string
-  }[]
 }

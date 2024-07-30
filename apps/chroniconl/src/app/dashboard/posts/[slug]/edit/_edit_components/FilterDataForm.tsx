@@ -30,11 +30,6 @@ import { toast } from '@repo/ui/use-toast'
 
 interface FilterDataFormProps {
   categories: Category[]
-  // Tags as an array of objects
-  tags: {
-    name: string
-    slug: string
-  }[]
   id: string
   category: {
     id: string
@@ -44,8 +39,6 @@ interface FilterDataFormProps {
 
 interface FilterDataFormState {
   category: string
-  // Tags as a string separated by commas
-  tags: string
 }
 
 const categoryStore = create<{
@@ -63,7 +56,6 @@ const categoryStore = create<{
 
 export default function FilterDataForm({
   categories: props__categories,
-  tags: props__tags,
   id: props__id,
   category: props__category,
 }: FilterDataFormProps) {
@@ -82,8 +74,7 @@ export default function FilterDataForm({
 
   const { control, handleSubmit } = useForm<FilterDataFormState>({
     defaultValues: {
-      category: props__category?.id || '',
-      tags: props__tags?.map((tag) => tag.name).join(', '),
+      category: props__category?.id || ''
     },
   })
 
@@ -93,7 +84,6 @@ export default function FilterDataForm({
       body: JSON.stringify({
         id: props__id,
         category_id: data.category,
-        tags: data.tags,
       }),
     })
 
@@ -197,25 +187,6 @@ export default function FilterDataForm({
               <PlusIcon className="h-5 w-5" />
             </Button>
           </div>
-        </div>
-
-        <div className="flex flex-col">
-          <Label htmlFor="tags">Tags</Label>
-          <Text>
-            Tags are used to help categorize your post. They are comma
-            separated.
-          </Text>
-          <Controller
-            name="tags"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="Add a tag"
-                className="mt-2 w-full"
-              />
-            )}
-          />
         </div>
 
         <div className="flex flex-col">
