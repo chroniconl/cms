@@ -98,10 +98,6 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 # https://uploadthing.com/dashboard/<project-id>/api-keys
 UPLOADTHING_SECRET=
 UPLOADTHING_APP_ID=
-
-# https://posthog.com/settings/api-key
-NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=
 ```
 
 ### Supabase
