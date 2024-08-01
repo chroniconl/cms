@@ -6,10 +6,10 @@ import { formatDate } from '@/utils/dates'
 import BorderBottom from '@/components/BorderBottom'
 
 export default async function BlogPostsGroup({
-	label,
+  label,
   posts,
 }: {
-	label?: string
+  label?: string
   posts: {
     id: string
     title: string
@@ -33,9 +33,7 @@ export default async function BlogPostsGroup({
   return (
     <div>
       <div className="mb-4">
-        {label && (
-					<Heading level={2}>{label}</Heading>
-				)}
+        {label && <Heading level={2}>{label}</Heading>}
         <div className="mb-4 mt-4">
           <BorderBottom height={1} borderColor="#FFF" />
         </div>

@@ -65,13 +65,13 @@ export default function Footer() {
             </Link>
           </nav>
         </div>
-				<div className="col-span-12 flex flex-col gap-4 md:col-span-2">
+        <div className="col-span-12 flex flex-col gap-4 md:col-span-2">
           <h4 className="ch-body ch-primary">Community</h4>
           <nav className="flex flex-col gap-2">
             <Link
               href="https://github.com/chroniconl/cms"
               className="ch-body ch-muted hover:underline"
-							prefetch={false}
+              prefetch={false}
             >
               We're open source!
             </Link>

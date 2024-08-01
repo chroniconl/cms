@@ -5,10 +5,12 @@ import SubscribeToNewsletter from '@/components/SubscribeToNewsletter'
 import { getAllPublishedPosts } from '@/server/getAllPublishedPosts'
 
 export default async function Page() {
-	const posts = await getAllPublishedPosts()
-	const preferredCategory = 'Tutorials';
+  const posts = await getAllPublishedPosts()
+  const preferredCategory = 'Tutorials'
 
-  const tutorials = posts.filter((post) => post.category.name === preferredCategory)
+  const tutorials = posts.filter(
+    (post) => post.category.name === preferredCategory,
+  )
 
   return (
     <PublicLayout>
@@ -17,10 +19,7 @@ export default async function Page() {
           <BlogPostsGroup posts={posts} />
         </div>
         <div className="col-span-12 md:col-span-6 lg:col-span-3">
-          <LatestHowToPosts 
-						label="Latest Tutorials"
-						posts={tutorials} 
-					/>
+          <LatestHowToPosts label="Latest Tutorials" posts={tutorials} />
           <SubscribeToNewsletter />
         </div>
       </div>

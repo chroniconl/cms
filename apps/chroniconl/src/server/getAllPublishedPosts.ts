@@ -6,12 +6,12 @@ import Logger from '@/utils/logger'
 
 const loggerName = 'server.getAllPublishedPosts'
 const applicationName = 'chroniconl'
-const environment = process.env.NODE_ENV as string || 'development'
+const environment = (process.env.NODE_ENV as string) || 'development'
 
 const logger = new Logger(loggerName, applicationName, environment)
 
 export async function getAllPublishedPosts() {
-	const start = performance.now();
+  const start = performance.now()
   const pstDate = getPSTDate()
   const formattedPSTDate = format(pstDate, 'yyyy-MM-dd')
 
@@ -25,25 +25,26 @@ export async function getAllPublishedPosts() {
     .lte('publish_date_day', formattedPSTDate)
     .order('publish_date_day', { ascending: false })
 
-  if (error) {    
-		void logger.logError({
-			message: 'getAllPublishedPosts failed - Error fetching posts' + error.message,
-			error_code: 'E001',
-			exception_type: 'Error',			
-		})
-		throw Error()
+  if (error) {
+    void logger.logError({
+      message:
+        'getAllPublishedPosts failed - Error fetching posts' + error.message,
+      error_code: 'E001',
+      exception_type: 'Error',
+    })
+    throw Error()
   }
 
   // Get the filtered posts
   const filteredPosts = removePostsThatWillBePublishedLaterToday(data)
 
-	const end = performance.now();
-	void logger.logPerformance({
-		message: 'getAllPublishedPosts executed successfully',
-		execution_time: Math.round(end - start),
-		url: '/api/getAllPublishedPosts',
-		http_method: 'GET'
-	});
-	
+  const end = performance.now()
+  void logger.logPerformance({
+    message: 'getAllPublishedPosts executed successfully',
+    execution_time: Math.round(end - start),
+    url: '/api/getAllPublishedPosts',
+    http_method: 'GET',
+  })
+
   return filteredPosts
 }

@@ -77,13 +77,13 @@ export default function PostsList({ data, count }: PostsListProps) {
     onColumnFiltersChange: setColumnFilters,
   })
 
-	if (data.length === 0) {
-		return (
-			<div className="mt-4 flex items-center justify-center">
-				<p className="ch-body ch-muted">No posts found</p>
-			</div>
-		)
-	}
+  if (data.length === 0) {
+    return (
+      <div className="mt-4 flex items-center justify-center">
+        <p className="ch-body ch-muted">No posts found</p>
+      </div>
+    )
+  }
 
   return (
     <section className="grid grid-cols-12 gap-2">
