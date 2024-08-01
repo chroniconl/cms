@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@repo/ui/card'
+} from '@/components/ui/card'
 
 interface DataProps {
   totalBytes: number

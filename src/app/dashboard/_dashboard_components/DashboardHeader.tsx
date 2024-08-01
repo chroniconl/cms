@@ -1,7 +1,7 @@
 import { SearchHeader } from '@/components/header/SearchHeader'
 import Avatar from '@/components/Avatar'
 import Link from 'next/link'
-import { Sheet, SheetTrigger, SheetContent } from '@repo/ui/sheet'
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import {
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@repo/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 
 const navItems = [
   { label: 'Dashboard', url: '/dashboard' },

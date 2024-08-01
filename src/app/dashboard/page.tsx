@@ -6,7 +6,7 @@ import {
   CardTitle,
   CardContent,
   CardDescription,
-} from '@repo/ui/card'
+} from '@/components/ui/card'
 import { getPSTDate, getPSTDaySevenDaysFromNow } from '@/utils/dates'
 import { supabase } from '@/utils/supabase'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui/table'
+} from '@/components/ui/table'
 import {
   format,
   formatDistanceToNow,
@@ -28,7 +28,7 @@ import {
 } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 import { Text } from '@/components/text'
-import { Badge } from '@repo/ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { ClockIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import UnseenFormSubmissionCard from './_dashboard_components/UnseenFormSubmissionCard'

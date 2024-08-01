@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@repo/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 

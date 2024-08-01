@@ -1,18 +1,18 @@
 'use client'
 
 import { PlusIcon } from 'lucide-react'
-import { Label } from '@repo/ui/label'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/select'
-import { Button, ChButtonPrimary } from '@repo/ui/button'
+} from '@/components/ui/select'
+import { Button, ChButtonPrimary } from '@/components/ui/button'
 import { Heading } from '@/components/heading'
-import { Input } from '@repo/ui/input'
-import { Card } from '@repo/ui/card'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 import { useForm, Controller } from 'react-hook-form'
 import { Category } from '@/utils/types'
 import { Text } from '@/components/text'
@@ -23,10 +23,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@repo/ui/dialog'
+} from '@/components/ui/dialog'
 import { create } from 'zustand'
 import { useEffect } from 'react'
-import { toast } from '@repo/ui/use-toast'
+import { toast } from '@/components/ui/use-toast'
 
 interface FilterDataFormProps {
   categories: Category[]

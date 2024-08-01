@@ -1,6 +1,6 @@
 'use client'
-import { ChButtonPrimary } from '@repo/ui/button'
-import { toast } from '@repo/ui/use-toast'
+import { ChButtonPrimary } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 
 export default function DeleteDocumentButton({ id }: { id: string }) {
   const handleDeleteDocumentPrompt = () => {

@@ -1,9 +1,9 @@
-import { Badge } from '@repo/ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { Heading } from '@/components/heading'
 import { Time } from '@/components/Time'
 import TipTap, { proseClassNames } from '@/components/TipTap'
 import { ClientImage } from '@/components/image'
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Image from 'next/image'
 import { Category } from '@/utils/types'
 

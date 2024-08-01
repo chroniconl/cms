@@ -1,19 +1,19 @@
 'use client'
 
-import { Label } from '@repo/ui/label'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/select'
+} from '@/components/ui/select'
 import { DatePickerSimple } from '@/components/DatePicker'
-import { ChButtonPrimary } from '@repo/ui/button'
+import { ChButtonPrimary } from '@/components/ui/button'
 import { Heading } from '@/components/heading'
-import { Card } from '@repo/ui/card'
+import { Card } from '@/components/ui/card'
 import { useForm, Controller } from 'react-hook-form'
-import { toast } from '@repo/ui/use-toast'
+import { toast } from '@/components/ui/use-toast'
 import { convertTimeString } from '@/utils/dates'
 
 export interface PublishDetailsProps {

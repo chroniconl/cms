@@ -7,8 +7,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@repo/ui/card'
-import { Input } from '@repo/ui/input'
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableHeader,
@@ -16,10 +16,10 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from '@repo/ui/table'
-import { Badge } from '@repo/ui/badge'
-import { Button } from '@repo/ui/button'
-import { Dialog, DialogContent } from '@repo/ui/dialog'
+} from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { EyeIcon, InfoIcon } from 'lucide-react'
 import Message from './Message'
 

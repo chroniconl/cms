@@ -5,11 +5,11 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
-} from '@repo/ui/card'
+} from '@/components/ui/card'
 import BorderBottom from '@/components/BorderBottom'
 import PublicLayout from '@/components/PublicLayout'
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Image from 'next/image'
 import SubscribeToNewsletter from '@/components/SubscribeToNewsletter'
 

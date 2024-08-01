@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '@repo/ui/card'
+} from '@/components/ui/card'
 
 export default function UnseenFormSubmissionCard({
   count = 0,

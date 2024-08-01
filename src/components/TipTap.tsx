@@ -21,8 +21,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@repo/ui/dropdown-menu'
-import { Button } from '@repo/ui/button'
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 import {
   BoldIcon,
   CodeIcon,
@@ -42,7 +42,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/select'
+} from '@/components/ui/select'
 
 import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'

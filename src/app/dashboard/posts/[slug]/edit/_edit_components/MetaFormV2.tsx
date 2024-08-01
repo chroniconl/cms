@@ -1,20 +1,20 @@
 'use client'
 import { PlusIcon } from 'lucide-react'
-import { Label } from '@repo/ui/label'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/select'
-import { Textarea } from '@repo/ui/textarea'
-import { Button, ChButtonPrimary } from '@repo/ui/button'
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { Button, ChButtonPrimary } from '@/components/ui/button'
 import { Heading } from '@/components/heading'
-import { Input } from '@repo/ui/input'
-import { Card } from '@repo/ui/card'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 import { useForm, Controller } from 'react-hook-form'
-import { toast } from '@repo/ui/use-toast'
+import { toast } from '@/components/ui/use-toast'
 import {
   Dialog,
   DialogContent,
@@ -23,8 +23,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/dialog'
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/avatar'
+} from '@/components/ui/dialog'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { UploadButton } from '@/components/UploadThingys'
 import { create } from 'zustand'
 import { useEffect } from 'react'

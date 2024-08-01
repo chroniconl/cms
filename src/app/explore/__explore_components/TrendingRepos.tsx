@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@repo/ui/button'
-import { Card } from '@repo/ui/card'
-import { Badge } from '@repo/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { StarIcon, GitBranchIcon } from 'lucide-react'
 
 export default function TrendingRepos() {

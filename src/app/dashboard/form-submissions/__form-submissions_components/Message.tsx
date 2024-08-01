@@ -6,13 +6,13 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@repo/ui/card'
-import { Button } from '@repo/ui/button'
-import { Label } from '@repo/ui/label'
-import { Input } from '@repo/ui/input'
-import { Textarea } from '@repo/ui/textarea'
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { LinkAsButton } from '@/components/button'
-import { toast } from '@repo/ui/use-toast'
+import { toast } from '@/components/ui/use-toast'
 import { useFormSubmissionsStore } from '../__form-submission_state/form-submissions-state'
 import { useEffect } from 'react'
 
