@@ -15,8 +15,9 @@ export default async function Page({
 
   const { data: categoriesData, error: categoriesError } = await supabase
     .from('categories')
-    .select('id')
+    .select('id, name')
     .eq('slug', params.category)
+		.single()
 
   if (categoriesError) {
     throw new Error(categoriesError.message)
@@ -28,7 +29,7 @@ export default async function Page({
     .order('publish_date_day', { ascending: false })
     .lte('publish_date_day', formattedPSTDate)
     .eq('visibility', 'public')
-    .eq('category_id', categoriesData[0].id)
+    .eq('category_id', categoriesData.id)
 
   if (postsError) {
     throw new Error(postsError.message)
@@ -39,6 +40,9 @@ export default async function Page({
 
   return (
     <PublicLayout>
+			<h1 className="text-3xl tracking-tighter sm:text-5xl text-white mb-10">
+				{categoriesData?.name}
+			</h1>			
       <BlogPostsGroup posts={filteredPosts} />
     </PublicLayout>
   )
