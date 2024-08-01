@@ -74,7 +74,7 @@ export default function FilterDataForm({
 
   const { control, handleSubmit } = useForm<FilterDataFormState>({
     defaultValues: {
-      category: props__category?.id || ''
+      category: props__category?.id || '',
     },
   })
 

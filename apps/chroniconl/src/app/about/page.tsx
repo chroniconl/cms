@@ -183,7 +183,7 @@ export default function About() {
             </div>
           </div>
         </section>
-				<BorderBottom height={1} borderColor="#FFF" />
+        <BorderBottom height={1} borderColor="#FFF" />
         <section className="w-full py-12 md:py-24 lg:py-32">
           <SubscribeToNewsletter />
         </section>

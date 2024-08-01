@@ -2,7 +2,6 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
-
 This is the public source code for a content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. **NOTE: This project used premium features in the services we use. Please be aware of the costs before using this project.**
 
 ## Features
@@ -11,11 +10,9 @@ Blog post management
 
 <img src="https://utfs.io/f/de9040b8-09c8-4c22-97b5-016af9032942-8jt8nz.png" width="400px" />
 
-
-Post dashboard 
+Post dashboard
 
 <img src="https://utfs.io/f/fa6598a9-f42b-41c4-adeb-7772a7773ab0-ft8p6c.png" width="400px" />
-
 
 Media gallery
 
