@@ -50,7 +50,7 @@ import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
 import hljs from 'highlight.js/lib/core'
 import go from 'highlight.js/lib/languages/go'
-import 'highlight.js/styles/a11y-dark.css'
+import 'highlight.js/styles/github-dark.css'
 
 // load all highlight.js languages
 // import { lowlight } from 'lowlight'
