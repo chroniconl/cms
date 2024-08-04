@@ -1,15 +1,15 @@
 .prose-custom {
-  code {
-    @apply prose-code:rounded-sm prose-code:border prose-code:border-stone-950/10 prose-code:bg-stone-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3 prose-code:text-stone-50;
-  }
+	code {
+		@apply prose-code:rounded-sm prose-code:border prose-code:border-stone-950/10 prose-code:bg-stone-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:leading-3 prose-code:text-stone-50;
+	}
 
-  pre {
-    @apply prose-pre:rounded-md prose-pre:bg-stone-800 prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3 prose-pre:text-stone-50;
-  }
+	pre {
+		@apply prose-pre:rounded-md prose-pre:bg-stone-800 prose-pre:px-4 prose-pre:py-2 prose-pre:leading-3 prose-pre:text-stone-50;
+	}
 
-  pre > code {
-    border: none;
-    padding-left: 0;
-    padding-right: 0;
-  }
+	pre > code {
+		border: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
 }

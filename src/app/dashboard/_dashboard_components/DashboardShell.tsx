@@ -3,65 +3,65 @@ import { currentUser } from '@clerk/nextjs/server'
 import DashboardHeader from './DashboardHeader'
 
 interface UserEmailInterface {
-  id: string
-  emailAddress: string
+	id: string
+	emailAddress: string
 }
 
 interface UserInterface {
-  emailAddresses: UserEmailInterface[]
-  id: string
-  primaryEmailAddressId: string
+	emailAddresses: UserEmailInterface[]
+	id: string
+	primaryEmailAddressId: string
 }
 
 const tryToGetEmailFromClerkResponse = (user: UserInterface) => {
-  try {
-    const userEmailData: UserEmailInterface | undefined =
-      user.emailAddresses.find(
-        (addy: UserEmailInterface) => addy.id === user.primaryEmailAddressId,
-      )
-    return userEmailData?.emailAddress
-  } catch (e) {
-    console.log(e)
+	try {
+		const userEmailData: UserEmailInterface | undefined =
+			user.emailAddresses.find(
+				(addy: UserEmailInterface) => addy.id === user.primaryEmailAddressId,
+			)
+		return userEmailData?.emailAddress
+	} catch (e) {
+		console.log(e)
 
-    return ''
-  }
+		return ''
+	}
 }
 
 export default async function DashboardShell({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
-  const user = await currentUser()
+	const user = await currentUser()
 
-  if (!user) {
-    throw new Error('Please sign in')
-  }
+	if (!user) {
+		throw new Error('Please sign in')
+	}
 
-  // its the same, just what we need
-  const email = tryToGetEmailFromClerkResponse(user as any as UserInterface)
+	// its the same, just what we need
+	const email = tryToGetEmailFromClerkResponse(user as any as UserInterface)
 
-  const { error: upsertError } = await supabase.from('users').upsert(
-    {
-      user_id: user?.id,
-      provider: 'clerk',
-      email: email,
-    },
-    { onConflict: 'user_id' },
-  )
+	const { error: upsertError } = await supabase.from('users').upsert(
+		{
+			user_id: user?.id,
+			provider: 'clerk',
+			email: email,
+		},
+		{ onConflict: 'user_id' },
+	)
 
-  if (upsertError) {
-    throw new Error('Something went wrong')
-  }
+	if (upsertError) {
+		throw new Error('Something went wrong')
+	}
 
-  return (
-    <div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#0f0f0f]">
-      <DashboardHeader />
-      <main className="flex flex-1 flex-col pb-3">
-        <div className="grow py-6">
-          <div className="mx-auto max-w-6xl">{children}</div>
-        </div>
-      </main>
-    </div>
-  )
+	return (
+		<div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#0f0f0f]">
+			<DashboardHeader />
+			<main className="flex flex-1 flex-col pb-3">
+				<div className="grow py-6">
+					<div className="mx-auto max-w-6xl">{children}</div>
+				</div>
+			</main>
+		</div>
+	)
 }

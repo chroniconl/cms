@@ -4,15 +4,15 @@ import { TrashIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '@/components/heading'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { toast } from '@/components/ui/use-toast'
@@ -21,145 +21,163 @@ import FileUploader from '@/components/FileUploader'
 import { useState } from 'react'
 
 export default function ImageForm({
-  documentId: props__documentId,
-  imageUrl: props__imageUrl,
-  imageId: props__imageId,
-  imageAlt,
+	documentId: props__documentId,
+	imageUrl: props__imageUrl,
+	imageId: props__imageId,
+	imageAlt,
+	maxFileSize = 10485760, // Default to 10 MB
 }: {
-  documentId: string
-  imageUrl: string | null
-  imageId: string | null
-  imageAlt: string | null
+	documentId: string
+	imageUrl: string | null
+	imageId: string | null
+	imageAlt: string | null
+	maxFileSize?: number
 }) {
-  const [imageUrl, setImageUrl] = useState<string | null>(props__imageUrl)
-  const [imageId, setImageId] = useState<string | null>(props__imageId)
+	const [imageUrl, setImageUrl] = useState<string | null>(props__imageUrl)
+	const [imageId, setImageId] = useState<string | null>(props__imageId)
 
-  const handleDeleteImage = async () => {
-    if (!imageId) {
-      return
-    }
-    const response = await fetch('/api/v0/document/image-delete', {
-      method: 'DELETE',
-      body: JSON.stringify({
-        id: props__documentId,
-        imageId: imageId,
-      }),
-    })
+	const handleDeleteImage = async () => {
+		if (!imageId) {
+			return
+		}
+		const response = await fetch('/api/v0/document/image-delete', {
+			method: 'DELETE',
+			body: JSON.stringify({
+				id: props__documentId,
+				imageId: imageId,
+			}),
+		})
 
-    const { error } = await response.json()
-    if (error) {
-      return
-    }
+		const { error } = await response.json()
+		if (error) {
+			return
+		}
 
-    setImageUrl(null)
-    setImageId(null)
+		setImageUrl(null)
+		setImageId(null)
 
-    toast({
-      title: 'Image deleted',
-      description: 'The image has been deleted.',
-    })
-  }
+		toast({
+			title: 'Image deleted',
+			description: 'The image has been deleted.',
+		})
+	}
 
-  const handleUploadImage = async (files: File[]) => {
-    try {
-      const formData = new FormData()
-      formData.append('image', files[0])
-      formData.append('id', props__documentId) // Include document ID
+	const handleUploadImage = async (files: File[]) => {
+		try {
+			for (const file of files) {
+				if (file.size > maxFileSize) {
+					toast({
+						title: 'File Size Exceeded',
+						description: `The file size of ${
+							file.name
+						} exceeds the maximum allowed size of ${maxFileSize / 1000000} MB. Please upload a file smaller than ${
+							maxFileSize / 1000000
+						} MB.`,
+						variant: 'destructive',
+					})
+					return // Stop the upload process if any file is too large
+				}
+			}
 
-      const response = await fetch('/api/v0.2/upload-document-image', {
-        // Adjust endpoint
-        method: 'POST',
-        body: formData, // Send FormData for Supabase compatibility
-      })
+			const formData = new FormData()
+			formData.append('image', files[0])
+			formData.append('id', props__documentId)
 
-      const { data, error, message } = await response.json()
-      if (error) {
-        return toast({
-          title: 'Error',
-          description: message,
-          variant: 'destructive',
-        })
-      }
+			const response = await fetch('/api/v0.2/upload-document-image', {
+				method: 'POST',
+				body: formData,
+			})
 
-      setImageUrl(data.url)
-      setImageId(data.image_id)
+			const { data, error, message } = await response.json()
 
-      toast({
-        title: 'Image uploaded',
-        description: 'The image has been uploaded.',
-      })
-    } catch (error) {
-      console.log('Upload error:', error)
-      toast({
-        title: 'Error',
-        description: 'Failed to upload image. Please try again later.',
-        variant: 'destructive',
-      })
-    }
-  }
+			if (error) {
+				return toast({
+					title: 'Error',
+					description: message,
+					variant: 'destructive',
+				})
+			}
 
-  return (
-    <div className="flex flex-col gap-4">
-      <Card>
-        <div className="mb-4 flex w-full justify-between px-4 pt-6">
-          <Heading level={3}>Image</Heading>
-          {imageUrl && imageUrl?.length > 0 && (
-            <AlertToDeleteImage handleDeleteImage={handleDeleteImage} />
-          )}
-        </div>
-        <div className="px-4 pb-6">
-          {imageUrl && typeof imageUrl === 'string' && imageUrl?.length > 0 ? (
-            <div className="flex flex-col gap-2">
-              <AspectRatio ratio={16 / 9} className="bg-muted">
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt || ''}
-                  fill
-                  className="rounded-md object-cover"
-                />
-              </AspectRatio>
-            </div>
-          ) : (
-            <FileUploader
-              dropZoneLabel="Drag & drop an image here"
-              onFileDrop={handleUploadImage}
-              onFileChange={handleUploadImage}
-              limit={1}
-            />
-          )}
-        </div>
-      </Card>
-    </div>
-  )
+			setImageUrl(data.url)
+			setImageId(data.image_id)
+
+			toast({
+				title: 'Image uploaded',
+				description: 'The image has been uploaded.',
+			})
+		} catch (error) {
+			console.log('Upload error:', error)
+			toast({
+				title: 'Error',
+				description: 'Failed to upload image. Please try again later.',
+				variant: 'destructive',
+			})
+		}
+	}
+
+	return (
+		<div className="flex flex-col gap-4">
+			<Card>
+				<div className="mb-4 flex w-full justify-between px-4 pt-6">
+					<Heading level={3}>Image</Heading>
+					{imageUrl && imageUrl?.length > 0 && (
+						<AlertToDeleteImage handleDeleteImage={handleDeleteImage} />
+					)}
+				</div>
+				<div className="px-4 pb-6">
+					{imageUrl && typeof imageUrl === 'string' && imageUrl?.length > 0 ? (
+						<div className="flex flex-col gap-2">
+							<AspectRatio ratio={16 / 9} className="bg-muted">
+								<Image
+									src={imageUrl}
+									alt={imageAlt || ''}
+									fill
+									className="rounded-md object-cover"
+								/>
+							</AspectRatio>
+						</div>
+					) : (
+						<FileUploader
+							dropZoneLabel="Drag & drop an image here"
+							onFileDrop={handleUploadImage}
+							onFileChange={handleUploadImage}
+							limit={1}
+						/>
+					)}
+				</div>
+			</Card>
+		</div>
+	)
 }
 
 const AlertToDeleteImage = ({
-  handleDeleteImage,
+	handleDeleteImage,
 }: {
-  handleDeleteImage: () => void
+	handleDeleteImage: () => void
 }) => {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">
-          <TrashIcon className="h-4 w-4" />
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. You will not be able to recover this
-            image from the database.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteImage}>
-            Yes, I'm sure
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button variant="outline" aria-label="Delete image">
+					<TrashIcon className="h-4 w-4" />
+					<span className="sr-only">Delete image</span>
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+					<AlertDialogDescription>
+						This action cannot be undone. You will not be able to recover this
+						image from the database.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogAction onClick={handleDeleteImage}>
+						Yes, I'm sure
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	)
 }
