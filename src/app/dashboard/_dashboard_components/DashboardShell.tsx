@@ -13,7 +13,7 @@ interface UserInterface {
   primaryEmailAddressId: string
 }
 
-const tryToGetEmail = (user: UserInterface) => {
+const tryToGetEmailFromClerkResponse = (user: UserInterface) => {
   try {
     const userEmailData: UserEmailInterface | undefined =
       user.emailAddresses.find(
@@ -39,7 +39,7 @@ export default async function DashboardShell({
   }
 
   // its the same, just what we need
-  const email = tryToGetEmail(user as any as UserInterface)
+  const email = tryToGetEmailFromClerkResponse(user as any as UserInterface)
 
   const { error: upsertError } = await supabase.from('users').upsert(
     {

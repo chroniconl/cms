@@ -9,7 +9,7 @@
     "eslint": "next lint",
     "lint": "npx biome lint ./src/**/*.{ts,tsx}",
     "prettier": "npx prettier --write ../../ --ignore-path ../../.gitignore",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch",
     "docs": "pnpm dlx typedoc ./src/**/*.{ts,tsx}",
     "prepare": "husky",

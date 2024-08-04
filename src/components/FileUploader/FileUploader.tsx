@@ -9,7 +9,7 @@ const FileUploader = ({
 	onFileChange = (_) => { return }, // button click event
 	buttonLabel = 'Select file to upload',
 	dropZoneLabel = 'Drag & drop files here',
-	acceptedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+	acceptedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'],
 	limit = 5,
 }: { 
 	onFileDrop?: (files: File[]) => void;
@@ -82,7 +82,7 @@ const FileUploader = ({
 	return (
 		<div>
 			<div
-				className={`p-4 border border-dashed border-blue-500 rounded w-[300px] max-w-[300px] flex items-center justify-center flex-col ${isDragging ? 'bg-blue-500/20' : ''}`}
+				className={`p-4 border border-input bg-background px-2.5 py-6 text-sm text-muted-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 rounded flex items-center justify-center flex-col ${isDragging ? 'bg-blue-500/20' : ''}`}
 				onDragOver={handleDragOver}
 				onDragLeave={handleDragLeave}
 				onDrop={handleDrop}
