@@ -1,9 +1,9 @@
 import DashboardShell from './_dashboard_components/DashboardShell'
 
 export default async function DashboardPage({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
-  return <DashboardShell>{children}</DashboardShell>
+	return <DashboardShell>{children}</DashboardShell>
 }
