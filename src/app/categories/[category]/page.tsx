@@ -17,7 +17,7 @@ export default async function Page({
     .from('categories')
     .select('id, name')
     .eq('slug', params.category)
-		.single()
+    .single()
 
   if (categoriesError) {
     throw new Error(categoriesError.message)
@@ -40,9 +40,9 @@ export default async function Page({
 
   return (
     <PublicLayout>
-			<h1 className="text-3xl tracking-tighter sm:text-5xl text-white mb-10">
-				{categoriesData?.name}
-			</h1>			
+      <h1 className="mb-10 text-3xl tracking-tighter text-white sm:text-5xl">
+        {categoriesData?.name}
+      </h1>
       <BlogPostsGroup posts={filteredPosts} />
     </PublicLayout>
   )

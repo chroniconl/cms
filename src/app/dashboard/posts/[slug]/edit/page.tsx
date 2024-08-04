@@ -71,11 +71,10 @@ export default async function DocumentSlugEdit({
             author_id={postData.author_id}
           />
           <ImageForm
-            id={postData.id}
+            documentId={postData.id}
             imageUrl={postData.image_url}
             imageId={postData.image_id}
-            imageAlt={postData.image_alt}
-            imageCaption={postData.image_caption}
+            imageAlt={postData.title}
           />
           <PublishDetailsForm
             id={postData.id}

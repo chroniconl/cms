@@ -8,9 +8,9 @@ import { Category } from '@/utils/types'
 
 export default async function BlogPostsGroup({
   posts,
-	limit,
+  limit,
 }: {
-	limit?: number | undefined
+  limit?: number | undefined
   posts: {
     id: string
     title: string
@@ -31,18 +31,18 @@ export default async function BlogPostsGroup({
     }
   }[]
 }) {
-	const postsCollection = limit ? posts?.slice(0, limit) : posts
+  const postsCollection = limit ? posts?.slice(0, limit) : posts
   return (
     <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {postsCollection?.map((post, i) => (
         <Link
-					className='inline-block h-full'
+          className="inline-block h-full"
           key={post.id}
           href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
             post.slug
           }`}
         >
-          <article key={post.id} className="h-full group">
+          <article key={post.id} className="group h-full">
             <ClientImage src={post.image_url} alt={post.image_alt} />
             <div className="mt-4 flex flex-col justify-between">
               <div>
