@@ -43,9 +43,22 @@ export async function POST(request: Request) {
     return failResponse('Image upload failed');
   }
 
-	const { data: fileData } = await supabase.storage
-		.from('documents')
-		.getPublicUrl(uploadData.id)
+	// Update the document with the new image
+	const { error: documentError } = await supabase.from('posts')
+		.update({
+			image_url: process.env.SUPABASE_STORAGE_BUCKET_URL + uploadData.path,
+			last_updated: new Date(),
+		})
+		.eq('id', documentId)
+		.single()
+
+	if (documentError) {
+		void logger.logError({
+			message: 'POST failed - Error updating document' + documentError.message,
+			exception_type: 'Error',
+		});
+		return failResponse('Error updating document');
+	}
 
   logger.logPerformance({ message: 'Image POST executed successfully' });
 
