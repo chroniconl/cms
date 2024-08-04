@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { TrashIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '@/components/heading'
-import { useMetaFormStore } from '../_edit_state/metaFormStore'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -19,6 +18,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { toast } from '@/components/ui/use-toast'
 import { Card } from '@/components/ui/card'
 import FileUploader from '@/components/FileUploader'
+import { useState } from 'react'
 
 export default function ImageForm({
 	documentId: props__documentId,
@@ -31,10 +31,8 @@ export default function ImageForm({
 	imageId: string | null
 	imageAlt: string | null
 }) {
-	const imageUrl = useMetaFormStore((state) => state.imageUrl) || props__imageUrl
-	const setImageUrl = useMetaFormStore((state) => state.setImageUrl)
-	const imageId = useMetaFormStore((state) => state.imageId) || props__imageId
-	const setImageId = useMetaFormStore((state) => state.setImageId)
+	const [imageUrl, setImageUrl] = useState<string | null>(props__imageUrl);
+	const [imageId, setImageId] = useState<string | null>(props__imageId);
 
 	const handleDeleteImage = async () => {
 		if (!imageId) {
@@ -108,8 +106,8 @@ export default function ImageForm({
 						<AlertToDeleteImage handleDeleteImage={handleDeleteImage} />
 					)}
 				</div>
-				<div className="px-4 pb-6">
-					{imageUrl && imageUrl?.length > 0 ? (
+				<div className="px-4 pb-6">					
+					{imageUrl && typeof imageUrl === 'string' && imageUrl?.length > 0 ? (
 						<div className="flex flex-col gap-2">
 							<AspectRatio ratio={16 / 9} className="bg-muted">
 								<Image
