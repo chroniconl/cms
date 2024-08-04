@@ -10,12 +10,14 @@ const FileUploader = ({
 	buttonLabel = 'Select file to upload',
 	dropZoneLabel = 'Drag & drop files here',
 	acceptedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+	limit = 5,
 }: { 
 	onFileDrop?: (files: File[]) => void;
 	onFileChange?: (files: File[]) => void;
 	buttonLabel?: string;
 	dropZoneLabel?: string;
 	acceptedFileTypes?: string[];
+	limit?: number;
 }) => {
 	const [files, setFiles] = useState<File[]>([])
 	const [isDragging, setIsDragging] = useState(false)
@@ -39,9 +41,17 @@ const FileUploader = ({
 		event.stopPropagation()
 		setIsDragging(false)
 
-		const droppedFiles = Array.from(event.dataTransfer.files);
-    const validFiles = droppedFiles.filter(file => 
-      acceptedFileTypes.some(type => file.type.startsWith(type) || file.name.endsWith(type))
+		let droppedFiles = Array.from(event.dataTransfer.files);
+
+		// Handle file limit restriction
+    if (limit !== null && droppedFiles.length > limit) {
+      droppedFiles = droppedFiles.slice(0, limit); // Keep only the allowed number of files
+    }
+
+    const validFiles = droppedFiles.filter((file) =>
+      acceptedFileTypes.some(
+        (type) => file.type.startsWith(type) || file.name.endsWith(type)
+      )
     );
 
     setFiles(validFiles);
@@ -49,16 +59,20 @@ const FileUploader = ({
 	}
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const selectedFiles = Array.from(event.target.files || [])
+		let selectedFiles = Array.from(event.target.files || []);
 
-    const validFiles = selectedFiles.filter(file => 
-      acceptedFileTypes.some(type => file.type.startsWith(type) || file.name.endsWith(type))
+    if (limit !== null && selectedFiles.length > limit) {
+      selectedFiles = selectedFiles.slice(0, limit);
+    }
+
+    const validFiles = selectedFiles.filter((file) =>
+      acceptedFileTypes.some(
+        (type) => file.type.startsWith(type) || file.name.endsWith(type)
+      )
     );
-		setFiles(validFiles)
-		onFileChange(validFiles)
 
-		setFiles(validFiles)
-		onFileChange(validFiles)
+		setFiles(validFiles);
+		onFileChange(validFiles);
 	}
 
 	const handleButtonClick = () => {

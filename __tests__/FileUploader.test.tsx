@@ -86,5 +86,43 @@ describe('FileUploader', () => {
 			expect(onFileChange).toHaveBeenCalledWith([]);
 		});
 	});
+
+	describe("File Limit", () => {
+		it("should accept only the specified number of files on drop", async () => {
+			const onFileDrop = jest.fn();
+			const { getByText } = render(<FileUploader onFileDrop={onFileDrop} limit={2} />);
+			const dropArea = getByText("Drag & drop files here");
+	
+			const file1 = new File(["hello"], "hello.jpg", { type: "image/jpeg" });
+			const file2 = new File(["world"], "world.png", { type: "image/png" });
+			const file3 = new File(["foo"], "foo.jpg", { type: "image/jpeg" }); // Extra file
+	
+			fireEvent.drop(dropArea, {
+				dataTransfer: { files: [file1, file2, file3] },
+			});
+	
+			await waitFor(() => {
+				expect(onFileDrop).toHaveBeenCalledWith([file1, file2]); // Only first two files are passed
+			});
+		});
+	
+		// ... (Add a similar test for button click with a file limit)
+		it("should accept only the specified number of files when selected via button click", async () => {
+			const user = userEvent.setup();
+			const onFileChange = jest.fn();
+			const { getByLabelText, getByText } = render(
+				<FileUploader onFileChange={onFileChange} limit={1} />
+			);
+	
+			const file1 = new File(['hello'], 'hello.jpg', { type: 'image/jpeg' });
+			const file2 = new File(['world'], 'world.png', { type: 'image/png' });
+	
+			const fileInput = getByLabelText('File input');
+			await user.upload(fileInput, [file1, file2]);
+			expect(onFileChange).toHaveBeenCalledWith([file1]);
+			expect(getByText(file1.name)).toBeInTheDocument();
+			// expect(getByText('world.png')).not.toBeInTheDocument();
+		});
+	});
 });
 
