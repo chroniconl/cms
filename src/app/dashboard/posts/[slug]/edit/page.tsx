@@ -9,7 +9,6 @@ import TipTap, { proseClassNames } from '@/components/TipTap'
 import { Card } from '@/components/ui/card'
 import { supabase } from '@/utils/supabase'
 import { getPSTDate } from '@/utils/dates'
-import FileUploader from '@/components/FileUploader'
 
 export default async function DocumentSlugEdit({
   params,
@@ -88,7 +87,6 @@ export default async function DocumentSlugEdit({
             categories={categoriesData}
             category={postData.category}
           />
-					<FileUploader />
         </section>
       </div>
     )

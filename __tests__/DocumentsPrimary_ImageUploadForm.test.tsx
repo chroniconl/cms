@@ -1,56 +1,66 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ImageForm from '../src/app/dashboard/posts/[slug]/edit/_edit_components/ImageForm';
-import { useMetaFormStore } from '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import ImageForm from '../src/app/dashboard/posts/[slug]/edit/_edit_components/ImageForm'
+import { useMetaFormStore } from '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore'
 
-jest.mock('../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore', () => ({
-  __esModule: true, // Ensure the module is treated as an ES module
-  useMetaFormStore: jest.fn(() => ({
-    imageUrl: null,
-    setImageUrl: jest.fn(),
-    imageId: null,
-    setImageId: jest.fn(),
-  })),
-}));
+jest.mock(
+  '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore',
+  () => ({
+    __esModule: true, // Ensure the module is treated as an ES module
+    useMetaFormStore: jest.fn(() => ({
+      imageUrl: null,
+      setImageUrl: jest.fn(),
+      imageId: null,
+      setImageId: jest.fn(),
+    })),
+  }),
+)
 
-// When uploading an image in this context, 
-// there will be an document ID and an document title 
+// When uploading an image in this context,
+// there will be an document ID and an document title
 // we use the document title as the image alt text
 const document = {
-	id: '123',
-	title: 'Example Title',
+  id: '123',
+  title: 'Example Title',
 }
 
 const testImage = {
-	id: '456',
-	url: process.env.SUPABASE_STORAGE_BUCKET_URL + '/__documents__test/fabian-gieske-cbIKeuURaq8-unsplash.png'
-} 
+  id: '456',
+  url:
+    process.env.SUPABASE_STORAGE_BUCKET_URL +
+    '/__documents__test/fabian-gieske-cbIKeuURaq8-unsplash.png',
+}
 
 describe('ImageForm', () => {
-	beforeEach(() => {
-    (useMetaFormStore as unknown as jest.Mock).mockClear(); // Reset the mock between tests
-  });
+  beforeEach(() => {
+    ;(useMetaFormStore as unknown as jest.Mock).mockClear() // Reset the mock between tests
+  })
 
   it('renders without an image initially', async () => {
-    const {getByText} = await render(<ImageForm documentId={document.id} imageUrl={null} imageId={null} imageAlt={document.title} />);
-    
-		expect(getByText('Drag & drop an image here')).toBeInTheDocument();
-  });
+    const { getByText } = await render(
+      <ImageForm
+        documentId={document.id}
+        imageUrl={null}
+        imageId={null}
+        imageAlt={document.title}
+      />,
+    )
 
-	it('renders with an image initially', async () => {
-		const {getByAltText} = await render(
-			<ImageForm 
-				documentId={document.id} 
-				imageUrl={testImage.url} 
-				imageId={testImage.id} 
-				imageAlt={document.title} 
-			/>
-		);
-				
-		expect(getByAltText(document.title)).toBeInTheDocument();
-	});
+    expect(getByText('Drag & drop an image here')).toBeInTheDocument()
+  })
 
-});
+  it('renders with an image initially', async () => {
+    const { getByAltText } = await render(
+      <ImageForm
+        documentId={document.id}
+        imageUrl={testImage.url}
+        imageId={testImage.id}
+        imageAlt={document.title}
+      />,
+    )
 
+    expect(getByAltText(document.title)).toBeInTheDocument()
+  })
+})
 
 // Component Rendering:
 

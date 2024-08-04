@@ -2,7 +2,11 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Text, Code } from '@/components/text'
 import { Heading } from '@/components/heading'
-import { Button, ChButtonPrimary, ChButtonSecondary } from '@/components/ui/button'
+import {
+  Button,
+  ChButtonPrimary,
+  ChButtonSecondary,
+} from '@/components/ui/button'
 import UploadLogo from './_settings_components/UploadLogo'
 
 export default function SettingsPage() {
