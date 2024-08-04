@@ -1,6 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import ImageForm from '../src/app/dashboard/posts/[slug]/edit/_edit_components/ImageForm'
 import { useMetaFormStore } from '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore'
+import userEvent from '@testing-library/user-event'
+import { Toaster } from '../src/components/ui/toaster'
 
 jest.mock(
   '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore',
@@ -27,7 +29,7 @@ const testImage = {
   id: '456',
   url:
     process.env.SUPABASE_STORAGE_BUCKET_URL +
-    '/__documents__test/fabian-gieske-cbIKeuURaq8-unsplash.png',
+    '/fabian-gieske-cbIKeuURaq8-unsplash.png',
 }
 
 describe('ImageForm', () => {
@@ -35,42 +37,147 @@ describe('ImageForm', () => {
     ;(useMetaFormStore as unknown as jest.Mock).mockClear() // Reset the mock between tests
   })
 
-  it('renders without an image initially', async () => {
-    const { getByText } = await render(
-      <ImageForm
-        documentId={document.id}
-        imageUrl={null}
-        imageId={null}
-        imageAlt={document.title}
-      />,
-    )
+  describe('Image Rendering', () => {
+    it('renders without an image initially', async () => {
+      const { getByText } = await render(
+        <ImageForm
+          documentId={document.id}
+          imageUrl={null}
+          imageId={null}
+          imageAlt={document.title}
+        />,
+      )
 
-    expect(getByText('Drag & drop an image here')).toBeInTheDocument()
+      // Initial Render (No Image): Verify the component renders correctly with the FileUploader visible and no image displayed when no image URL is provided.
+      expect(getByText('Drag & drop an image here')).toBeInTheDocument()
+    })
+
+    it('renders with an image initially', async () => {
+      const { getByAltText, getByLabelText } = await render(
+        <ImageForm
+          documentId={document.id}
+          imageUrl={testImage.url}
+          imageId={testImage.id}
+          imageAlt={document.title}
+        />,
+      )
+
+      // Alt Text and Caption: Verify the imageAlt prop is used correctly. This can be done by checking if the alt attribute of the Image component matches the value passed as imageAlt in the props.
+      // Initial Render (With Image): Verify the component renders the Image component correctly, showing the provided image URL and the delete button when an image URL exists.
+      expect(getByAltText(document.title)).toBeInTheDocument()
+      expect(getByLabelText('Delete image')).toBeInTheDocument()
+    })
   })
 
-  it('renders with an image initially', async () => {
-    const { getByAltText } = await render(
-      <ImageForm
-        documentId={document.id}
-        imageUrl={testImage.url}
-        imageId={testImage.id}
-        imageAlt={document.title}
-      />,
-    )
+  describe('Image Upload', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn() // Mock fetch before each test
+    })
 
-    expect(getByAltText(document.title)).toBeInTheDocument()
+    afterEach(() => {
+      jest.restoreAllMocks() // Clear mocks after each test
+    })
+    it('successfully uploads an image', async () => {
+      const file = new File(['(mocked image data)'], 'test-image.png', {
+        type: 'image/png',
+      })
+
+      // Mock successful response from the API
+      ;(fetch as jest.Mock).mockResolvedValueOnce({
+        json: async () => ({
+          data: testImage,
+          error: null,
+          message: 'Success',
+        }),
+      })
+
+      const { getByLabelText, getByText, getByAltText } = render(
+        <>
+          <ImageForm
+            documentId={document.id}
+            imageUrl={null}
+            imageId={null}
+            imageAlt={document.title}
+          />
+          <Toaster />
+        </>,
+      )
+
+      const dropzone = getByText('Drag & drop an image here').closest('div')
+      const input = getByLabelText('File input') as HTMLInputElement
+
+      // Simulate file drop
+      userEvent.upload(input, file)
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledWith(
+          '/api/v0.2/upload-document-image',
+          expect.objectContaining({
+            method: 'POST',
+            body: expect.any(FormData),
+          }),
+        )
+      })
+
+      await waitFor(() => {
+        expect(getByAltText(document.title)).toBeInTheDocument()
+      })
+      await waitFor(
+        () => {
+          expect(getByText('Image uploaded')).toBeInTheDocument()
+        },
+        { timeout: 4000 },
+      )
+    })
+
+    it('handles image upload errors', async () => {
+      const file = new File(['(mocked image data)'], 'test-image.png', {
+        type: 'image/png',
+      })
+
+      // Mock error response from the API
+      ;(fetch as jest.Mock).mockResolvedValueOnce({
+        json: async () => ({
+          error: 'Upload failed',
+          message: 'Error details',
+        }),
+      })
+
+      const { getByLabelText, findByText } = render(
+        <>
+          <ImageForm
+            documentId={document.id}
+            imageUrl={null}
+            imageId={null}
+            imageAlt={document.title}
+          />
+          <Toaster />
+        </>,
+      )
+
+      const input = getByLabelText('File input') as HTMLInputElement
+      userEvent.upload(input, file)
+
+      // if it failed, there will be a toast we cant test from here
+      // because its rendered at a higher level
+
+      // Check if toast notification shows the error message
+      const errorToast = await findByText('Error details') // Wait for the error message to appear
+      expect(errorToast).toBeInTheDocument()
+
+      // // Check that the toast notification is visible for a certain duration (adjust the timeout as needed)
+      await waitFor(
+        () => {
+          expect(errorToast).toBeVisible()
+        },
+        { timeout: 6000 },
+      )
+    })
   })
 })
 
-// Component Rendering:
-
-// Initial Render (No Image): Verify the component renders correctly with the FileUploader visible and no image displayed when no image URL is provided.
-// Initial Render (With Image): Verify the component renders the Image component correctly, showing the provided image URL and the delete button when an image URL exists.
-// Alt Text and Caption: Verify the imageAlt prop is used correctly. This can be done by checking if the alt attribute of the Image component matches the value passed as imageAlt in the props.
 // Image Upload:
 
-// Success: Simulate a successful image upload using the FileUploader. Test if the setImageUrl and setImageId functions are called with the correct values. Check if a success toast notification is displayed.
-// Error: Simulate an error during image upload. Test if the state variables are not updated and an error toast notification is displayed.
 // File Type Validation: Verify that only allowed file types (e.g., .jpg, .png) are accepted by the FileUploader.
 // File Size Limit: Test if the FileUploader correctly enforces the file size limit (if you have one).
 // Image Deletion:

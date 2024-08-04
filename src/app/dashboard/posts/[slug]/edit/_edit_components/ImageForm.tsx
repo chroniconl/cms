@@ -64,15 +64,15 @@ export default function ImageForm({
     try {
       const formData = new FormData()
       formData.append('image', files[0])
-      formData.append('id', props__documentId) // Include document ID
+      formData.append('id', props__documentId)
 
       const response = await fetch('/api/v0.2/upload-document-image', {
-        // Adjust endpoint
         method: 'POST',
-        body: formData, // Send FormData for Supabase compatibility
+        body: formData,
       })
 
       const { data, error, message } = await response.json()
+
       if (error) {
         return toast({
           title: 'Error',
@@ -141,8 +141,9 @@ const AlertToDeleteImage = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" aria-label="Delete image">
           <TrashIcon className="h-4 w-4" />
+          <span className="sr-only">Delete image</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
