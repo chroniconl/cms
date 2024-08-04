@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import FileUploader from '../src/components/FileUploader';
+import { FileUploader } from '../src/components/FileUploader';
 
 describe('FileUploader', () => {
 	it('should render the drag-and-drop area', () => {
