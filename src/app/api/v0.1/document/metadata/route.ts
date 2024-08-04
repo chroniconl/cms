@@ -10,63 +10,63 @@ const environment = (process.env.NODE_ENV as string) || 'development'
 const logger = new Logger(loggerName, applicationName, environment)
 
 export async function PUT(request: Request) {
-  const start = performance.now()
-  const { error: userError } = await getCurrentUser()
-  if (userError) {
-    void logger.logError({
-      message: 'PUT failed - Error getting user' + JSON.stringify(userError),
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
-    return failResponse('Trouble getting user')
-  }
+	const start = performance.now()
+	const { error: userError } = await getCurrentUser()
+	if (userError) {
+		void logger.logError({
+			message: 'PUT failed - Error getting user' + JSON.stringify(userError),
+			error_code: 'E001',
+			exception_type: 'Error',
+		})
+		return failResponse('Trouble getting user')
+	}
 
-  const requestData = await request.json()
+	const requestData = await request.json()
 
-  const schema = joi.object({
-    id: joi.string().required(),
-    title: joi.string().optional(),
-    description: joi.string().optional(),
-    author_id: joi.string().optional(),
-  })
+	const schema = joi.object({
+		id: joi.string().required(),
+		title: joi.string().optional(),
+		description: joi.string().optional(),
+		author_id: joi.string().optional(),
+	})
 
-  const { error: validationError } = schema.validate(requestData)
+	const { error: validationError } = schema.validate(requestData)
 
-  if (validationError) {
-    void logger.logError({
-      message:
-        'PUT failed - Error validating request data' + validationError.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
-    return failResponse(validationError.message)
-  }
+	if (validationError) {
+		void logger.logError({
+			message:
+				'PUT failed - Error validating request data' + validationError.message,
+			error_code: 'E001',
+			exception_type: 'Error',
+		})
+		return failResponse(validationError.message)
+	}
 
-  const { error } = await supabase
-    .from('posts')
-    .update({
-      title: requestData?.title || null,
-      description: requestData?.description || null,
-      author_id: requestData?.author_id || '',
-      last_updated: new Date(),
-    })
-    .match({ id: requestData?.id })
+	const { error } = await supabase
+		.from('posts')
+		.update({
+			title: requestData?.title || null,
+			description: requestData?.description || null,
+			author_id: requestData?.author_id || '',
+			last_updated: new Date(),
+		})
+		.match({ id: requestData?.id })
 
-  if (error) {
-    void logger.logError({
-      message: 'PUT failed - Error updating document' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
-    return failResponse(error?.message)
-  }
+	if (error) {
+		void logger.logError({
+			message: 'PUT failed - Error updating document' + error.message,
+			error_code: 'E001',
+			exception_type: 'Error',
+		})
+		return failResponse(error?.message)
+	}
 
-  const end = performance.now()
-  void logger.logPerformance({
-    message: 'PUT executed successfully',
-    execution_time: Math.round(end - start),
-    url: '/api/v0.1/document/metadata',
-    http_method: 'PUT',
-  })
-  return okResponse('Document updated')
+	const end = performance.now()
+	void logger.logPerformance({
+		message: 'PUT executed successfully',
+		execution_time: Math.round(end - start),
+		url: '/api/v0.1/document/metadata',
+		http_method: 'PUT',
+	})
+	return okResponse('Document updated')
 }

@@ -5,175 +5,175 @@ import userEvent from '@testing-library/user-event'
 import { Toaster } from '../src/components/ui/toaster'
 
 jest.mock(
-  '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore',
-  () => ({
-    __esModule: true, // Ensure the module is treated as an ES module
-    useMetaFormStore: jest.fn(() => ({
-      imageUrl: null,
-      setImageUrl: jest.fn(),
-      imageId: null,
-      setImageId: jest.fn(),
-    })),
-  }),
+	'../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore',
+	() => ({
+		__esModule: true, // Ensure the module is treated as an ES module
+		useMetaFormStore: jest.fn(() => ({
+			imageUrl: null,
+			setImageUrl: jest.fn(),
+			imageId: null,
+			setImageId: jest.fn(),
+		})),
+	}),
 )
 
 // When uploading an image in this context,
 // there will be an document ID and an document title
 // we use the document title as the image alt text
 const document = {
-  id: '123',
-  title: 'Example Title',
+	id: '123',
+	title: 'Example Title',
 }
 
 const testImage = {
-  id: '456',
-  url:
-    process.env.SUPABASE_STORAGE_BUCKET_URL +
-    '/fabian-gieske-cbIKeuURaq8-unsplash.png',
+	id: '456',
+	url:
+		process.env.SUPABASE_STORAGE_BUCKET_URL +
+		'/fabian-gieske-cbIKeuURaq8-unsplash.png',
 }
 
 describe('ImageForm', () => {
-  beforeEach(() => {
-    ;(useMetaFormStore as unknown as jest.Mock).mockClear() // Reset the mock between tests
-  })
+	beforeEach(() => {
+		;(useMetaFormStore as unknown as jest.Mock).mockClear() // Reset the mock between tests
+	})
 
-  describe('Image Rendering', () => {
-    it('renders without an image initially', async () => {
-      const { getByText } = await render(
-        <ImageForm
-          documentId={document.id}
-          imageUrl={null}
-          imageId={null}
-          imageAlt={document.title}
-        />,
-      )
+	describe('Image Rendering', () => {
+		it('renders without an image initially', async () => {
+			const { getByText } = await render(
+				<ImageForm
+					documentId={document.id}
+					imageUrl={null}
+					imageId={null}
+					imageAlt={document.title}
+				/>,
+			)
 
-      // Initial Render (No Image): Verify the component renders correctly with the FileUploader visible and no image displayed when no image URL is provided.
-      expect(getByText('Drag & drop an image here')).toBeInTheDocument()
-    })
+			// Initial Render (No Image): Verify the component renders correctly with the FileUploader visible and no image displayed when no image URL is provided.
+			expect(getByText('Drag & drop an image here')).toBeInTheDocument()
+		})
 
-    it('renders with an image initially', async () => {
-      const { getByAltText, getByLabelText } = await render(
-        <ImageForm
-          documentId={document.id}
-          imageUrl={testImage.url}
-          imageId={testImage.id}
-          imageAlt={document.title}
-        />,
-      )
+		it('renders with an image initially', async () => {
+			const { getByAltText, getByLabelText } = await render(
+				<ImageForm
+					documentId={document.id}
+					imageUrl={testImage.url}
+					imageId={testImage.id}
+					imageAlt={document.title}
+				/>,
+			)
 
-      // Alt Text and Caption: Verify the imageAlt prop is used correctly. This can be done by checking if the alt attribute of the Image component matches the value passed as imageAlt in the props.
-      // Initial Render (With Image): Verify the component renders the Image component correctly, showing the provided image URL and the delete button when an image URL exists.
-      expect(getByAltText(document.title)).toBeInTheDocument()
-      expect(getByLabelText('Delete image')).toBeInTheDocument()
-    })
-  })
+			// Alt Text and Caption: Verify the imageAlt prop is used correctly. This can be done by checking if the alt attribute of the Image component matches the value passed as imageAlt in the props.
+			// Initial Render (With Image): Verify the component renders the Image component correctly, showing the provided image URL and the delete button when an image URL exists.
+			expect(getByAltText(document.title)).toBeInTheDocument()
+			expect(getByLabelText('Delete image')).toBeInTheDocument()
+		})
+	})
 
-  describe('Image Upload', () => {
-    beforeEach(() => {
-      global.fetch = jest.fn() // Mock fetch before each test
-    })
+	describe('Image Upload', () => {
+		beforeEach(() => {
+			global.fetch = jest.fn() // Mock fetch before each test
+		})
 
-    afterEach(() => {
-      jest.restoreAllMocks() // Clear mocks after each test
-    })
-    it('successfully uploads an image', async () => {
-      const file = new File(['(mocked image data)'], 'test-image.png', {
-        type: 'image/png',
-      })
+		afterEach(() => {
+			jest.restoreAllMocks() // Clear mocks after each test
+		})
+		it('successfully uploads an image', async () => {
+			const file = new File(['(mocked image data)'], 'test-image.png', {
+				type: 'image/png',
+			})
 
-      // Mock successful response from the API
-      ;(fetch as jest.Mock).mockResolvedValueOnce({
-        json: async () => ({
-          data: testImage,
-          error: null,
-          message: 'Success',
-        }),
-      })
+			// Mock successful response from the API
+			;(fetch as jest.Mock).mockResolvedValueOnce({
+				json: async () => ({
+					data: testImage,
+					error: null,
+					message: 'Success',
+				}),
+			})
 
-      const { getByLabelText, getByText, getByAltText } = render(
-        <>
-          <ImageForm
-            documentId={document.id}
-            imageUrl={null}
-            imageId={null}
-            imageAlt={document.title}
-          />
-          <Toaster />
-        </>,
-      )
+			const { getByLabelText, getByText, getByAltText } = render(
+				<>
+					<ImageForm
+						documentId={document.id}
+						imageUrl={null}
+						imageId={null}
+						imageAlt={document.title}
+					/>
+					<Toaster />
+				</>,
+			)
 
-      const dropzone = getByText('Drag & drop an image here').closest('div')
-      const input = getByLabelText('File input') as HTMLInputElement
+			const dropzone = getByText('Drag & drop an image here').closest('div')
+			const input = getByLabelText('File input') as HTMLInputElement
 
-      // Simulate file drop
-      userEvent.upload(input, file)
+			// Simulate file drop
+			userEvent.upload(input, file)
 
-      await waitFor(() => {
-        expect(fetch).toHaveBeenCalledWith(
-          '/api/v0.2/upload-document-image',
-          expect.objectContaining({
-            method: 'POST',
-            body: expect.any(FormData),
-          }),
-        )
-      })
+			await waitFor(() => {
+				expect(fetch).toHaveBeenCalledWith(
+					'/api/v0.2/upload-document-image',
+					expect.objectContaining({
+						method: 'POST',
+						body: expect.any(FormData),
+					}),
+				)
+			})
 
-      await waitFor(() => {
-        expect(getByAltText(document.title)).toBeInTheDocument()
-      })
-      await waitFor(
-        () => {
-          expect(getByText('Image uploaded')).toBeInTheDocument()
-        },
-        { timeout: 4000 },
-      )
-    })
+			await waitFor(() => {
+				expect(getByAltText(document.title)).toBeInTheDocument()
+			})
+			await waitFor(
+				() => {
+					expect(getByText('Image uploaded')).toBeInTheDocument()
+				},
+				{ timeout: 4000 },
+			)
+		})
 
-    it('handles image upload errors', async () => {
-      const file = new File(['(mocked image data)'], 'test-image.png', {
-        type: 'image/png',
-      })
+		it('handles image upload errors', async () => {
+			const file = new File(['(mocked image data)'], 'test-image.png', {
+				type: 'image/png',
+			})
 
-      // Mock error response from the API
-      ;(fetch as jest.Mock).mockResolvedValueOnce({
-        json: async () => ({
-          error: 'Upload failed',
-          message: 'Error details',
-        }),
-      })
+			// Mock error response from the API
+			;(fetch as jest.Mock).mockResolvedValueOnce({
+				json: async () => ({
+					error: 'Upload failed',
+					message: 'Error details',
+				}),
+			})
 
-      const { getByLabelText, findByText } = render(
-        <>
-          <ImageForm
-            documentId={document.id}
-            imageUrl={null}
-            imageId={null}
-            imageAlt={document.title}
-          />
-          <Toaster />
-        </>,
-      )
+			const { getByLabelText, findByText } = render(
+				<>
+					<ImageForm
+						documentId={document.id}
+						imageUrl={null}
+						imageId={null}
+						imageAlt={document.title}
+					/>
+					<Toaster />
+				</>,
+			)
 
-      const input = getByLabelText('File input') as HTMLInputElement
-      userEvent.upload(input, file)
+			const input = getByLabelText('File input') as HTMLInputElement
+			userEvent.upload(input, file)
 
-      // if it failed, there will be a toast we cant test from here
-      // because its rendered at a higher level
+			// if it failed, there will be a toast we cant test from here
+			// because its rendered at a higher level
 
-      // Check if toast notification shows the error message
-      const errorToast = await findByText('Error details') // Wait for the error message to appear
-      expect(errorToast).toBeInTheDocument()
+			// Check if toast notification shows the error message
+			const errorToast = await findByText('Error details') // Wait for the error message to appear
+			expect(errorToast).toBeInTheDocument()
 
-      // // Check that the toast notification is visible for a certain duration (adjust the timeout as needed)
-      await waitFor(
-        () => {
-          expect(errorToast).toBeVisible()
-        },
-        { timeout: 6000 },
-      )
-    })
-  })
+			// // Check that the toast notification is visible for a certain duration (adjust the timeout as needed)
+			await waitFor(
+				() => {
+					expect(errorToast).toBeVisible()
+				},
+				{ timeout: 6000 },
+			)
+		})
+	})
 })
 
 // Image Upload:

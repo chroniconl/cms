@@ -10,20 +10,20 @@ Here's an example of how to use the `FileUploader` component:
 import { FileUploader } from '@chroniconl/file-uploader'
 
 function MyComponent() {
-  return (
-    <FileUploader
-      onFileDrop={(files) => {
-        // Handle file drop event
-      }}
-      onFileChange={(files) => {
-        // Handle file change event
-      }}
-      buttonLabel="Select file to upload"
-      dropZoneLabel="Drag & drop files here"
-      acceptedFileTypes={['image/png', 'image/jpeg', 'image/jpg', 'image/gif']}
-      limit={5}
-    />
-  )
+	return (
+		<FileUploader
+			onFileDrop={(files) => {
+				// Handle file drop event
+			}}
+			onFileChange={(files) => {
+				// Handle file change event
+			}}
+			buttonLabel="Select file to upload"
+			dropZoneLabel="Drag & drop files here"
+			acceptedFileTypes={['image/png', 'image/jpeg', 'image/jpg', 'image/gif']}
+			limit={5}
+		/>
+	)
 }
 ```
 
