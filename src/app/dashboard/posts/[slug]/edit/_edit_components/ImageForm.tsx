@@ -25,11 +25,13 @@ export default function ImageForm({
 	imageUrl: props__imageUrl,
 	imageId: props__imageId,
 	imageAlt,
+	maxFileSize = 10485760, // Default to 10 MB
 }: {
 	documentId: string
 	imageUrl: string | null
 	imageId: string | null
 	imageAlt: string | null
+	maxFileSize?: number
 }) {
 	const [imageUrl, setImageUrl] = useState<string | null>(props__imageUrl)
 	const [imageId, setImageId] = useState<string | null>(props__imageId)
@@ -62,6 +64,21 @@ export default function ImageForm({
 
 	const handleUploadImage = async (files: File[]) => {
 		try {
+			for (const file of files) {
+				if (file.size > maxFileSize) {
+					toast({
+						title: 'File Size Exceeded',
+						description: `The file size of ${
+							file.name
+						} exceeds the maximum allowed size of ${maxFileSize / 1000000} MB. Please upload a file smaller than ${
+							maxFileSize / 1000000
+						} MB.`,
+						variant: 'destructive',
+					})
+					return // Stop the upload process if any file is too large
+				}
+			}
+
 			const formData = new FormData()
 			formData.append('image', files[0])
 			formData.append('id', props__documentId)

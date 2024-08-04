@@ -173,19 +173,129 @@ describe('ImageForm', () => {
 				{ timeout: 6000 },
 			)
 		})
+
+		it('handles file size errors', async () => {
+			const largeFile = new File(
+				['(mocked large image data)'],
+				'large-image.png',
+				{
+					type: 'image/png',
+				},
+			)
+
+			Object.defineProperty(largeFile, 'size', { value: 11 * 1024 * 1024 }) // 11 MB
+
+			const { getByLabelText, findByText } = render(
+				<>
+					<ImageForm
+						documentId={document.id}
+						imageUrl={null}
+						imageId={null}
+						imageAlt={document.title}
+					/>
+					<Toaster />
+				</>,
+			)
+
+			const input = getByLabelText('File input') as HTMLInputElement
+			userEvent.upload(input, largeFile)
+
+			// Check if toast notification shows the correct error message
+			const errorToast = await findByText(
+				/The file size of large-image.png exceeds the maximum allowed size/,
+			)
+			expect(errorToast).toBeInTheDocument()
+
+			// Check if the toast notification is visible
+			await waitFor(
+				() => {
+					expect(errorToast).toBeVisible()
+				},
+				{ timeout: 6000 },
+			)
+		})
+
+		it('only uploads one file', async () => {
+			const file1 = new File(['(mocked image data 1)'], 'test-image1.png', {
+				type: 'image/png',
+			})
+			const file2 = new File(['(mocked image data 2)'], 'test-image2.png', {
+				type: 'image/png',
+			})
+
+			// Mock successful response for the first file upload
+			;(fetch as jest.Mock).mockResolvedValueOnce({
+				json: async () => ({
+					data: testImage,
+					error: null,
+					message: 'Success',
+				}),
+			})
+
+			const { getByLabelText, getByAltText } = render(
+				<ImageForm
+					documentId={document.id}
+					imageUrl={null}
+					imageId={null}
+					imageAlt={document.title}
+				/>,
+			)
+
+			const input = getByLabelText('File input') as HTMLInputElement
+
+			// Simulate uploading multiple files
+			userEvent.upload(input, [file1, file2])
+
+			// Wait for the first image to be rendered
+			await waitFor(() => {
+				expect(getByAltText(document.title)).toBeInTheDocument()
+			})
+
+			// Ensure that `fetch` is only called once, indicating only one file was uploaded
+			expect(fetch).toHaveBeenCalledTimes(1)
+		})
+	})
+
+	describe('Image Deletion', () => {
+		it('successfully deletes an image', async () => {
+			// Mock successful response from the API
+			;(fetch as jest.Mock).mockResolvedValueOnce({
+				json: async () => ({
+					error: null,
+				}),
+			})
+
+			const { getByLabelText, queryByAltText } = render(
+				<>
+					<ImageForm
+						documentId={document.id}
+						imageUrl={testImage.url}
+						imageId={testImage.id}
+						imageAlt={document.title}
+					/>
+					<Toaster />
+				</>,
+			)
+
+			// Click the delete button
+			fireEvent.click(getByLabelText('Delete image'))
+
+			// Click the confirmation button in the dialog
+			const confirmButton = screen.getByText("Yes, I'm sure")
+			fireEvent.click(confirmButton)
+
+			// Wait for the image to be removed
+			await waitFor(() => {
+				expect(queryByAltText(document.title)).toBeNull()
+			})
+
+			// Check if fetch was called with the correct endpoint and method
+			expect(fetch).toHaveBeenCalledWith(
+				'/api/v0/document/image-delete',
+				expect.objectContaining({
+					method: 'DELETE',
+				}),
+			)
+		})
 	})
 })
-
-// Image Upload:
-
-// File Type Validation: Verify that only allowed file types (e.g., .jpg, .png) are accepted by the FileUploader.
-// File Size Limit: Test if the FileUploader correctly enforces the file size limit (if you have one).
-// Image Deletion:
-
-// Confirmation Dialog: Verify that the confirmation dialog appears when the delete button is clicked.
-// Successful Deletion: Simulate confirming the deletion. Check if the setImageUrl and setImageId functions are called with null. Verify that a success toast notification is displayed.
-// Canceled Deletion: Simulate canceling the deletion. Test if the state variables remain unchanged and the image is not removed.
-// Form Submission:
-
-// Alt Text and Caption Update: Verify that the form correctly updates the image alt text and caption when the form is submitted.
-// Error Handling: Simulate an error during form submission. Check if an error toast notification is displayed.
