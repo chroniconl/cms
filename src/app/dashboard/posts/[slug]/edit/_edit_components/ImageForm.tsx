@@ -104,12 +104,12 @@ export default function ImageForm({
 			<Card>
 				<div className="mb-4 flex w-full justify-between px-4 pt-6">
 					<Heading level={3}>Image</Heading>
-					{imageUrl && (
+					{imageUrl && imageUrl?.length > 0 && (
 						<AlertToDeleteImage handleDeleteImage={handleDeleteImage} />
 					)}
 				</div>
 				<div className="px-4 pb-6">
-					{imageUrl ? (
+					{imageUrl && imageUrl?.length > 0 ? (
 						<div className="flex flex-col gap-2">
 							<AspectRatio ratio={16 / 9} className="bg-muted">
 								<Image
@@ -122,6 +122,7 @@ export default function ImageForm({
 						</div>
 					) : (
 						<FileUploader
+							dropZoneLabel="Drag & drop an image here"
 							onFileDrop={handleUploadImage}
 							onFileChange={handleUploadImage}
 							limit={1}
