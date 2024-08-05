@@ -3,75 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--background: #ffffff;
-		--foreground: #05052c;
+  :root {
+    --background: #ffffff;
+    --foreground: #05052c;
 
-		--card: #ffffff;
-		--card-foreground: #05052c;
+    --card: #ffffff;
+    --card-foreground: #05052c;
 
-		--popover: #ffffff;
-		--popover-foreground: #05052c;
+    --popover: #ffffff;
+    --popover-foreground: #05052c;
 
-		--primary: #0c1c25;
-		--primary-foreground: #f1f7fb;
+    --primary: #0c1c25;
+    --primary-foreground: #f1f7fb;
 
-		--secondary: #e9edf6;
-		--secondary-foreground: #0c1c25;
+    --secondary: #e9edf6;
+    --secondary-foreground: #0c1c25;
 
-		--muted: #e9edf6;
-		--muted-foreground: #727b86;
+    --muted: #e9edf6;
+    --muted-foreground: #727b86;
 
-		--accent: #e9edf6;
-		--accent-foreground: #0c1c25;
+    --accent: #e9edf6;
+    --accent-foreground: #0c1c25;
 
-		--destructive: #f23b3b;
-		--destructive-foreground: #f1f7fb;
+    --destructive: #f23b3b;
+    --destructive-foreground: #f1f7fb;
 
-		--border: #e5e4e1;
-		--input: #e5e4e1;
-		--ring: #ffa145;
-		--radius: 0.75rem;
-		--text-primary: #000;
-	}
+    --border: #e5e4e1;
+    --input: #e5e4e1;
+    --ring: #ffa145;
+    --radius: 0.75rem;
+    --text-primary: #000;
+  }
 
-	.dark {
-		--background: #0f0f0f;
-		--foreground: #a2a2a2;
+  .dark {
+    --background: #0f0f0f;
+    --foreground: #a2a2a2;
 
-		--card: #1a1a1a;
-		--card-foreground: #f1f7fb;
+    --card: #1a1a1a;
+    --card-foreground: #f1f7fb;
 
-		--popover: #151210;
-		--popover-foreground: #f1f7fb;
+    --popover: #151210;
+    --popover-foreground: #f1f7fb;
 
-		--primary: #f1f7fb;
-		--primary-foreground: #0c1c25;
+    --primary: #f1f7fb;
+    --primary-foreground: #0c1c25;
 
-		--secondary: #2c2826;
-		--secondary-foreground: #f1f7fb;
+    --secondary: #2c2826;
+    --secondary-foreground: #f1f7fb;
 
-		--muted: #2c2826;
-		--muted-foreground: #9ba7b2;
+    --muted: #2c2826;
+    --muted-foreground: #9ba7b2;
 
-		--accent: #2c2826;
-		--accent-foreground: #f1f7fb;
+    --accent: #2c2826;
+    --accent-foreground: #f1f7fb;
 
-		--destructive: #ff0000;
-		--destructive-foreground: #f1f7fb;
+    --destructive: #ff0000;
+    --destructive-foreground: #f1f7fb;
 
-		--border: #2a2422;
-		--input: #2a2422;
-		--ring: #f1580a;
-		--text-primary: #fff;
-	}
+    --border: #2a2422;
+    --input: #2a2422;
+    --ring: #f1580a;
+    --text-primary: #fff;
+  }
 }
 
 .inline-code {
-	@apply select-all rounded border border-stone-200 bg-stone-100 p-0.5 font-mono dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100;
+  @apply select-all rounded border border-stone-200 bg-stone-100 p-0.5 font-mono dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100;
 }
 
 /* wtf is this */
 .SliderSet .border-primary {
-	@apply rounded-full border-2 border-black dark:border-white;
+  @apply rounded-full border-2 border-black dark:border-white;
 }

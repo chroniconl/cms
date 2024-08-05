@@ -13,7 +13,7 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 const logger = new Logger(
-  'api.v0.2.upload-document-image',
+  'api.v0.2.upload-logo',
   'chroniconl',
   process.env.NODE_ENV || 'development',
 )
@@ -30,9 +30,8 @@ export async function POST(request: Request) {
     return failResponse('Missing required data')
   }
 
-  const fromHere = useTestEnv ? '__documents_test' : 'documents'
   const { data: uploadData, error: uploadError } = await supabase.storage
-    .from(fromHere)
+    .from('misc')
     .upload(file.name, file)
 
   if (uploadError) {
@@ -49,9 +48,9 @@ export async function POST(request: Request) {
 
   // Update the document with the new image
   const { error: documentError } = await supabase
-    .from('posts')
+    .from('website_settings')
     .update({
-      image_url: process.env.SUPABASE_STORAGE_BUCKET_URL + uploadData.path,
+      logo_url: process.env.SUPABASE_STORAGE_BUCKET_URL + uploadData.path,
       last_updated: new Date(),
     })
     .eq('id', documentId)
