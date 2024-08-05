@@ -1,25 +1,27 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import FileUploader from '../src/components/FileUploader'
+import FileUploader from './FileUploader'
 
 describe('FileUploader', () => {
-  it('should render the drag-and-drop area', () => {
-    const { getByText } = render(<FileUploader />)
-    expect(getByText('Drag & drop files here')).toBeInTheDocument()
-  })
+  describe('File Rendering', () => {
+    it('should render the drag-and-drop area', () => {
+      const { getByText } = render(<FileUploader />)
+      expect(getByText('Drag & drop files here')).toBeInTheDocument()
+    })
 
-  it('should change the background color on drag over', () => {
-    const { getByText } = render(<FileUploader />)
-    const dropZone = getByText('Drag & drop files here').parentElement
+    it('should change the background color on drag over', () => {
+      const { getByText } = render(<FileUploader />)
+      const dropZone = getByText('Drag & drop files here').parentElement
 
-    fireEvent.dragOver(dropZone!)
-    expect(dropZone).toHaveStyle('background-color: bg-blue-500/20')
-  })
+      fireEvent.dragOver(dropZone!)
+      expect(dropZone).toHaveStyle('background-color: bg-blue-500/20')
+    })
 
-  it('should have a select file to upload button', () => {
-    const { getByLabelText } = render(<FileUploader />)
-    expect(getByLabelText('Select file to upload')).toBeInTheDocument()
+    it('should have a select file to upload button', () => {
+      const { getByLabelText } = render(<FileUploader />)
+      expect(getByLabelText('Select file to upload')).toBeInTheDocument()
+    })
   })
 
   describe('File Acceptance', () => {

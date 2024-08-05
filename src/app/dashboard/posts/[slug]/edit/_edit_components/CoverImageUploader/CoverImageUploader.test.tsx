@@ -1,21 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import ImageForm from '../src/app/dashboard/posts/[slug]/edit/_edit_components/ImageForm'
-import { useMetaFormStore } from '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore'
+import ImageForm from './CoverImageUploader'
+import { useMetaFormStore } from '../../_edit_state/metaFormStore'
 import userEvent from '@testing-library/user-event'
-import { Toaster } from '../src/components/ui/toaster'
-
-jest.mock(
-  '../src/app/dashboard/posts/[slug]/edit/_edit_state/metaFormStore',
-  () => ({
-    __esModule: true, // Ensure the module is treated as an ES module
-    useMetaFormStore: jest.fn(() => ({
-      imageUrl: null,
-      setImageUrl: jest.fn(),
-      imageId: null,
-      setImageId: jest.fn(),
-    })),
-  }),
-)
+import { Toaster } from '@/components/ui/toaster'
 
 // When uploading an image in this context,
 // there will be an document ID and an document title
@@ -33,10 +20,6 @@ const testImage = {
 }
 
 describe('ImageForm', () => {
-  beforeEach(() => {
-    ;(useMetaFormStore as unknown as jest.Mock).mockClear() // Reset the mock between tests
-  })
-
   describe('Image Rendering', () => {
     it('renders without an image initially', async () => {
       const { getByText } = await render(
