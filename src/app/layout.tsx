@@ -13,46 +13,46 @@ import { GeistSans } from 'geist/font/sans'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata = {
-	title: {
-		template: '%s - Chroniconl',
-		default: 'Chroniconl',
-	},
-	description: 'Hanging out on the technical side of entrepreneurship.',
-	alternates: {
-		types: {
-			'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-		},
-	},
+  title: {
+    template: '%s - Chroniconl',
+    default: 'Chroniconl',
+  },
+  description: 'Hanging out on the technical side of entrepreneurship.',
+  alternates: {
+    types: {
+      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
+    },
+  },
 }
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode
+  children: React.ReactNode
 }) {
-	return (
-		<html lang="en" className="dark h-full antialiased">
-			<body
-				className={cn(
-					'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
-					GeistSans.className,
-				)}
-			>
-				<ClerkProvider
-					appearance={{
-						baseTheme: dark,
-					}}
-				>
-					<ReactQueryClientProvider>
-						<Providers>
-							<div>{children}</div>
-							<Analytics />
-							<Toaster />
-						</Providers>
-					</ReactQueryClientProvider>
-				</ClerkProvider>
-				<GoogleAnalytics gaId="G-R8Z92CFCBM" />
-			</body>
-		</html>
-	)
+  return (
+    <html lang="en" className="dark h-full antialiased">
+      <body
+        className={cn(
+          'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
+          GeistSans.className,
+        )}
+      >
+        <ClerkProvider
+          appearance={{
+            baseTheme: dark,
+          }}
+        >
+          <ReactQueryClientProvider>
+            <Providers>
+              <div>{children}</div>
+              <Analytics />
+              <Toaster />
+            </Providers>
+          </ReactQueryClientProvider>
+        </ClerkProvider>
+        <GoogleAnalytics gaId="G-R8Z92CFCBM" />
+      </body>
+    </html>
+  )
 }

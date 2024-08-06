@@ -6,44 +6,44 @@ import { supabase } from '@/utils/supabase'
 import { format } from 'date-fns'
 
 export default async function Page({
-	params,
+  params,
 }: {
-	params: { category: string }
+  params: { category: string }
 }) {
-	const pstDate = getPSTDate()
-	const formattedPSTDate = format(pstDate, 'yyyy-MM-dd')
+  const pstDate = getPSTDate()
+  const formattedPSTDate = format(pstDate, 'yyyy-MM-dd')
 
-	const { data: categoriesData, error: categoriesError } = await supabase
-		.from('categories')
-		.select('id, name')
-		.eq('slug', params.category)
-		.single()
+  const { data: categoriesData, error: categoriesError } = await supabase
+    .from('categories')
+    .select('id, name')
+    .eq('slug', params.category)
+    .single()
 
-	if (categoriesError) {
-		throw new Error(categoriesError.message)
-	}
+  if (categoriesError) {
+    throw new Error(categoriesError.message)
+  }
 
-	const { data: postsData, error: postsError } = await supabase
-		.from('posts')
-		.select('*, category:categories(id, name, slug, color)')
-		.order('publish_date_day', { ascending: false })
-		.lte('publish_date_day', formattedPSTDate)
-		.eq('visibility', 'public')
-		.eq('category_id', categoriesData.id)
+  const { data: postsData, error: postsError } = await supabase
+    .from('posts')
+    .select('*, category:categories(id, name, slug, color)')
+    .order('publish_date_day', { ascending: false })
+    .lte('publish_date_day', formattedPSTDate)
+    .eq('visibility', 'public')
+    .eq('category_id', categoriesData.id)
 
-	if (postsError) {
-		throw new Error(postsError.message)
-	}
+  if (postsError) {
+    throw new Error(postsError.message)
+  }
 
-	// filter out posts based on publish_date_time
-	const filteredPosts = removePostsThatWillBePublishedLaterToday(postsData)
+  // filter out posts based on publish_date_time
+  const filteredPosts = removePostsThatWillBePublishedLaterToday(postsData)
 
-	return (
-		<PublicLayout>
-			<h1 className="mb-10 text-3xl tracking-tighter text-white sm:text-5xl">
-				{categoriesData?.name}
-			</h1>
-			<BlogPostsGroup posts={filteredPosts} />
-		</PublicLayout>
-	)
+  return (
+    <PublicLayout>
+      <h1 className="mb-10 text-3xl tracking-tighter text-white sm:text-5xl">
+        {categoriesData?.name}
+      </h1>
+      <BlogPostsGroup posts={filteredPosts} />
+    </PublicLayout>
+  )
 }
