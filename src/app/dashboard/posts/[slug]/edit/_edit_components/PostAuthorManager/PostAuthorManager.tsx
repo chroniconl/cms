@@ -8,11 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { Button, ChButtonPrimary } from '@/components/ui/button'
-import { Heading } from '@/components/heading'
 import { Input } from '@/components/ui/input'
-import { Card } from '@/components/ui/card'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from '@/components/ui/use-toast'
 import {
@@ -22,19 +19,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { UploadButton } from '@/components/UploadThingys'
 import { create } from 'zustand'
 import { useEffect } from 'react'
 import Image from 'next/image'
+
+interface Author {
+  id: string
+  display_name: string
+}
+
 type MetaFormProps = {
   id: string
-  title: string
-  description: string
   author_id?: string
-  authors: any[]
+  authors: Author[]
 }
 
 const avatarState = create<{
@@ -56,12 +56,21 @@ const avatarState = create<{
 const authorState = create<{
   authors: any[]
   setAuthors: (authors: any[]) => void
+  currentSelectedAuthor: any
+  setCurrentSelectedAuthor: (currentSelectedAuthor: any) => void
 }>((set) => ({
   authors: [],
   setAuthors: (authors: any[]) => set({ authors }),
+  currentSelectedAuthor: {},
+  setCurrentSelectedAuthor: (currentSelectedAuthor: any) =>
+    set({ currentSelectedAuthor }),
 }))
 
-export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
+export default function PostAuthorForm({
+  id,
+  authors,
+  author_id,
+}: MetaFormProps) {
   // These stateful avatars are only used when the user is adding a new author
   // that didn't exist in the database
   const avatarUrl = avatarState((state) => state.avatarUrl)
@@ -73,6 +82,12 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
 
   const state__authors = authorState((state) => state.authors)
   const setAuthors = authorState((state) => state.setAuthors)
+  const currentSelectedAuthor = authorState(
+    (state) => state.currentSelectedAuthor,
+  )
+  const setCurrentSelectedAuthor = authorState(
+    (state) => state.setCurrentSelectedAuthor,
+  )
 
   useEffect(() => {
     if (!authors) {
@@ -82,22 +97,23 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
     setAuthors(authors)
   }, [])
 
-  const {
-    control,
-    handleSubmit,
-    setValue: setValueForPostMetadata,
-  } = useForm<MetaFormProps>({
-    defaultValues: {
-      author_id: author_id || '',
-    },
-  })
+  useEffect(() => {
+    if (!author_id) {
+      return
+    }
+    setCurrentSelectedAuthor(author_id)
+  }, [])
 
-  const onSubmit = async (data: MetaFormProps) => {
+  const handleAuthorChange = async (data: string) => {
+    const author = state__authors.find((author) => author.id === data)
+
+    setCurrentSelectedAuthor(author.id)
+
     const response = await fetch('/api/v0.2/post-author', {
       method: 'PUT',
       body: JSON.stringify({
         id,
-        author_id: data.author_id,
+        author_id: author.id,
       }),
     })
     const { error } = await response.json()
@@ -110,11 +126,6 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
       })
       return
     }
-
-    toast({
-      title: 'Success',
-      description: 'Post metadata updated successfully',
-    })
   }
 
   const {
@@ -160,7 +171,7 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
 
     // HEADS UP: This is not the New Author Form
     // This for the Post Metadata Form
-    setValueForPostMetadata('author_id', newAuthor[0].id)
+    setCurrentSelectedAuthor(newAuthor[0].id)
 
     toast({
       title: 'Success',
@@ -174,56 +185,41 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
   }
 
   return (
-    <Card className="flex flex-col gap-4">
-      <form
-        className="space-y-[20px] rounded-md px-4 pb-6"
-        role="form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-10 flex flex-col">
-            <div>
-              <Label htmlFor="author">Author</Label>
-              <Controller
-                name="author_id"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    onValueChange={(value) => field.onChange(value)}
-                  >
-                    <SelectTrigger className="flex w-full items-center justify-between">
-                      <SelectValue placeholder="Select an author" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {state__authors &&
-                        state__authors.map((author) => (
-                          <SelectItem key={author.id} value={author.id}>
-                            {author.display_name}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </div>
-          </div>
-          <div className="col-span-2 flex h-full items-end justify-end">
-            <Button
-              variant="outline"
-              onClick={() => setAvatarModalOpen(true)}
-              type="button"
+    <>
+      <div className="grid grid-cols-12 gap-2">
+        <div className="col-span-10 flex flex-col">
+          <div>
+            <Label htmlFor="author">Author</Label>
+            <Select
+              name="author_id"
+              value={currentSelectedAuthor}
+              onValueChange={(value) => handleAuthorChange(value)}
             >
-              <PlusIcon className="h-5 w-5" />
-              <span className="sr-only">Add a new author</span>
-            </Button>
+              <SelectTrigger className="flex w-full items-center justify-between">
+                <SelectValue placeholder="Select an author" />
+              </SelectTrigger>
+              <SelectContent>
+                {state__authors &&
+                  state__authors.map((author) => (
+                    <SelectItem key={author.id} value={author.id}>
+                      {author.display_name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
-
-        <div className="flex flex-col">
-          <ChButtonPrimary type="submit">Update Metadata</ChButtonPrimary>
+        <div className="col-span-2 flex h-full items-end justify-end">
+          <Button
+            variant="outline"
+            onClick={() => setAvatarModalOpen(true)}
+            type="button"
+          >
+            <PlusIcon className="h-5 w-5" />
+            <span className="sr-only">Add a new author</span>
+          </Button>
         </div>
-      </form>
+      </div>
       <Dialog open={avatarModalOpen} onOpenChange={setAvatarModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -337,6 +333,6 @@ export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
           </form>
         </DialogContent>
       </Dialog>
-    </Card>
+    </>
   )
 }
