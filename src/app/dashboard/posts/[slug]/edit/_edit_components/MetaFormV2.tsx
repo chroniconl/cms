@@ -61,13 +61,7 @@ const authorState = create<{
   setAuthors: (authors: any[]) => set({ authors }),
 }))
 
-export default function MetaForm({
-  id,
-  title,
-  description,
-  authors,
-  author_id,
-}: MetaFormProps) {
+export default function MetaForm({ id, authors, author_id }: MetaFormProps) {
   // These stateful avatars are only used when the user is adding a new author
   // that didn't exist in the database
   const avatarUrl = avatarState((state) => state.avatarUrl)
@@ -94,23 +88,19 @@ export default function MetaForm({
     setValue: setValueForPostMetadata,
   } = useForm<MetaFormProps>({
     defaultValues: {
-      title: title || '',
-      description: description || '',
       author_id: author_id || '',
     },
   })
 
   const onSubmit = async (data: MetaFormProps) => {
-    const response = await fetch('/api/v0.1/document/metadata', {
+    const response = await fetch('/api/v0.2/post-author', {
       method: 'PUT',
       body: JSON.stringify({
         id,
-        title: data.title,
-        description: data.description,
         author_id: data.author_id,
       }),
     })
-    const { error, message } = await response.json()
+    const { error } = await response.json()
 
     if (error) {
       toast({
@@ -125,7 +115,6 @@ export default function MetaForm({
       title: 'Success',
       description: 'Post metadata updated successfully',
     })
-    // Handle form submission
   }
 
   const {
@@ -142,20 +131,20 @@ export default function MetaForm({
   const onAuthorSubmit = async (data: {
     name: string
     linkTo: string
-    avatarUrl?: string | null
-    avatarId?: string | null
+    avatarUrl?: string
+    avatarId?: string
   }) => {
-    const response = await fetch('/api/v0.1/authors/create-author', {
+    const response = await fetch('/api/v0.2/create-author', {
       method: 'POST',
       body: JSON.stringify({
-        avatar_url: avatarUrl,
-        avatar_id: avatarId,
+        avatar_url: avatarUrl || '',
+        avatar_id: avatarId || '',
         name: data.name,
         link_to: data.linkTo,
       }),
     })
 
-    const { data: newAuthor, error, message } = await response.json()
+    const { data: newAuthor, error } = await response.json()
 
     if (error) {
       toast({
@@ -186,47 +175,11 @@ export default function MetaForm({
 
   return (
     <Card className="flex flex-col gap-4">
-      <div className="px-4 pb-2 pt-6">
-        <Heading level={3}>{'Post Metadata'}</Heading>
-      </div>
       <form
         className="space-y-[20px] rounded-md px-4 pb-6"
         role="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col">
-          <Label htmlFor="title">Title</Label>
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <Input
-                type="text"
-                id="title"
-                placeholder="Enter a title"
-                className="w-full"
-                {...field}
-              />
-            )}
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <Label htmlFor="description">Description</Label>
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
-              <Textarea
-                id="description"
-                placeholder="Enter a description"
-                className="w-full"
-                {...field}
-              />
-            )}
-          />
-        </div>
-
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-10 flex flex-col">
             <div>

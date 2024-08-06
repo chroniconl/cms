@@ -4,7 +4,7 @@ import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.document.image-metadata.PUT'
+const loggerName = 'api.v0.2.create.author.PUT'
 const applicationName = 'chroniconl'
 const environment = (process.env.NODE_ENV as string) || 'development'
 const logger = new Logger(loggerName, applicationName, environment)
@@ -22,8 +22,7 @@ export async function POST(request: Request) {
   if (userError) {
     void logger.logError({
       message: 'POST failed - Error getting user' + JSON.stringify(userError),
-      error_code: 'E001',
-      exception_type: 'Error',
+      error_code: 'AUTH_ERROR',
     })
     return failResponse('Trouble getting user')
   }
@@ -35,8 +34,8 @@ export async function POST(request: Request) {
     void logger.logError({
       message:
         'POST failed - Error validating request data' + validationError.message,
-      error_code: 'E001',
-      exception_type: 'Error',
+      error_code: 'VALIDATION_ERROR',
+      http_method: 'POST',
     })
     return failResponse(validationError.message)
   }
@@ -55,8 +54,8 @@ export async function POST(request: Request) {
   if (error) {
     void logger.logError({
       message: 'POST failed - Error creating author' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
+      error_code: 'DATABASE_ERROR',
+      http_method: 'POST',
     })
     return failResponse(error?.message)
   }
@@ -65,7 +64,7 @@ export async function POST(request: Request) {
   void logger.logPerformance({
     message: 'POST executed successfully',
     execution_time: Math.round(end - start),
-    url: '/api/v0/document/image-metadata',
+    url: '/api/v0.2/create-author',
     http_method: 'POST',
   })
   return okResponse(data, 'Avatar created')
