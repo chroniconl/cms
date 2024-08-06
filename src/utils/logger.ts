@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase'
 
 type LogErrorOptions = {
-  error_code?: string
+  error_code?: 'VALIDATION_ERROR' | 'DATABASE_ERROR' | string
   exception_type?: string
   stack_trace?: string
   message: string

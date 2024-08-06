@@ -7,7 +7,6 @@ import {
   ChButtonPrimary,
   ChButtonSecondary,
 } from '@/components/ui/button'
-import UploadLogo from './_settings_components/UploadLogo'
 
 export default function SettingsPage() {
   return (
@@ -39,7 +38,6 @@ export default function SettingsPage() {
 
                 <div className="sm:col-span-12">
                   <Label htmlFor="logo">Logo</Label>
-                  <UploadLogo />
                 </div>
               </div>
             </div>

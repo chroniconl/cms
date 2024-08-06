@@ -9,6 +9,8 @@ import TipTap, { proseClassNames } from '@/components/TipTap'
 import { Card } from '@/components/ui/card'
 import { supabase } from '@/utils/supabase'
 import { getPSTDate } from '@/utils/dates'
+import PostTitleInput from './_edit_components/PostTitleInput'
+import PostDescriptionTextarea from './_edit_components/PostDescriptionTextarea'
 
 export default async function DocumentSlugEdit({
   params,
@@ -63,18 +65,25 @@ export default async function DocumentSlugEdit({
         </section>
         <section className="col-span-12 flex h-full flex-col gap-2 md:col-span-4">
           {/* pass as props cause server components */}
+          <Card className="space-y-2 p-2">
+            <PostTitleInput postId={postData.id} value={postData.title} />
+            <PostDescriptionTextarea
+              postId={postData.id}
+              value={postData.description}
+            />
+          </Card>
+          <ImageForm
+            documentId={postData.id}
+            imageUrl={postData.image_url}
+            imageId={postData.image_id}
+            imageAlt={postData.title}
+          />
           <MetaForm
             id={postData.id}
             title={postData.title}
             description={postData.description}
             authors={authorsData}
             author_id={postData.author_id}
-          />
-          <ImageForm
-            documentId={postData.id}
-            imageUrl={postData.image_url}
-            imageId={postData.image_id}
-            imageAlt={postData.title}
           />
           <PublishDetailsForm
             id={postData.id}
