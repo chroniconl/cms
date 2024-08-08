@@ -1,8 +1,8 @@
-# Chroniconl CMS
+# Chroniconl
 
 [![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
-This is the public source code for a content management system for content heavy websites. Deploy to Vercel, and use the built in CMS to manage your content. **NOTE: This project used premium features in the services we use. Please be aware of the costs before using this project.**
+Just a fun project I'm working on.
 
 ## Features
 
@@ -30,10 +30,7 @@ More coming soon...
 
 Why build a CMS when you could use one of the many alternatives?
 
-1. A desire to remain close to the source code while providing a flexible admin experience.
-2. To build a writers experience that doesn't suck.
-3. To provide all the benefits of a highly secured CMS out of the box.
-4. I'm having fun taking this project as far as it can go.
+1. I'm having fun taking this project as far as it can go.
 
 ## Getting Started
 
@@ -45,7 +42,7 @@ Why build a CMS when you could use one of the many alternatives?
 - $ Vercel account (Hosting)
 - $ Supabase account (API keys required)
 - $ Clerk account (API keys required)
-- $ UploadThing account (API keys required)
+- $ Resend account (API keys required)
 
 > I'm working on consolidating some of these. Please check back soon or consider contributing if you'd like to help out.
 
@@ -94,10 +91,11 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 # https://supabase.com/dashboard/project/
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_STORAGE_BUCKET_URL=
 
-# https://uploadthing.com/dashboard/<project-id>/api-keys
-UPLOADTHING_SECRET=
-UPLOADTHING_APP_ID=
+RESEND_KEY=
+ADMIN_EMAIL=
 ```
 
 ### Supabase
@@ -134,21 +132,13 @@ Once you're ready to deploy, you can use Vercel to deploy the project to your ow
 3. Click the "Deploy" button.
 4. Follow the prompts to deploy the project to your own domain.
 
-## Contributing / Bug Reports
-
-We'd be appreciative of bug reports/ fixes, and would gladly accept new proposals.
-
-If you'd like to contribute to an existing issue, kindly communicate through the designated ticket to avoid overlapping efforts. Check out the [Open Issues](https://github.com/matthewbub/chroniconl-cms/issues?q=is%3Aissue+is%3Aopen) and our Contributing Guide for more information.
-
-This project requires Node.js and pnpm to be installed. If needed, you can install them from Node.js website and pnpm website.
-
 ### Contributors Setup
 
 1. Fork this repository
 2. Clone the forked repository to your local machine, or open a new Code Space
 3. Checkout to a clean branch. e.g git checkout feature/addSomeCode (Please be more descriptive)
 4. (Follow the steps in [Getting Started](#getting-started) to install dependencies)
-5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/matthewbub/chroniconl-cms/issues 🙂
+5. You're all set up. Run pnpm run build to run the production build and ensure everything is working. If not, please open an issue in https://github.com/chroniconl/cms/issues 🙂
 
 ## FAQ
 

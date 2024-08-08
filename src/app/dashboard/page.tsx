@@ -7,7 +7,11 @@ import {
   CardContent,
   CardDescription,
 } from '@/components/ui/card'
-import { getPSTDate, getPSTDaySevenDaysFromNow } from '@/utils/dates'
+import {
+  formatDate,
+  getPSTDate,
+  getPSTDaySevenDaysFromNow,
+} from '@/utils/dates'
 import { supabase } from '@/utils/supabase'
 import Link from 'next/link'
 import UploadThingStorageSizePieChart from './_dashboard_components/UploadThingStorageSizePieChart'
@@ -150,12 +154,12 @@ async function ComingSoon() {
 }
 
 async function DraftPosts() {
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from('posts')
-    .select('*, category:categories(id, name, slug, color)')
+    .select('*, category:categories(id, name, slug, color)', { count: 'exact' })
     .eq('visibility', 'draft')
     .order('publish_date_day', { ascending: false })
-    .limit(6)
+    .limit(10)
 
   if (error) {
     throw Error()
@@ -166,30 +170,42 @@ async function DraftPosts() {
       <CardHeader>
         <CardTitle>Draft Posts</CardTitle>
         <CardDescription>
-          These are posts that are currently in the draft stage.
+          These are posts that are currently in the draft stage.{' '}
+          {count && count > 0 && (
+            <span className="text-sm text-muted-foreground">
+              {count} draft posts
+            </span>
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Publish Date</TableHead>
+            <TableRow className="grid grid-cols-12">
+              <TableHead className="col-span-8">Title</TableHead>
+              <TableHead className="col-span-4 text-right">
+                Publish Date
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data && data.length ? (
               data.map((post) => (
-                <TableRow key={post.id}>
-                  <TableCell>
+                <TableRow
+                  key={post.id}
+                  className="grid grid-cols-12 hover:bg-stone-50 dark:hover:bg-stone-800"
+                >
+                  <TableCell className="col-span-8 overflow-hidden text-ellipsis text-nowrap">
                     <Link
-                      className="font-medium"
+                      className="text-sm font-medium"
                       href={`/dashboard/posts/${post.slug}`}
                     >
                       {post.title}
                     </Link>
                   </TableCell>
-                  <TableCell>{post.publish_date_day}</TableCell>
+                  <TableCell className="col-span-4 text-right">
+                    {formatDate(post.publish_date_day)}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (

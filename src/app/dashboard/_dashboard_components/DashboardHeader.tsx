@@ -24,7 +24,7 @@ const navItems = [
 export default async function DashboardHeader() {
   return (
     <>
-      <header className="hidden h-[80px] w-full items-center px-4 md:flex">
+      <header className="hidden h-[80px] w-full items-center bg-card px-4 md:flex">
         <div className="flex w-full items-center gap-4">
           <div className="flex flex-grow">
             <Link
