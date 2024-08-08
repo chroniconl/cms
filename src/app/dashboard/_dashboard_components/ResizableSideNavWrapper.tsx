@@ -1,8 +1,5 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/brZKx9ToDhP
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+'use client'
+
 import {
   ResizablePanelGroup,
   ResizablePanel,
@@ -14,18 +11,8 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from '@/components/ui/collapsible'
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import {
-  ChevronRightIcon,
-  FileIcon,
-  FolderIcon,
-  HomeIcon,
-  ImageIcon,
-  MenuIcon,
-  SettingsIcon,
-  TelescopeIcon,
-} from 'lucide-react'
+import { ChevronRightIcon } from 'lucide-react'
+import { cn } from '@/utils/cn'
 
 export default function ResizableSideNavWrapper({
   children,
@@ -35,83 +22,53 @@ export default function ResizableSideNavWrapper({
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel defaultSize={20} className="sticky top-10 z-10">
-        <nav className="sticky top-10 z-10 flex flex-col gap-2 p-4">
+        <nav className="z-10 flex flex-col divide-y divide-stone-200/50 dark:divide-stone-700/50">
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             prefetch={false}
           >
-            <HomeIcon className="h-5 w-5" />
             Home
           </Link>
-          <Collapsible className="grid gap-1">
-            <CollapsibleTrigger className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground [&[data-state=open]>svg]:rotate-90">
-              <div className="flex items-center gap-3">
-                <FolderIcon className="h-5 w-5" />
-                Posts
-              </div>
+          <Collapsible className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50  dark:border-l-stone-700/50">
+            <CollapsibleTrigger
+              className={
+                '[&[data-state=open]:bg-accent] text-accent-foreground] flex items-center justify-between px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground [&[data-state=open]>svg]:rotate-90'
+              }
+            >
+              <div className="flex items-center gap-3">Blog Manager</div>
               <ChevronRightIcon className="h-5 w-5 transition-transform" />
             </CollapsibleTrigger>
-            <CollapsibleContent className="grid gap-1 pl-8">
+            <CollapsibleContent className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50">
               <Link
                 href="/dashboard/posts"
-                className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
                 prefetch={false}
               >
-                <FileIcon className="h-5 w-5" />
-                Posts
+                Blog Posts
               </Link>
               <Link
                 href="/dashboard/media"
-                className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
                 prefetch={false}
               >
-                <ImageIcon className="h-5 w-5" />
-                Media
+                Media Gallery
               </Link>
-              <Collapsible className="grid gap-1">
-                <CollapsibleTrigger className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground [&[data-state=open]>svg]:rotate-90">
-                  <div className="flex items-center gap-3">
-                    <FolderIcon className="h-5 w-5" />
-                    Design
-                  </div>
-                  <ChevronRightIcon className="h-5 w-5 transition-transform" />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="grid gap-1 pl-8">
-                  <Link
-                    href="#"
-                    className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                    prefetch={false}
-                  >
-                    <FileIcon className="h-5 w-5" />
-                    Wireframes
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                    prefetch={false}
-                  >
-                    <FileIcon className="h-5 w-5" />
-                    Mockups
-                  </Link>
-                </CollapsibleContent>
-              </Collapsible>
             </CollapsibleContent>
           </Collapsible>
+
           <Link
             href="/dashboard/explore"
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             prefetch={false}
           >
-            <TelescopeIcon className="h-5 w-5" />
             Explore / Research
           </Link>
           <Link
             href="/dashboard/settings"
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             prefetch={false}
           >
-            <SettingsIcon className="h-5 w-5" />
             Settings
           </Link>
         </nav>
