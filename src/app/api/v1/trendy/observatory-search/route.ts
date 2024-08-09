@@ -4,7 +4,7 @@ import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v1.trendy.POST'
+const loggerName = 'api.v1.trendy.observatory-search.POST'
 const applicationName = 'chroniconl'
 const environment = (process.env.NODE_ENV as string) || 'development'
 const logger = new Logger(loggerName, applicationName, environment)
@@ -51,6 +51,35 @@ export async function POST(request: Request) {
     })
     return failResponse("Couldn't fetch data")
   }
+
+  console.log(responseData)
+
+  const { data: trendyData, error: trendyError } = await supabase
+    .from('chroniconl__trendy__url_history')
+    .insert({
+      full_url: requestData.url,
+      page_title: responseData?.title,
+      raw_contents: responseData.content,
+    })
+    .select()
+
+  if (trendyError) {
+    void logger.logError({
+      message:
+        'POST failed - Error inserting trendy data' + trendyError.message,
+      error_code: 'DATABASE_ERROR',
+      exception_type: 'Error',
+    })
+    return failResponse("Couldn't insert data")
+  }
+
+  const end = performance.now()
+  void logger.logPerformance({
+    message: 'POST executed successfully',
+    execution_time: Math.round(end - start),
+    url: '/api/v1/trendy',
+    http_method: 'POST',
+  })
 
   return okResponse(responseData, 'Success')
 }

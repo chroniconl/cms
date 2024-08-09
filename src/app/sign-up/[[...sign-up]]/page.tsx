@@ -10,7 +10,7 @@ export default function Page() {
       <Text>
         We're actively working on this project. Please check back soon.
       </Text>
-      {/* <SignUp path="/sign-up" /> */}
+      <SignUp path="/sign-up" />
     </PublicLayout>
   )
 }

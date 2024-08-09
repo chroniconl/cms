@@ -5,7 +5,9 @@ import { ChButtonPrimary } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import BorderBottom from '@/components/BorderBottom'
 import { toast } from '@/components/ui/use-toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { formatDate } from '@/utils/dates'
+import { Card } from '@/components/ui/card'
 
 export default async function Page() {
   return (
@@ -20,7 +22,7 @@ const Screen = () => {
   const [html, setHtml] = useState('')
 
   const handleFetchHTML = async () => {
-    const response = await fetch('/api/v1/trendy', {
+    const response = await fetch('/api/v1/trendy/observatory-search', {
       method: 'POST',
       body: JSON.stringify({
         url: url,
@@ -71,7 +73,7 @@ const Screen = () => {
               </ChButtonPrimary>
             </div>
             <div className="mb-8 mt-4">
-              <BorderBottom />
+              <div className="ch-border-bottom w-full" />
             </div>
             <Tabs defaultValue="preview">
               <TabsList>
@@ -80,43 +82,64 @@ const Screen = () => {
               </TabsList>
               <TabsContent value="preview">
                 <div
-                  className="h-[500px] w-full overflow-auto rounded-md border bg-muted-foreground p-4 text-primary-foreground"
+                  className="ch-border max-h-[500px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-primary-foreground"
                   dangerouslySetInnerHTML={{
                     __html: JSON.parse(JSON.stringify(html)),
                   }}
                 />
               </TabsContent>
               <TabsContent value="raw">
-                <pre className="h-[500px] w-full overflow-auto rounded-md border bg-muted-foreground p-4 text-primary-foreground">
-                  {html}
+                <pre className="ch-border max-h-[500px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs">
+                  <code>{html}</code>
                 </pre>
               </TabsContent>
             </Tabs>
           </div>
           <div className="col-span-4">
-            <h3 className="ch-heading ch-primary">History</h3>
-            <div className="flex flex-col gap-2">
-              <div className="ch-border rounded-md p-2">
-                <a href="#" className="text-muted-foreground">
-                  <div className="font-medium">Example Website</div>
-                  <div className="text-sm">https://example.com</div>
-                </a>
-              </div>
-              <div className="ch-border rounded-md p-2">
-                <a href="#" className="text-muted-foreground">
-                  <div className="font-medium">Google</div>
-                  <div className="text-sm">https://google.com</div>
-                </a>
-              </div>
-              <div className="ch-border rounded-md p-2">
-                <a href="#" className="text-muted-foreground">
-                  <div className="font-medium">GitHub</div>
-                  <div className="text-sm">https://github.com</div>
-                </a>
-              </div>
-            </div>
+            <History />
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+const History = () => {
+  const [history, setHistory] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const response = await fetch('/api/v1/trendy/history', {
+        method: 'GET',
+      })
+
+      const { data, error } = await response.json()
+      if (error) {
+        throw new Error('Failed to fetch history')
+      }
+
+      setHistory(data)
+    }
+
+    fetchHistory()
+  }, [])
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="space-y-4">
+        <h2 className="text-3xl font-bold">History</h2>
+        <p className="ch-body ch-muted">
+          Here you can view all the URLs you've visited in the Observatory.
+        </p>
+      </div>
+      <div className="max-h-[500px] space-y-4 overflow-y-auto p-1">
+        {history.map((item) => (
+          <div key={item.id} className="ch-border-outline p-4">
+            <p className="ch-body ch-primary">{item.page_title}</p>
+            <p className="ch-body">{item.full_url}</p>
+            <p className="ch-body ch-muted">{formatDate(item.created_at)}</p>
+          </div>
+        ))}
       </div>
     </div>
   )
