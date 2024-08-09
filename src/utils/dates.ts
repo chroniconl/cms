@@ -23,6 +23,16 @@ export function formatDate(dateString: string) {
   })
 }
 
+export function formatDateWithTimeToo(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  })
+}
+
 /**
  * @description Checks if a publication time is in the past
  */

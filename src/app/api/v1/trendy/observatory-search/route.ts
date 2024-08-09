@@ -52,8 +52,6 @@ export async function POST(request: Request) {
     return failResponse("Couldn't fetch data")
   }
 
-  console.log(responseData)
-
   const { data: trendyData, error: trendyError } = await supabase
     .from('chroniconl__trendy__url_history')
     .insert({

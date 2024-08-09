@@ -21,7 +21,11 @@ export default function ResizableSideNavWrapper({
 }) {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={20} className="sticky top-10 z-10">
+      <ResizablePanel
+        defaultSize={20}
+        maxSize={25}
+        className="sticky top-10 z-10"
+      >
         <nav className="z-10 flex flex-col divide-y divide-stone-200/50 dark:divide-stone-700/50">
           <Link
             href="/dashboard"
