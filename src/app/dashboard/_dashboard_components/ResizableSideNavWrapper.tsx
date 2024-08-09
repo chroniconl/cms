@@ -57,13 +57,39 @@ export default function ResizableSideNavWrapper({
             </CollapsibleContent>
           </Collapsible>
 
-          <Link
+          <Collapsible className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50  dark:border-l-stone-700/50">
+            <CollapsibleTrigger
+              className={
+                '[&[data-state=open]:bg-accent] text-accent-foreground] flex items-center justify-between px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground [&[data-state=open]>svg]:rotate-90'
+              }
+            >
+              <div className="flex items-center gap-3">Explore / Research</div>
+              <ChevronRightIcon className="h-5 w-5 transition-transform" />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50">
+              <Link
+                href="/dashboard/research/open-source"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
+                prefetch={false}
+              >
+                Open Source Projects
+              </Link>
+              <Link
+                href="/dashboard/research/observatory"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
+                prefetch={false}
+              >
+                Observatory (Preview)
+              </Link>
+            </CollapsibleContent>
+          </Collapsible>
+          {/* <Link
             href="/dashboard/explore"
             className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             prefetch={false}
           >
             Explore / Research
-          </Link>
+          </Link> */}
           <Link
             href="/dashboard/settings"
             className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
