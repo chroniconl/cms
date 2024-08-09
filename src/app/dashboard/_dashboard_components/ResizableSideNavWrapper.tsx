@@ -83,6 +83,26 @@ export default function ResizableSideNavWrapper({
               </Link>
             </CollapsibleContent>
           </Collapsible>
+
+          <Collapsible className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50  dark:border-l-stone-700/50">
+            <CollapsibleTrigger
+              className={
+                '[&[data-state=open]:bg-accent] text-accent-foreground] flex items-center justify-between px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground [&[data-state=open]>svg]:rotate-90'
+              }
+            >
+              <div className="flex items-center gap-3">Administrator</div>
+              <ChevronRightIcon className="h-5 w-5 transition-transform" />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="grid divide-y divide-stone-200/50 dark:divide-stone-700/50">
+              <Link
+                href="/dashboard/form-submissions"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
+                prefetch={false}
+              >
+                Contact Us Form Submissions
+              </Link>
+            </CollapsibleContent>
+          </Collapsible>
           {/* <Link
             href="/dashboard/explore"
             className="flex items-center gap-3 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
