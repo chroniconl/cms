@@ -1,9 +1,7 @@
-import Logger from '@/utils/logger'
-
-const loggerName = 'api.v0.1.document.image-metadata.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+import {
+  media__v0_1__FetchMediaError,
+  media__v0_1__PerformanceSuccess,
+} from './loggingActions'
 
 const fetchData = async () => {
   if (!process.env.UPLOADTHING_SECRET) {
@@ -21,6 +19,7 @@ const fetchData = async () => {
   })
 
   if (!response.ok) {
+    void media__v0_1__FetchMediaError(response)
     throw new Error('Failed to fetch media')
   }
 
@@ -34,12 +33,8 @@ export async function GET() {
   const data = await fetchData()
 
   const end = performance.now()
-  void logger.logPerformance({
-    message: 'GET executed successfully',
-    execution_time: Math.round(end - start),
-    url: '/api/v0.1/document/image-upload',
-    http_method: 'GET',
-  })
+  void media__v0_1__PerformanceSuccess(start, end)
+
   return new Response(JSON.stringify(data), {
     status: 200,
     headers: {

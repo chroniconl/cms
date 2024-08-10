@@ -1,13 +1,13 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import Logger from '@/utils/logger'
+import {
+  trending__v0_1__ValidationError,
+  trending__v0_1__DatabaseError,
+  trending__v0_1__PerformanceSuccess,
+} from './loggingActions'
 
-const loggerName = 'api.v0.1.document.image-metadata.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
-
+// HEY MAT, HERE'S A LAZY LOAD EXAMPLE
 export async function GET(request: Request) {
   const start = performance.now()
   const url = new URL(request.url)
@@ -26,11 +26,7 @@ export async function GET(request: Request) {
   })
 
   if (error) {
-    void logger.logError({
-      message: 'GET failed - Error validating request data' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void trending__v0_1__ValidationError(error)
     return failResponse(error?.details[0]?.message)
   }
 
@@ -45,20 +41,11 @@ export async function GET(request: Request) {
     .range(offset, offset + limit)
 
   if (supabaseError) {
-    void logger.logError({
-      message: 'GET failed - Error fetching trends' + supabaseError.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void trending__v0_1__DatabaseError(supabaseError)
     return failResponse(supabaseError?.message)
   }
 
   const end = performance.now()
-  void logger.logPerformance({
-    message: 'GET executed successfully',
-    execution_time: Math.round(end - start),
-    url: '/api/v0.1/trending',
-    http_method: 'GET',
-  })
+  void trending__v0_1__PerformanceSuccess(start, end)
   return okResponse(data)
 }
