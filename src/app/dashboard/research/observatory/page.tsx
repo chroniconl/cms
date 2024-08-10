@@ -3,11 +3,9 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { ChButtonPrimary } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import BorderBottom from '@/components/BorderBottom'
 import { toast } from '@/components/ui/use-toast'
-import { useEffect, useState } from 'react'
-import { formatDate, formatDateWithTimeToo } from '@/utils/dates'
-import { Card } from '@/components/ui/card'
+import { useEffect } from 'react'
+import { formatDateWithTimeToo } from '@/utils/dates'
 import DOMPurify from 'dompurify'
 import { Text } from '@/components/text'
 import { Switch } from '@/components/ui/switch'
@@ -18,6 +16,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { create } from 'zustand'
+
+interface HistoryItem {
+  id: string
+  created_at: string
+  full_url: string
+  page_title: string
+  raw_contents: string
+}
+
+interface ObservatoryStore {
+  url: string
+  setUrl: (url: string) => void
+  html: string
+  setHtml: (html: string) => void
+  prompt: string
+  setPrompt: (prompt: string) => void
+  useRawOnly: boolean
+  setUseRawOnly: (useRawOnly: boolean) => void
+  useSanitizeHtml: boolean
+  setUseSanitizeHtml: (useSanitizeHtml: boolean) => void
+  history: HistoryItem[]
+  setHistory: (history: HistoryItem[]) => void
+  sort: 'Ascending' | 'Descending'
+  setSort: (sort: 'Ascending' | 'Descending') => void
+}
+
+const useObservatoryStore = create<ObservatoryStore>((set) => ({
+  url: '',
+  setUrl: (url: string) => set({ url }),
+  html: '',
+  setHtml: (html: string) => set({ html }),
+  prompt: '',
+  setPrompt: (prompt: string) => set({ prompt }),
+  useRawOnly: false,
+  setUseRawOnly: (useRawOnly: boolean) => set({ useRawOnly }),
+  useSanitizeHtml: true,
+  setUseSanitizeHtml: (useSanitizeHtml: boolean) => set({ useSanitizeHtml }),
+  history: [],
+  setHistory: (history: any[]) => set({ history }),
+  sort: 'Ascending',
+  setSort: (sort: 'Ascending' | 'Descending') => set({ sort }),
+}))
+
 export default async function Page() {
   return (
     <div className="mx-auto w-full">
@@ -26,12 +68,27 @@ export default async function Page() {
   )
 }
 
+const promptSuggestions = [
+  'Write a script to extract all the links from this file',
+  'Suggest recurring information I can extract from this file',
+  'Find and extract all the headings from the HTML',
+  'Extract all the images and their sources from the HTML',
+  'Analyze the HTML structure and suggest ways to improve it',
+]
+
 const Screen = () => {
-  const [url, setUrl] = useState('')
-  const [html, setHtml] = useState('')
-  const [prompt, setPrompt] = useState('')
-  const [useRawOnly, setUseRawOnly] = useState(false)
-  const [useSanitizeHtml, setUseSanitizeHtml] = useState(true)
+  const url = useObservatoryStore((state) => state.url)
+  const setUrl = useObservatoryStore((state) => state.setUrl)
+  const html = useObservatoryStore((state) => state.html)
+  const setHtml = useObservatoryStore((state) => state.setHtml)
+  const prompt = useObservatoryStore((state) => state.prompt)
+  const setPrompt = useObservatoryStore((state) => state.setPrompt)
+  const useRawOnly = useObservatoryStore((state) => state.useRawOnly)
+  const setUseRawOnly = useObservatoryStore((state) => state.setUseRawOnly)
+  const useSanitizeHtml = useObservatoryStore((state) => state.useSanitizeHtml)
+  const setUseSanitizeHtml = useObservatoryStore(
+    (state) => state.setUseSanitizeHtml,
+  )
 
   const handleFetchHTML = async () => {
     const response = await fetch('/api/v1/trendy/observatory-search', {
@@ -61,42 +118,20 @@ const Screen = () => {
     })
   }
 
-  const handleGenerate = async () => {
-    // const response = await fetch('/api/v1/trendy/observatory-generate', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     url: url,
-    //     prompt: prompt,
-    //   }),
-    // })
-    // const { data, error, message } = await response.json()
-    // if (error) {
-    //   toast({
-    //     title: 'Error',
-    //     description: message,
-    //     variant: 'destructive',
-    //   })
-    //   return
-    // }
-    // setHtml(data?.content)
-    // toast({
-    //   title: 'Success',
-    //   description: 'HTML generated successfully',
-    // })
-  }
+  const handleGenerate = async () => {}
 
   return (
     <div className="min-h-dvh flex-1">
       <div className="space-y-4">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8">
-            <div className="flex flex-col gap-4">
+            <div className="mb-2 flex flex-col gap-4">
               <h2 className="text-3xl font-bold">Observatory (Preview)</h2>
-              <p className="text-muted-foreground">
+              <p className="ch-body ch-muted">
                 Enter a URL to fetch the HTML to begin exploring the site.
               </p>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col">
               <Label htmlFor="url" className="sr-only">
                 Enter URL
               </Label>
@@ -107,7 +142,7 @@ const Screen = () => {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
-              <div className="my-4 space-y-2">
+              <div className="mb-12 mt-8 space-y-2">
                 <div className="flex items-center space-x-2">
                   <Switch
                     id="useRawOnly"
@@ -181,31 +216,15 @@ const Screen = () => {
               <div className="mt-8 space-y-4">
                 <h3 className="text-xl font-bold">AI Suggestions</h3>
                 <div className="grid gap-2">
-                  <div className="ch-border rounded-md p-2">
-                    <div className="font-medium">
-                      Write a script to extract all the links from this file
+                  {promptSuggestions.map((prompt) => (
+                    <div
+                      key={prompt}
+                      className="ch-border rounded-md p-2"
+                      onClick={() => setPrompt(prompt)}
+                    >
+                      <div className="font-medium">{prompt}</div>
                     </div>
-                  </div>
-                  <div className="ch-border rounded-md p-2">
-                    <div className="font-medium">
-                      Suggest recurring information I can extract from this file
-                    </div>
-                  </div>
-                  <div className="ch-border rounded-md p-2">
-                    <div className="font-medium">
-                      Find and extract all the headings from the HTML
-                    </div>
-                  </div>
-                  <div className="ch-border rounded-md p-2">
-                    <div className="font-medium">
-                      Extract all the images and their sources from the HTML
-                    </div>
-                  </div>
-                  <div className="ch-border rounded-md p-2">
-                    <div className="font-medium">
-                      Analyze the HTML structure and suggest ways to improve it
-                    </div>
-                  </div>
+                  ))}
 
                   <Input
                     id="prompt"
@@ -230,8 +249,10 @@ const Screen = () => {
 }
 
 const History = () => {
-  const [history, setHistory] = useState<any[]>([])
-  const [sort, setSort] = useState<'Ascending' | 'Descending'>('Ascending')
+  const history = useObservatoryStore((state) => state.history)
+  const setHistory = useObservatoryStore((state) => state.setHistory)
+  const sort = useObservatoryStore((state) => state.sort)
+  const setSort = useObservatoryStore((state) => state.setSort)
 
   useEffect(() => {
     const fetchHistory = async () => {
