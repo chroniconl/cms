@@ -2,12 +2,12 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import Logger from '@/utils/logger'
-
-const loggerName = 'api.v0.2.create.author.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+import {
+  createAuthor__v0_2__AuthError,
+  createAuthor__v0_2__DatabaseError,
+  createAuthor__v0_2__PerformanceSuccess,
+  createAuthor__v0_2__ValidationError,
+} from './loggingActions'
 
 const createAuthorSchema = joi.object({
   name: joi.string().required(),
@@ -20,10 +20,7 @@ export async function POST(request: Request) {
   const start = performance.now()
   const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
-    void logger.logError({
-      message: 'POST failed - Error getting user' + JSON.stringify(userError),
-      error_code: 'AUTH_ERROR',
-    })
+    void createAuthor__v0_2__AuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -31,12 +28,7 @@ export async function POST(request: Request) {
   const { error: validationError } = createAuthorSchema.validate(requestData)
 
   if (validationError) {
-    void logger.logError({
-      message:
-        'POST failed - Error validating request data' + validationError.message,
-      error_code: 'VALIDATION_ERROR',
-      http_method: 'POST',
-    })
+    void createAuthor__v0_2__ValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -52,20 +44,11 @@ export async function POST(request: Request) {
     .select()
 
   if (error) {
-    void logger.logError({
-      message: 'POST failed - Error creating author' + error.message,
-      error_code: 'DATABASE_ERROR',
-      http_method: 'POST',
-    })
+    void createAuthor__v0_2__DatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void logger.logPerformance({
-    message: 'POST executed successfully',
-    execution_time: Math.round(end - start),
-    url: '/api/v0.2/create-author',
-    http_method: 'POST',
-  })
+  void createAuthor__v0_2__PerformanceSuccess(start, end)
   return okResponse(data, 'Avatar created')
 }

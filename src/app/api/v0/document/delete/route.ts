@@ -1,22 +1,17 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import Logger from '@/utils/logger'
-
-const loggerName = 'api.v0.document.delete.DELETE'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+import {
+  documentDelete__v0__AuthError,
+  documentDelete__v0__DatabaseError,
+  documentDelete__v0__PerformanceSuccess,
+} from './loggingActions'
 
 export async function DELETE(request: Request) {
   const start = performance.now()
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void logger.logError({
-      message: 'DELETE failed - Error getting user' + JSON.stringify(userError),
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void documentDelete__v0__AuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -27,20 +22,11 @@ export async function DELETE(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void logger.logError({
-      message: 'DELETE failed - Error deleting document' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void documentDelete__v0__DatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void logger.logPerformance({
-    message: 'DELETE executed successfully',
-    execution_time: Math.round(end - start),
-    url: '/api/v0/document/delete',
-    http_method: 'DELETE',
-  })
+  void documentDelete__v0__PerformanceSuccess(start, end)
   return okResponse('Document deleted')
 }

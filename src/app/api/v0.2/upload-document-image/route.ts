@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 import { failResponse, okResponse } from '@/utils/response'
-import Logger from '@/utils/logger'
-
+import {
+  uploadDocumentImage__v0_2__MissingDataError,
+  uploadDocumentImage__v0_2__UploadError,
+  uploadDocumentImage__v0_2__DocumentUpdateError,
+  uploadDocumentImage__v0_2__PerformanceSuccess,
+} from './loggingActions'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const useTestEnv = process.env.NODE_ENV === 'test'
@@ -12,21 +16,14 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-const logger = new Logger(
-  'api.v0.2.upload-document-image',
-  'chroniconl',
-  process.env.NODE_ENV || 'development',
-)
-
 export async function POST(request: Request) {
+  const start = performance.now()
   const formData = await request.formData()
   const file = formData.get('image') as File
   const documentId = formData.get('id') as string
 
   if (!file || !documentId) {
-    logger.logError({
-      message: 'POST failed - Missing image file or document ID',
-    })
+    void uploadDocumentImage__v0_2__MissingDataError()
     return failResponse('Missing required data')
   }
 
@@ -36,10 +33,7 @@ export async function POST(request: Request) {
     .upload(file.name, file)
 
   if (uploadError) {
-    logger.logError({
-      message: 'POST failed - Supabase upload error: ' + uploadError.message,
-    })
-
+    void uploadDocumentImage__v0_2__UploadError(uploadError)
     // @ts-ignore
     if (uploadError.error === 'Duplicate') {
       return failResponse('Document already exists')
@@ -58,15 +52,12 @@ export async function POST(request: Request) {
     .single()
 
   if (documentError) {
-    void logger.logError({
-      message: 'POST failed - Error updating document' + documentError.message,
-      exception_type: 'Error',
-    })
+    void uploadDocumentImage__v0_2__DocumentUpdateError(documentError)
     return failResponse('Error updating document')
   }
 
-  logger.logPerformance({ message: 'Image POST executed successfully' })
-
+  const end = performance.now()
+  void uploadDocumentImage__v0_2__PerformanceSuccess(start, end)
   return okResponse({
     image_id: uploadData.id,
     image_path: uploadData.path,
