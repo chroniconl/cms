@@ -52,7 +52,13 @@ const Screen = () => {
   const setUrl = useObservatoryStore((state) => state.setUrl)
   const html = useObservatoryStore((state) => state.html)
   const setHtml = useObservatoryStore((state) => state.setHtml)
-  const useSanitizeHtml = useObservatoryStore((state) => state.useSanitizeHtml)
+  const contentPreviewType = useObservatoryStore(
+    (state) => state.contentPreviewType,
+  )
+  const headHtml = useObservatoryStore((state) => state.headHtml)
+  const setHeadHtml = useObservatoryStore((state) => state.setHeadHtml)
+  const bodyHtml = useObservatoryStore((state) => state.bodyHtml)
+  const setBodyHtml = useObservatoryStore((state) => state.setBodyHtml)
 
   const handleFetchHTML = async () => {
     const response = await fetch('/api/v1/trendy/observatory-search', {
@@ -72,9 +78,9 @@ const Screen = () => {
       return
     }
 
-    const sanitizedHtml = DOMPurify.sanitize(data?.content)
-    const html = useSanitizeHtml ? sanitizedHtml : data?.content
-    setHtml(html)
+    setHtml(data?.content)
+    setHeadHtml(data?.head_content_only)
+    setBodyHtml(data?.body_content_only)
 
     toast({
       title: 'Success',
@@ -128,7 +134,13 @@ const Screen = () => {
                 contentEditable
                 className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
               >
-                <code>{html.trim()}</code>
+                <code>
+                  {contentPreviewType === 'head'
+                    ? headHtml
+                    : contentPreviewType === 'body'
+                      ? bodyHtml
+                      : html}
+                </code>
               </pre>
               <div className="mb-8 mt-12">
                 <div className="ch-border-bottom w-full" />

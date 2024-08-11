@@ -23,6 +23,8 @@ class URLResearchPreviewInputSchema(Schema):
 class URLResearchPreviewResultSchema(Schema):
     content = String()
     title = String()
+    head_content_only = String()
+    body_content_only = String()
 
 
 @app.get("/v1/research/preview")
@@ -40,10 +42,17 @@ def research_url(query_data):  # Add query_data argument here
         soup = BeautifulSoup(response.text, 'html.parser')
         # Extract the title
         title = soup.title.string if soup.title else "No title found"
+        head_content = soup.head.prettify()
+        body_content = soup.body.prettify()
         html_content = clean_html(response.text)
 
 
-        return {"title": title, "content": html_content}, 200
+        return {
+            "title": title, 
+            "content": html_content,
+            "head_content_only": head_content,
+            "body_content_only": body_content
+        }, 200
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}, 500
 
@@ -86,11 +95,6 @@ def extract_links(data):
         extracted_links.append({"url": href, "label": label or ""})
 
     return {"links": extracted_links}, 200
-
-
-@app.get("/")  # Decorate the hello_world route
-def hello_world():
-    return "Hello World!"
 
 
 if __name__ == "__main__":
