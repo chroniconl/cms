@@ -23,14 +23,9 @@ import { ObserverHistory } from './components/ObserverHistory'
 import { ObserverControls } from './components/ObserverControls'
 import { ObserverActions } from './components/ObserverActions'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { HelpCircle } from 'lucide-react'
+
 import { cn } from '@/utils/cn'
+import TypedComponent from '@/components/Typed'
 
 export default async function Page() {
   return (
@@ -39,14 +34,6 @@ export default async function Page() {
     </div>
   )
 }
-
-const promptSuggestions = [
-  'Write a script to extract all the links from this file',
-  'Suggest recurring information I can extract from this file',
-  'Find and extract all the headings from the HTML',
-  'Extract all the images and their sources from the HTML',
-  'Analyze the HTML structure and suggest ways to improve it',
-]
 
 const Screen = () => {
   const url = useObservatoryStore((state) => state.url)
@@ -150,12 +137,15 @@ const Screen = () => {
               <div>
                 {loadingUrlResponse && (
                   <p className="text-xs text-green-300">
-                    Processing request...
+                    <TypedComponent strings={['Processing request...']} />
                   </p>
                 )}
                 {!loadingUrlResponse && html && (
-                  <p className="text-xs text-stone-300">
-                    HTML fetched successfully
+                  <p className="ch-body">
+                    <TypedComponent
+                      strings={['HTML retrieved']}
+                      showCursor={false}
+                    />
                   </p>
                 )}
               </div>

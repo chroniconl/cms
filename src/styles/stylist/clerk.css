@@ -15,8 +15,8 @@
 
 .ch-body {
   font-family: inherit;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.75rem /* 12px */;
+  line-height: 1rem /* 16px */;
   font-weight: 400;
   color: #a2a2a2;
 }
@@ -64,8 +64,8 @@
   .cl-cardBox .cl-footerActionText,
   .cl-cardBox .cl-dividerText {
     font-family: inherit;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.75rem /* 12px */;
+    line-height: 1rem /* 16px */;
     font-weight: 400;
     color: #a2a2a2;
   }
