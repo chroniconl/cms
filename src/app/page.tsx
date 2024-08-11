@@ -1,5 +1,6 @@
 import BlogPostsGroup from '@/components/BlogPostsGroup'
 import LatestHowToPosts from '@/components/LatestHowToPosts'
+import { ObservatoryAsAFeature } from '@/components/marketing/ObservatoryAsAFeature'
 import PublicLayout from '@/components/PublicLayout'
 import SubscribeToNewsletter from '@/components/SubscribeToNewsletter'
 import { getAllPublishedPosts } from '@/server/getAllPublishedPosts'
@@ -14,6 +15,7 @@ export default async function Page() {
 
   return (
     <PublicLayout>
+      <ObservatoryAsAFeature />
       <div className="grid w-full grid-cols-12 gap-4">
         <div className="col-span-12 md:col-span-6 lg:col-span-9">
           <BlogPostsGroup posts={posts} limit={6} />

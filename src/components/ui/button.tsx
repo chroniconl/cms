@@ -78,7 +78,7 @@ const ChButtonSecondary = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80',
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80',
       'h-10 px-4 py-2',
       'ch-border-outline bg-[#0f0f0f] text-white hover:bg-stone-900 disabled:opacity-50',
       className,
