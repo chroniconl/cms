@@ -19,6 +19,7 @@ export async function GET(request: Request) {
   const { data: trendyData, error: trendyError } = await supabase
     .from('chroniconl__trendy__url_history')
     .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
 
   if (trendyError) {
     void trendyHistory__v1__DatabaseError(trendyError)

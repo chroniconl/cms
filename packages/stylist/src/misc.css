@@ -22,3 +22,8 @@
 .ch-border-right {
   border-right: 1px solid #2a2422;
 }
+
+.ch-card {
+  border: 1px solid #2a2422;
+  background-color: rgba(31, 31, 31, 0.5);
+}
