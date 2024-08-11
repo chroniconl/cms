@@ -1,12 +1,11 @@
 'use client'
 import { useForm } from 'react-hook-form'
-import { ChButtonPrimaryMarketing } from '@/components/ui/button'
+import { ChButtonPrimary } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 interface ContactFormProps {
   name: string
@@ -93,9 +92,9 @@ export default function ContactForm() {
           {errors.message && <span>{errors.message.message}</span>}
         </div>
         <div className="flex justify-end gap-2">
-          <ChButtonPrimaryMarketing type="submit">
+          <ChButtonPrimary type="submit" className="w-fit">
             Get in Touch
-          </ChButtonPrimaryMarketing>
+          </ChButtonPrimary>
         </div>
       </form>
     </section>

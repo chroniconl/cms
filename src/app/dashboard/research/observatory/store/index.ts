@@ -31,6 +31,8 @@ export interface ObservatoryStore {
   ) => void
   loadingUrlResponse: boolean
   setLoadingUrlResponse: (loadingUrlResponse: boolean) => void
+  copiedToClipboard: boolean
+  setCopiedToClipboard: (copiedToClipboard: boolean) => void
 }
 
 export const useObservatoryStore = create<ObservatoryStore>((set) => ({
@@ -56,4 +58,7 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   loadingUrlResponse: false,
   setLoadingUrlResponse: (loadingUrlResponse: boolean) =>
     set({ loadingUrlResponse }),
+  copiedToClipboard: false,
+  setCopiedToClipboard: (copiedToClipboard: boolean) =>
+    set({ copiedToClipboard }),
 }))

@@ -70,7 +70,7 @@
 }
 
 .ch-button {
-  @mixin ButtonPrimary;
+  @mixin BaseButton;
 }
 
 .ch-button-secondary {

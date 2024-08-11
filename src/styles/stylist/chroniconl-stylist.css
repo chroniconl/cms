@@ -12,17 +12,7 @@
   width: fit-content;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  background-color: #282828;
-  color: #fff;
-  outline: 1px solid #2a2422;
-  /* outside */
-  border: 1px solid #0f0f0f;
-  /* inside */
 }
-
-.ch-button:hover {
-    background-color: #2a2422;
-  }
 
 .ch-button-secondary {
   font-size: 14px;

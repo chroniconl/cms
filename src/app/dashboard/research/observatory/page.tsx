@@ -1,15 +1,9 @@
 'use client'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import {
-  ChButtonPrimary,
-  ChButtonPrimaryMarketing,
-} from '@/components/ui/button'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { ChButtonPrimary, ChButtonSecondary } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { useEffect } from 'react'
-import DOMPurify from 'dompurify'
-import { Text } from '@/components/text'
 import {
   Sheet,
   SheetContent,
@@ -23,9 +17,14 @@ import { ObserverHistory } from './components/ObserverHistory'
 import { ObserverControls } from './components/ObserverControls'
 import { ObserverActions } from './components/ObserverActions'
 import { ScrollArea } from '@/components/ui/scroll-area'
-
 import { cn } from '@/utils/cn'
 import TypedComponent from '@/components/Typed'
+import {
+  ClipboardCheckIcon,
+  ClipboardCopyIcon,
+  ClipboardIcon,
+} from 'lucide-react'
+import BorderBottom from '@/components/BorderBottom'
 
 export default async function Page() {
   return (
@@ -52,6 +51,12 @@ const Screen = () => {
   )
   const setLoadingUrlResponse = useObservatoryStore(
     (state) => state.setLoadingUrlResponse,
+  )
+  const copiedToClipboard = useObservatoryStore(
+    (state) => state.copiedToClipboard,
+  )
+  const setCopiedToClipboard = useObservatoryStore(
+    (state) => state.setCopiedToClipboard,
   )
 
   const handleFetchHTML = async () => {
@@ -87,6 +92,41 @@ const Screen = () => {
 
   const handleGenerate = async () => {}
 
+  const handleCopyToClipboard = () => {
+    let contentToCopy = ''
+    switch (contentPreviewType) {
+      case 'head':
+        contentToCopy = headHtml
+        break
+      case 'body':
+        contentToCopy = bodyHtml
+        break
+      default:
+        contentToCopy = html
+    }
+
+    navigator.clipboard
+      .writeText(contentToCopy)
+      .then(() => {
+        toast({
+          title: 'Copied to clipboard',
+          description: 'The HTML content has been copied to your clipboard.',
+        })
+        setCopiedToClipboard(true)
+
+        setTimeout(() => {
+          setCopiedToClipboard(false)
+        }, 2000)
+      })
+      .catch((err) => {
+        toast({
+          title: 'Error',
+          description: 'Failed to copy content to clipboard.',
+          variant: 'destructive',
+        })
+      })
+  }
+
   return (
     <div className="min-h-dvh flex-1">
       <div className="space-y-4">
@@ -114,12 +154,9 @@ const Screen = () => {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                 />
-                <ChButtonPrimaryMarketing
-                  onClick={handleFetchHTML}
-                  disabled={!url}
-                >
+                <ChButtonPrimary onClick={handleFetchHTML} disabled={!url}>
                   Fetch HTML
-                </ChButtonPrimaryMarketing>
+                </ChButtonPrimary>
               </div>
             </div>
 
@@ -151,18 +188,34 @@ const Screen = () => {
               </div>
             </div>
             <div className="ch-border-left ml-[28px] h-6 w-1" />
-            <pre
-              contentEditable
-              className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
-            >
-              <code>
-                {contentPreviewType === 'head' && headHtml}
-                {contentPreviewType === 'body' && bodyHtml}
-                {contentPreviewType === 'default' && html}
-                {html.length === 0 &&
-                  "There's nothing to display here. Enter a URL above to get started."}
-              </code>
-            </pre>
+            <div className="relative">
+              {html && (
+                <ChButtonSecondary
+                  className="absolute right-4 top-4 w-fit"
+                  disabled={copiedToClipboard}
+                  onClick={handleCopyToClipboard}
+                >
+                  {!copiedToClipboard ? (
+                    <ClipboardIcon className="h-5 w-5" />
+                  ) : (
+                    <ClipboardCheckIcon className="h-5 w-5" />
+                  )}
+                </ChButtonSecondary>
+              )}
+
+              <pre
+                contentEditable
+                className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
+              >
+                <code>
+                  {contentPreviewType === 'head' && headHtml}
+                  {contentPreviewType === 'body' && bodyHtml}
+                  {contentPreviewType === 'default' && html}
+                  {html.length === 0 &&
+                    "There's nothing to display here. Enter a URL above to get started."}
+                </code>
+              </pre>
+            </div>
             <div className="mb-8 mt-12">
               <div className="ch-border-bottom w-full" />
             </div>
@@ -182,6 +235,9 @@ const Screen = () => {
                       View and manage all the URLs you've visited in the
                       Observatory.
                     </SheetDescription>
+                    <div className="mb-4 mt-2">
+                      <BorderBottom />
+                    </div>
                   </SheetHeader>
                   <History />
                 </SheetContent>
@@ -195,7 +251,7 @@ const Screen = () => {
                   <div className="ml-[20px] h-4 w-4 animate-pulse rounded-full border border-green-500" />
                   <div>
                     <p className="text-xs text-green-300">
-                      Observatory is active
+                      <TypedComponent strings={['Observatory is active']} />
                     </p>
                   </div>
                 </div>
