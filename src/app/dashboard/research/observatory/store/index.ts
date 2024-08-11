@@ -15,8 +15,6 @@ export interface ObservatoryStore {
   setHtml: (html: string) => void
   prompt: string
   setPrompt: (prompt: string) => void
-  useRawOnly: boolean
-  setUseRawOnly: (useRawOnly: boolean) => void
   useSanitizeHtml: boolean
   setUseSanitizeHtml: (useSanitizeHtml: boolean) => void
   history: HistoryItem[]
@@ -25,8 +23,6 @@ export interface ObservatoryStore {
   setLoadingHistory: (loadingHistory: boolean) => void
   jobResponse: any
   setJobResponse: (jobResponse: any) => void
-  tab: string
-  setTab: (tab: string) => void
 }
 
 export const useObservatoryStore = create<ObservatoryStore>((set) => ({
@@ -36,8 +32,6 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   setHtml: (html: string) => set({ html }),
   prompt: '',
   setPrompt: (prompt: string) => set({ prompt }),
-  useRawOnly: false,
-  setUseRawOnly: (useRawOnly: boolean) => set({ useRawOnly }),
   useSanitizeHtml: true,
   setUseSanitizeHtml: (useSanitizeHtml: boolean) => set({ useSanitizeHtml }),
   history: [],
@@ -46,6 +40,4 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   setLoadingHistory: (loadingHistory: boolean) => set({ loadingHistory }),
   jobResponse: null,
   setJobResponse: (jobResponse: any) => set({ jobResponse }),
-  tab: 'raw',
-  setTab: (tab: string) => set({ tab }),
 }))

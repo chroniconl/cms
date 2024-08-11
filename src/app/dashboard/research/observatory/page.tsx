@@ -52,10 +52,7 @@ const Screen = () => {
   const setUrl = useObservatoryStore((state) => state.setUrl)
   const html = useObservatoryStore((state) => state.html)
   const setHtml = useObservatoryStore((state) => state.setHtml)
-  const useRawOnly = useObservatoryStore((state) => state.useRawOnly)
   const useSanitizeHtml = useObservatoryStore((state) => state.useSanitizeHtml)
-  const tab = useObservatoryStore((state) => state.tab)
-  const setTab = useObservatoryStore((state) => state.setTab)
 
   const handleFetchHTML = async () => {
     const response = await fetch('/api/v1/trendy/observatory-search', {
@@ -94,7 +91,9 @@ const Screen = () => {
           <div className="col-span-8">
             <div className="mb-2 flex justify-between">
               <div>
-                <h2 className="text-3xl font-bold">Observatory (Preview)</h2>
+                <h2 className="text-3xl font-bold text-white">
+                  Observatory (Preview)
+                </h2>
                 <p className="ch-body ch-muted">
                   Enter a URL to fetch the HTML to begin exploring the site.
                 </p>
@@ -125,56 +124,12 @@ const Screen = () => {
             </div>
 
             <>
-              <Tabs defaultValue="raw" value={tab} onValueChange={setTab}>
-                <div className="flex w-full items-center justify-between">
-                  <div className="flex w-full items-center space-x-2">
-                    <h3 className="text-xl font-bold">Visual Preview</h3>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <HelpCircle className="h-4 w-4 hover:text-yellow-500" />
-                        </TooltipTrigger>
-                        <TooltipContent className="sm:max-w-[425px]">
-                          <p className="ch-body ch-muted ">
-                            Preview the page contents as it was captured in a
-                            mini window.
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-
-                  <TabsList>
-                    <TabsTrigger value="preview" disabled={useRawOnly}>
-                      Preview
-                    </TabsTrigger>
-                    <TabsTrigger value="raw">Raw</TabsTrigger>
-                  </TabsList>
-                </div>
-
-                <TabsContent value="preview">
-                  {!useRawOnly ? (
-                    <div
-                      className="ch-card max-h-[500px] min-h-[300px] w-full overflow-auto rounded-md  p-4 text-primary-foreground"
-                      dangerouslySetInnerHTML={{
-                        __html: JSON.parse(JSON.stringify(html)),
-                      }}
-                    />
-                  ) : (
-                    <div className="ch-border max-h-[500px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-primary-foreground opacity-40">
-                      <Text>Content preview is disabled for raw data</Text>
-                    </div>
-                  )}
-                </TabsContent>
-                <TabsContent value="raw">
-                  <pre
-                    contentEditable
-                    className="ch-card max-h-[500px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
-                  >
-                    <code>{html.trim()}</code>
-                  </pre>
-                </TabsContent>
-              </Tabs>
+              <pre
+                contentEditable
+                className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
+              >
+                <code>{html.trim()}</code>
+              </pre>
               <div className="mb-8 mt-12">
                 <div className="ch-border-bottom w-full" />
               </div>
