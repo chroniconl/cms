@@ -1,4 +1,4 @@
-import '@/styles/chroniconl-stylist.css'
+import '@/styles/stylist/chroniconl-stylist.min.css'
 import '@/styles/tailwind.css'
 import '@/styles/prose.css'
 import ReactQueryClientProvider from '@/components/ReactQueryClientProvider'

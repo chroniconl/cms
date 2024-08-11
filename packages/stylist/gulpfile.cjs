@@ -116,6 +116,10 @@ function combineStyles() {
     .pipe(gulp.dest('dist')); // Write the combined file to dist
 }
 
+function moveCSS() {
+  return gulp.src('dist/**').pipe(gulp.dest('../../src/styles/stylist'));
+}
+
 /**
  * @name build - npm run build
  * @readme a series of tasks to build the CSS files
@@ -139,3 +143,4 @@ gulp.task('minify', minifyCSS);
 gulp.task('default', build);
 gulp.task('lint-dev', lintDevCode);
 gulp.task('watch', watch);
+gulp.task('move-css', moveCSS);
