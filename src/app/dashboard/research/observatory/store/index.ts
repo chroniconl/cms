@@ -29,6 +29,8 @@ export interface ObservatoryStore {
   setContentPreviewType: (
     contentPreviewType: 'default' | 'head' | 'body',
   ) => void
+  loadingUrlResponse: boolean
+  setLoadingUrlResponse: (loadingUrlResponse: boolean) => void
 }
 
 export const useObservatoryStore = create<ObservatoryStore>((set) => ({
@@ -48,7 +50,10 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   setLoadingHistory: (loadingHistory: boolean) => set({ loadingHistory }),
   jobResponse: null,
   setJobResponse: (jobResponse: any) => set({ jobResponse }),
-  contentPreviewType: 'default',
+  contentPreviewType: 'default' as 'default' | 'head' | 'body',
   setContentPreviewType: (contentPreviewType: 'default' | 'head' | 'body') =>
     set({ contentPreviewType }),
+  loadingUrlResponse: false,
+  setLoadingUrlResponse: (loadingUrlResponse: boolean) =>
+    set({ loadingUrlResponse }),
 }))

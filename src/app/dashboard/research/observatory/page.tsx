@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { HelpCircle } from 'lucide-react'
+import { cn } from '@/utils/cn'
 
 export default async function Page() {
   return (
@@ -59,8 +60,15 @@ const Screen = () => {
   const setHeadHtml = useObservatoryStore((state) => state.setHeadHtml)
   const bodyHtml = useObservatoryStore((state) => state.bodyHtml)
   const setBodyHtml = useObservatoryStore((state) => state.setBodyHtml)
+  const loadingUrlResponse = useObservatoryStore(
+    (state) => state.loadingUrlResponse,
+  )
+  const setLoadingUrlResponse = useObservatoryStore(
+    (state) => state.setLoadingUrlResponse,
+  )
 
   const handleFetchHTML = async () => {
+    setLoadingUrlResponse(true)
     const response = await fetch('/api/v1/trendy/observatory-search', {
       method: 'POST',
       body: JSON.stringify({
@@ -75,6 +83,7 @@ const Screen = () => {
         description: message,
         variant: 'destructive',
       })
+      setLoadingUrlResponse(false)
       return
     }
 
@@ -82,6 +91,7 @@ const Screen = () => {
     setHeadHtml(data?.head_content_only)
     setBodyHtml(data?.body_content_only)
 
+    setLoadingUrlResponse(false)
     toast({
       title: 'Success',
       description: 'HTML fetched successfully',
@@ -125,27 +135,47 @@ const Screen = () => {
                 </ChButtonPrimaryMarketing>
               </div>
             </div>
+
+            <div className="ch-border-left ml-[28px] h-6 w-1" />
+            <div className="flex items-center space-x-2">
+              <div
+                className={cn([
+                  'ml-[20px] h-4 w-4 rounded-full',
+                  loadingUrlResponse && 'animate-pulse border border-green-500',
+                  !loadingUrlResponse && !html && 'ch-border-outline',
+                  !loadingUrlResponse && html && 'ch-border-outline',
+                ])}
+              />
+
+              <div>
+                {loadingUrlResponse && (
+                  <p className="text-xs text-green-300">
+                    Processing request...
+                  </p>
+                )}
+                {!loadingUrlResponse && html && (
+                  <p className="text-xs text-stone-300">
+                    HTML fetched successfully
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="ch-border-left ml-[28px] h-6 w-1" />
+            <pre
+              contentEditable
+              className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
+            >
+              <code>
+                {contentPreviewType === 'head' && headHtml}
+                {contentPreviewType === 'body' && bodyHtml}
+                {contentPreviewType === 'default' && html}
+                {html.length === 0 &&
+                  "There's nothing to display here. Enter a URL above to get started."}
+              </code>
+            </pre>
             <div className="mb-8 mt-12">
               <div className="ch-border-bottom w-full" />
             </div>
-
-            <>
-              <pre
-                contentEditable
-                className="ch-card max-h-[300px] min-h-[300px] w-full overflow-auto rounded-md p-4 text-xs"
-              >
-                <code>
-                  {contentPreviewType === 'head'
-                    ? headHtml
-                    : contentPreviewType === 'body'
-                      ? bodyHtml
-                      : html}
-                </code>
-              </pre>
-              <div className="mb-8 mt-12">
-                <div className="ch-border-bottom w-full" />
-              </div>
-            </>
           </div>
           <div className="col-span-4">
             <div className="mb-4 flex w-full">
@@ -170,16 +200,16 @@ const Screen = () => {
             <ObserverControls />
             {html && (
               <>
-                <div className="ch-border-left ml-6 h-6 w-1" />
+                <div className="ch-border-left ml-[28px] h-6 w-1" />
                 <div className="flex items-center space-x-2">
-                  <div className="ml-4 h-4 w-4 animate-pulse rounded-full border border-green-500" />
+                  <div className="ml-[20px] h-4 w-4 animate-pulse rounded-full border border-green-500" />
                   <div>
                     <p className="text-xs text-green-300">
                       Observatory is active
                     </p>
                   </div>
                 </div>
-                <div className="ch-border-left ml-6 h-6 w-1" />
+                <div className="ch-border-left ml-[28px] h-6 w-1" />
                 <ObserverActions />
               </>
             )}
