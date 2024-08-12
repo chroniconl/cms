@@ -7,6 +7,8 @@ import { cn } from '@/utils/cn'
 import { ObserverStartForm } from './components/ObserverStartForm'
 import { UnstructuredDataDisplay } from './components/UnstructuredDataDisplay'
 import { HistorySheet } from './components/HistorySheet'
+import { StructuredDataDisplay } from './components/StructuredDataDisplay copy'
+import TypedComponent from '@/components/Typed'
 
 export default async function Page() {
   return (
@@ -29,6 +31,10 @@ const Screen = () => {
   const setCopiedToClipboard = useObservatoryStore(
     (state) => state.setCopiedToClipboard,
   )
+  const loadingActionResponse = useObservatoryStore(
+    (state) => state.loadingActionResponse,
+  )
+  const actionResponse = useObservatoryStore((state) => state.actionResponse)
 
   const handleCopyToClipboard = () => {
     let contentToCopy = ''
@@ -113,30 +119,35 @@ const Screen = () => {
 
             <UnstructuredDataDisplay />
 
-            {/* Stepper */}
-            <div id="observatory-step-to-structured-data">
-              <div className="ch-border-left ml-[28px] h-6 w-1" />
-              <div className="flex items-center space-x-2">
-                <div
-                  className={cn([
-                    'ch-border-outline ml-[20px] h-4 w-4 rounded-full',
-                  ])}
-                />
+            {html && (
+              <>
+                {/* Stepper */}
+                <div id="observatory-step-to-structured-data">
+                  <div className="ch-border-left ml-[28px] h-6 w-1" />
+                  <div className="flex items-center space-x-2">
+                    <div
+                      className={cn([
+                        'ch-border-outline ml-[20px] h-4 w-4 rounded-full',
+                      ])}
+                    />
 
-                <div>
-                  {/* TODO: Load if user selects action */}
-                  {/* {loadingUrlResponse && (
-                    <p className="text-xs text-green-300">
-                      Processing request...
-                    </p>
-                  )} */}
-                  {/* {!loadingUrlResponse && html && (
-                    <p className="ch-body">HTML retrieved</p>
-                  )} */}
+                    <div>
+                      {/* TODO: Load if user selects action */}
+                      {loadingActionResponse && (
+                        <p className="text-xs text-green-300">
+                          <TypedComponent strings={['Processing request...']} />
+                        </p>
+                      )}
+                      {!loadingActionResponse && actionResponse?.data && (
+                        <p className="ch-body">Output generated</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="ch-border-left ml-[28px] h-6 w-1" />
                 </div>
-              </div>
-              <div className="ch-border-left ml-[28px] h-6 w-1" />
-            </div>
+                <StructuredDataDisplay />
+              </>
+            )}
           </div>
 
           <div className="col-span-4">

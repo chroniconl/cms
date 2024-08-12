@@ -17,8 +17,6 @@ export interface ObservatoryStore {
   setHeadHtml: (headHtml: string) => void
   bodyHtml: string
   setBodyHtml: (bodyHtml: string) => void
-  prompt: string
-  setPrompt: (prompt: string) => void
   history: HistoryItem[]
   setHistory: (history: HistoryItem[]) => void
   loadingHistory: boolean
@@ -33,6 +31,15 @@ export interface ObservatoryStore {
   setLoadingUrlResponse: (loadingUrlResponse: boolean) => void
   copiedToClipboard: boolean
   setCopiedToClipboard: (copiedToClipboard: boolean) => void
+
+  // After the user clicks the "Fetch HTML" button
+  // Their presented with a secondary form to select the action
+  prompt: string
+  setPrompt: (prompt: string) => void
+  loadingActionResponse: boolean
+  setLoadingActionResponse: (loadingActionResponse: boolean) => void
+  actionResponse: any
+  setActionResponse: (actionResponse: any) => void
 }
 
 export const useObservatoryStore = create<ObservatoryStore>((set) => ({
@@ -44,8 +51,6 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   setHeadHtml: (headHtml: string) => set({ headHtml }),
   bodyHtml: '',
   setBodyHtml: (bodyHtml: string) => set({ bodyHtml }),
-  prompt: '',
-  setPrompt: (prompt: string) => set({ prompt }),
   history: [],
   setHistory: (history: any[]) => set({ history }),
   loadingHistory: true,
@@ -61,4 +66,11 @@ export const useObservatoryStore = create<ObservatoryStore>((set) => ({
   copiedToClipboard: false,
   setCopiedToClipboard: (copiedToClipboard: boolean) =>
     set({ copiedToClipboard }),
+  prompt: '',
+  setPrompt: (prompt: string) => set({ prompt }),
+  loadingActionResponse: false,
+  setLoadingActionResponse: (loadingActionResponse: boolean) =>
+    set({ loadingActionResponse }),
+  actionResponse: null,
+  setActionResponse: (actionResponse: any) => set({ actionResponse }),
 }))

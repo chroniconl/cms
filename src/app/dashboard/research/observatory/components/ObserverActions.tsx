@@ -14,6 +14,17 @@ export const ObserverActions = () => {
   const setJobResponse = useObservatoryStore((state) => state.setJobResponse)
   const ogUrl = useObservatoryStore((state) => state.url)
   const setPrompt = useObservatoryStore((state) => state.setPrompt)
+  const prompt = useObservatoryStore((state) => state.prompt)
+  const setLoadingActionResponse = useObservatoryStore(
+    (state) => state.setLoadingActionResponse,
+  )
+  const setActionResponse = useObservatoryStore(
+    (state) => state.setActionResponse,
+  )
+  const loadingActionResponse = useObservatoryStore(
+    (state) => state.loadingActionResponse,
+  )
+  const actionResponse = useObservatoryStore((state) => state.actionResponse)
 
   const suggestions = [
     {
@@ -62,6 +73,31 @@ export const ObserverActions = () => {
     setJobResponse(data.links)
   }
 
+  const handleGenerate = async () => {
+    setLoadingActionResponse(true)
+    const response = await fetch('/api/v1/trendy/observatory-action', {
+      method: 'POST',
+      body: JSON.stringify({
+        html_content: html,
+        type: 'custom',
+        prompt: prompt,
+      }),
+    })
+
+    const { data, error } = await response.json()
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to generate action',
+        variant: 'destructive',
+      })
+      return
+    }
+
+    setActionResponse(data)
+    setLoadingActionResponse(false)
+  }
+
   return (
     <div className="ch-border-outline p-4">
       <div>
@@ -94,7 +130,9 @@ export const ObserverActions = () => {
         />
       </div>
       <div className="mt-4 flex w-full items-center justify-end">
-        <ChButtonPrimary className="w-fit">Generate</ChButtonPrimary>
+        <ChButtonPrimary className="w-fit" onClick={handleGenerate}>
+          Generate
+        </ChButtonPrimary>
       </div>
     </div>
   )

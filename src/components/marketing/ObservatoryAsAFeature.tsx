@@ -1,4 +1,6 @@
+'use client'
 import { Check } from 'lucide-react'
+import { ClientImage } from '../image'
 
 export const ObservatoryAsAFeature = () => {
   return (
@@ -40,11 +42,11 @@ export const ObservatoryAsAFeature = () => {
           </ul>
         </div>
         <div className="flex md:flex-1">
-          <img
-            src="/images/working-on-housing-project.jpg"
-            alt="working on housing"
-            width="1300"
-            className="w-full rounded-lg object-cover md:h-full"
+          <ClientImage
+            src="https://azhrbvulmwgxcijoaenn.supabase.co/storage/v1/object/public/my-blog/ObserverToolBeta.png"
+            aspectRatio={4 / 3}
+            className="object-cover"
+            alt="Observer Tool Beta"
           />
         </div>
       </div>

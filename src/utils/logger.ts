@@ -62,6 +62,15 @@ class Logger {
 
     await this.logToDatabase(logData)
   }
+
+  async logInfo(infoData: Omit<LogData, 'log_level'>) {
+    const logData: LogData = {
+      ...infoData,
+      log_level: 'INFO',
+    }
+
+    await this.logToDatabase(logData)
+  }
 }
 
 export default Logger

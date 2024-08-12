@@ -3,20 +3,26 @@ import Image from 'next/image'
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import { cn } from '@/utils/cn'
 
-export function ClientImage({ src, alt, className, ...props }: any) {
+export function ClientImage({
+  src,
+  alt,
+  className,
+  aspectRatio,
+  ...props
+}: any) {
   if (!src) {
     return null
   }
   return (
     <AspectRatio
-      ratio={16 / 9}
-      className={cn('rounded-md bg-muted', className)}
+      ratio={aspectRatio || 16 / 9}
+      className={cn('rounded-md', className)}
     >
       <Image
         src={src}
         alt={alt}
         fill
-        className="rounded-md object-cover"
+        className="object-fit rounded-md"
         {...props}
       />
     </AspectRatio>
