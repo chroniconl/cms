@@ -2,7 +2,7 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { ChButtonSecondaryMarketing } from '@/components/ui/button'
+import { ChButtonSecondary } from '@/components/ui/button'
 import { MailIcon } from 'lucide-react'
 import { toast } from '@/components/ui/use-toast'
 import { useState } from 'react'
@@ -83,9 +83,9 @@ export default function SubscribeToNewsletter() {
             {errors.email && <span>This field is required</span>}
           </div>
           <div className="flex w-full justify-end">
-            <ChButtonSecondaryMarketing type="submit" className="w-full">
+            <ChButtonSecondary type="submit" className="w-fit">
               Subscribe
-            </ChButtonSecondaryMarketing>
+            </ChButtonSecondary>
           </div>
         </form>
 

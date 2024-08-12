@@ -19,6 +19,7 @@
   },
   "scripts": {
     "build": "pnpm run build:clean && gulp default && pnpm run build:format",
+    "postbuild": "gulp move-css",
     "dev": "gulp watch",
     "build:clean": "rimraf dist",
     "build:format": "prettier --write .",

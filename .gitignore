@@ -41,3 +41,7 @@ next-env.d.ts
 dev
 
 .turbo
+
+__pycache__
+
+.venv

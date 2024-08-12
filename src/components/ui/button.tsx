@@ -55,61 +55,39 @@ Button.displayName = 'Button'
 const ChButtonPrimary = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => (
-  <Button ref={ref} className={cn('ch-button', className)} {...props} />
+>(({ className, children, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn(
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80',
+      'h-10 px-4 py-2',
+      'bg-teal-600 text-white hover:bg-teal-700 disabled:bg-teal-500',
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </button>
 ))
 ChButtonPrimary.displayName = 'ChButtonPrimary'
 
 const ChButtonSecondary = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => (
-  <Button
+>(({ className, children, ...props }, ref) => (
+  <button
     ref={ref}
-    className={cn('ch-button-secondary', className)}
+    className={cn(
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80',
+      'h-10 px-4 py-2',
+      'ch-border-outline bg-[#0f0f0f] text-white hover:bg-stone-900 disabled:opacity-50',
+      className,
+    )}
     {...props}
-  />
+  >
+    {children}
+  </button>
 ))
 ChButtonSecondary.displayName = 'ChButtonSecondary'
 
-const ChButtonPrimaryMarketing = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => (
-  <Button
-    ref={ref}
-    className={cn('ch-button-marketing', className)}
-    {...props}
-  />
-))
-ChButtonPrimaryMarketing.displayName = 'ChButtonPrimaryMarketing'
-
-const ChButtonSecondaryMarketing = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => (
-  <Button
-    ref={ref}
-    className={cn('ch-button-secondary-marketing', className)}
-    {...props}
-  />
-))
-ChButtonSecondaryMarketing.displayName = 'ChButtonSecondaryMarketing'
-
-const ChButtonPrimaryOutline = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => (
-  <Button ref={ref} className={cn('ch-button-outline', className)} {...props} />
-))
-ChButtonPrimaryOutline.displayName = 'ChButtonPrimaryOutline'
-
-export {
-  Button,
-  buttonVariants,
-  ChButtonPrimary,
-  ChButtonSecondary,
-  ChButtonPrimaryMarketing,
-  ChButtonSecondaryMarketing,
-  ChButtonPrimaryOutline,
-}
+export { Button, buttonVariants, ChButtonPrimary, ChButtonSecondary }
