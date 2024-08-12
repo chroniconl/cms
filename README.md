@@ -6,6 +6,12 @@ Just a fun project I'm working on.
 
 ## Features
 
+**Observatory (Preview)**
+
+Work with raw HTML content to consult AI / preform common tasks.
+
+<img src="https://azhrbvulmwgxcijoaenn.supabase.co/storage/v1/object/public/my-blog/ObserverToolBeta.png" width="400px" />
+
 Blog post management
 
 <img src="https://utfs.io/f/de9040b8-09c8-4c22-97b5-016af9032942-8jt8nz.png" width="400px" />
