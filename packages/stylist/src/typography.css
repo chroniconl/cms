@@ -20,22 +20,11 @@
 
 @define-mixin HeadingStyles {
   @mixin BaseHeadingTypography;
-
-  &.ch-primary {
-    color: var(--text-primary);
-  }
-  &.ch-muted {
-    color: var(--text-secondary);
-  }
 }
 
 @define-mixin BodyStyles {
   @mixin BaseBodyTypography;
   color: var(--text-secondary);
-
-  &.ch-primary {
-    color: var(--text-primary);
-  }
 }
 
 .ch-heading {
@@ -44,4 +33,11 @@
 
 .ch-body {
   @mixin BodyStyles;
+}
+
+.ch-color-primary {
+  color: var(--text-primary);
+}
+.ch-color-secondary {
+  color: var(--text-secondary);
 }

@@ -80,7 +80,7 @@ export default function PostsList({ data, count }: PostsListProps) {
   if (data.length === 0) {
     return (
       <div className="mt-4 flex items-center justify-center">
-        <p className="ch-body ch-muted">No posts found</p>
+        <p className="ch-body ch-color-secondary">No posts found</p>
       </div>
     )
   }

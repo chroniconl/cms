@@ -5,14 +5,6 @@
   font-weight: 400;
 }
 
-.ch-heading.ch-primary {
-    color: #FFFFFF;
-  }
-
-.ch-heading.ch-muted {
-    color: #a2a2a2;
-  }
-
 .ch-body {
   font-family: inherit;
   font-size: 0.75rem /* 12px */;
@@ -21,8 +13,12 @@
   color: #a2a2a2;
 }
 
-.ch-body.ch-primary {
-    color: #FFFFFF;
-  }
+.ch-color-primary {
+  color: #FFFFFF;
+}
+
+.ch-color-secondary {
+  color: #a2a2a2;
+}
 
 /*# sourceMappingURL=maps/typography.css.map */

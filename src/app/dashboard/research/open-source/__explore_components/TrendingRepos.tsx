@@ -89,8 +89,8 @@ export default function TrendingRepos() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 flex flex-col gap-4">
-          <h1 className="ch-heading ch-primary">Trending Repositories</h1>
-          <p className="ch-body ch-muted">Loading...</p>
+          <h1 className="ch-heading ch-color-primary">Trending Repositories</h1>
+          <p className="ch-body ch-color-secondary">Loading...</p>
         </div>
       </div>
     )
@@ -99,7 +99,7 @@ export default function TrendingRepos() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="ch-heading ch-primary">Trending Repositories</h1>
+        <h1 className="ch-heading ch-color-primary">Trending Repositories</h1>
         <div className="flex gap-2">
           <Button
             onClick={() => setSelectedLanguage('all')}
@@ -155,19 +155,21 @@ export default function TrendingRepos() {
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row-reverse items-center gap-2">
                     <StarIcon className="h-4 w-4" />
-                    <span className="ch-body ch-muted text-xs">
+                    <span className="ch-body ch-color-secondary text-xs">
                       {repo.stars}
                     </span>
                   </div>
                   <div className="flex flex-row-reverse items-center gap-2">
                     <GitBranchIcon className="h-4 w-4" />
-                    <span className="ch-body ch-muted text-xs">
+                    <span className="ch-body ch-color-secondary text-xs">
                       {repo.forks}
                     </span>
                   </div>
                 </div>
               </div>
-              <p className="ch-body ch-muted mb-4">{repo.description}</p>
+              <p className="ch-body ch-color-secondary mb-4">
+                {repo.description}
+              </p>
               <div className="flex items-center gap-2">
                 <Badge
                   variant="outline"

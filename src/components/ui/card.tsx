@@ -25,7 +25,7 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn([
-      'ch-heading ch-primary',
+      'ch-heading ch-color-primary',
       'flex flex-col space-y-1.5 px-6 pb-6 pt-4',
       className,
     ])}
@@ -55,8 +55,8 @@ const CardDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn('ch-body', className, {
-      'ch-primary': styleType === 'primary',
-      'ch-muted': styleType === 'secondary',
+      'ch-color-primary': styleType === 'primary',
+      'ch-color-secondary': styleType === 'secondary',
     })}
     {...props}
   />
