@@ -51,9 +51,9 @@ export default async function BlogPostsGroup({
               <div className="mt-4 flex flex-col justify-between">
                 <div>
                   <p className="ch-body">{post.title}</p>
-                  {/* <p className="ch-body ch-muted">{post?.author?.display_name && post?.author?.display_name + " · "}{formatDate(post?.publish_date_day)}</p> 									 */}
+                  {/* <p className="ch-body ch-color-secondary">{post?.author?.display_name && post?.author?.display_name + " · "}{formatDate(post?.publish_date_day)}</p> 									 */}
                   {/* Theres only 1 author for now, dont need to show the author name */}
-                  <p className="ch-body ch-muted">
+                  <p className="ch-body ch-color-secondary">
                     {formatDate(post?.publish_date_day)}
                   </p>
                 </div>

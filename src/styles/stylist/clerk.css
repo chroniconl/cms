@@ -5,14 +5,6 @@
   font-weight: 400;
 }
 
-.ch-heading.ch-primary {
-    color: #FFFFFF;
-  }
-
-.ch-heading.ch-muted {
-    color: #a2a2a2;
-  }
-
 .ch-body {
   font-family: inherit;
   font-size: 0.75rem /* 12px */;
@@ -21,9 +13,13 @@
   color: #a2a2a2;
 }
 
-.ch-body.ch-primary {
-    color: #FFFFFF;
-  }
+.ch-color-primary {
+  color: #FFFFFF;
+}
+
+.ch-color-secondary {
+  color: #a2a2a2;
+}
 
 .cl-cardBox .cl-card {
     background-color: #1a1a1a;
@@ -51,14 +47,6 @@
     font-weight: 400;
   }
 
-.cl-cardBox .cl-headerTitle.ch-primary {
-    color: #FFFFFF;
-  }
-
-.cl-cardBox .cl-headerTitle.ch-muted {
-    color: #a2a2a2;
-  }
-
 .cl-cardBox .cl-headerSubtitle,
   .cl-cardBox .cl-formFieldLabel,
   .cl-cardBox .cl-footerActionText,
@@ -68,10 +56,6 @@
     line-height: 1rem /* 16px */;
     font-weight: 400;
     color: #a2a2a2;
-  }
-
-.cl-cardBox .cl-headerSubtitle.ch-primary, .cl-cardBox .cl-formFieldLabel.ch-primary, .cl-cardBox .cl-footerActionText.ch-primary, .cl-cardBox .cl-dividerText.ch-primary {
-    color: #FFFFFF;
   }
 
 /*# sourceMappingURL=maps/clerk.css.map */

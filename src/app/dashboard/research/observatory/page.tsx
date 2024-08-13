@@ -81,7 +81,7 @@ const Screen = () => {
                 <h2 className="text-3xl font-bold text-white">
                   Observatory (Preview)
                 </h2>
-                <p className="ch-body ch-muted">
+                <p className="ch-body ch-color-secondary">
                   Enter a URL to fetch the HTML to begin exploring the site.
                 </p>
               </div>

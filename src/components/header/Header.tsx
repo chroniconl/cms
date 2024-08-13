@@ -15,18 +15,18 @@ export default function Header() {
           className="mr-10 flex items-center gap-2"
           prefetch={false}
         >
-          <h1 className="ch-heading ch-primary">Chroniconl</h1>
+          <h1 className="ch-heading ch-color-primary">Chroniconl</h1>
         </Link>
         <Link
           href="/about"
-          className="ch-muted rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+          className="ch-color-secondary rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
           prefetch={false}
         >
           About
         </Link>
         <Link
           href="/contact"
-          className="ch-muted rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+          className="ch-color-secondary rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
           prefetch={false}
         >
           Contact
@@ -59,19 +59,19 @@ export default function Header() {
             <div className="grid gap-2 py-6">
               <Link
                 href="/"
-                className="ch-muted rounded-sm px-4 py-2 hover:bg-stone-900"
+                className="ch-color-secondary rounded-sm px-4 py-2 hover:bg-stone-900"
               >
                 Home
               </Link>
               <Link
                 href="/about"
-                className="ch-muted rounded-sm px-4 py-2 hover:bg-stone-900"
+                className="ch-color-secondary rounded-sm px-4 py-2 hover:bg-stone-900"
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="ch-muted rounded-sm px-4 py-2 hover:bg-stone-900"
+                className="ch-color-secondary rounded-sm px-4 py-2 hover:bg-stone-900"
               >
                 Contact
               </Link>
@@ -92,7 +92,7 @@ export default function Header() {
         </Sheet>
 
         <Link href="/" className="flex items-center gap-2">
-          <span className="ch-heading ch-primary">Chroniconl</span>
+          <span className="ch-heading ch-color-primary">Chroniconl</span>
         </Link>
         <div className="h-6 w-6" />
       </div>

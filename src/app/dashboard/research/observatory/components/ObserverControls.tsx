@@ -31,7 +31,7 @@ export const ObserverControls = () => {
                 <HelpCircle className="h-4 w-4 hover:text-yellow-500" />
               </TooltipTrigger>
               <TooltipContent className="sm:max-w-[425px]">
-                <p className="ch-body ch-muted ">
+                <p className="ch-body ch-color-secondary ">
                   View the full HTML or only the head or body of the page.
                 </p>
               </TooltipContent>
