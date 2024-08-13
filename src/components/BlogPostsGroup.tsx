@@ -33,32 +33,44 @@ export default async function BlogPostsGroup({
 }) {
   const postsCollection = limit ? posts?.slice(0, limit) : posts
   return (
-    <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {postsCollection?.map((post, i) => (
-        <Link
-          className="inline-block h-full"
-          key={post.id}
-          href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
-            post.slug
-          }`}
-        >
-          <article key={post.id} className="group h-full">
-            <ClientImage src={post.image_url} alt={post.image_alt} />
-            <div className="mt-4 flex flex-col justify-between">
-              <div>
-                <Heading level={3}>{post.title}</Heading>
-                <Text className="mt-2">{post?.publish_date_day}</Text>
-                <Text className="mt-2">{post?.description?.slice(0, 200)}</Text>
+    <div className="mt-20">
+      <div className="mb-8 flex flex-col items-center justify-center text-center">
+        <h2 className="mb-4 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
+          From the blog
+        </h2>
+        <p className="mb-8">
+          Check out the latest trends and discover what's happening in the world
+        </p>
+      </div>
+      <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {postsCollection?.map((post, i) => (
+          <Link
+            className="inline-block h-full"
+            key={post.id}
+            href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
+              post.slug
+            }`}
+          >
+            <article key={post.id} className="group h-full">
+              <ClientImage src={post.image_url} alt={post.image_alt} />
+              <div className="mt-4 flex flex-col justify-between">
+                <div>
+                  <Heading level={3}>{post.title}</Heading>
+                  <Text className="mt-2">{post?.publish_date_day}</Text>
+                  <Text className="mt-2">
+                    {post?.description?.slice(0, 200)}
+                  </Text>
+                </div>
+                <div className="mt-3 flex items-center text-sm">
+                  <Badge color={post.category?.color}>
+                    {post.category?.name}
+                  </Badge>
+                </div>
               </div>
-              <div className="mt-3 flex items-center text-sm">
-                <Badge color={post.category?.color}>
-                  {post.category?.name}
-                </Badge>
-              </div>
-            </div>
-          </article>
-        </Link>
-      ))}
-    </section>
+            </article>
+          </Link>
+        ))}
+      </section>
+    </div>
   )
 }
