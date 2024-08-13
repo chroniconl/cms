@@ -10,9 +10,9 @@ export const ObservatoryAsAFeature = () => {
           <span className="mb-2 inline-block rounded-md border border-emerald-600 bg-emerald-800/30 px-4 py-1 text-sm text-white">
             The Observatory (Beta)
           </span>
-          <h1 className="mb-8 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
+          <h2 className="mb-8 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
             Unstructured data into structured data
-          </h1>
+          </h2>
           <p>
             All good web research starts in the raw HTML contents. Submit any
             publicly available URL and our system will provide an easy-to-use
@@ -41,7 +41,7 @@ export const ObservatoryAsAFeature = () => {
             </li>
           </ul>
         </div>
-        <div className="flex md:flex-1">
+        <div className="mt-12 flex md:mt-0 md:flex-1">
           <ClientImage
             src="https://azhrbvulmwgxcijoaenn.supabase.co/storage/v1/object/public/my-blog/ObserverToolBeta.png"
             aspectRatio={4 / 3}
