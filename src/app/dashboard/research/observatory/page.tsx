@@ -97,7 +97,7 @@ const Screen = () => {
                   className={cn([
                     'ml-[20px] h-4 w-4 rounded-full',
                     loadingUrlResponse &&
-                      'animate-pulse border border-green-500',
+                      'animate-pulse border border-teal-500',
                     !loadingUrlResponse && !html && 'ch-border-outline',
                     !loadingUrlResponse && html && 'ch-border-outline',
                   ])}
@@ -105,7 +105,7 @@ const Screen = () => {
 
                 <div>
                   {loadingUrlResponse && (
-                    <p className="text-xs text-green-300">
+                    <p className="text-xs text-teal-300">
                       Processing request...
                     </p>
                   )}
@@ -134,7 +134,7 @@ const Screen = () => {
                     <div>
                       {/* TODO: Load if user selects action */}
                       {loadingActionResponse && (
-                        <p className="text-xs text-green-300">
+                        <p className="text-xs text-teal-300">
                           <TypedComponent strings={['Processing request...']} />
                         </p>
                       )}
@@ -159,9 +159,9 @@ const Screen = () => {
                 <div id="observer-actions-prestep">
                   <div className="ch-border-left ml-[28px] h-6 w-1" />
                   <div className="flex items-center space-x-2">
-                    <div className="ml-[20px] h-4 w-4 animate-pulse rounded-full border border-green-500" />
+                    <div className="ml-[20px] h-4 w-4 animate-pulse rounded-full border border-teal-500" />
                     <div>
-                      <p className="text-xs text-green-300">
+                      <p className="text-xs text-teal-300">
                         Observatory is active
                       </p>
                     </div>

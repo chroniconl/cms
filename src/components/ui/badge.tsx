@@ -17,8 +17,7 @@ const badgeVariants = cva(
         outline: 'text-foreground',
         red: 'border border-red-500 text-red-500 bg-red-50 dark:bg-red-700 dark:text-white',
         blue: 'border border-blue-500 text-blue-500 bg-blue-50 dark:bg-blue-700 dark:text-white',
-        green:
-          'border border-green-500 text-green-500 bg-green-50 dark:bg-green-700 dark:text-white',
+        teal: 'border border-teal-500 text-teal-500 bg-teal-50 dark:bg-teal-700 dark:text-white',
         yellow:
           'border border-yellow-500 text-yellow-500 bg-yellow-50 dark:bg-yellow-700 dark:text-white',
         gray: 'border border-stone-500 text-stone-500 bg-stone-50 dark:bg-stone-700 dark:text-white',
@@ -29,7 +28,6 @@ const badgeVariants = cva(
         pink: 'border border-pink-500 text-pink-500 bg-pink-50 dark:bg-pink-700 dark:text-white',
         orange:
           'border border-orange-500 text-orange-500 bg-orange-50 dark:bg-orange-700 dark:text-white',
-        teal: 'border border-teal-500 text-teal-500 bg-teal-50 dark:bg-teal-700 dark:text-white',
         cyan: 'border border-cyan-500 text-cyan-500 bg-cyan-50 dark:bg-cyan-700 dark:text-white',
         white: 'border border-white text-white bg-white',
         black: 'border border-black text-black bg-black',

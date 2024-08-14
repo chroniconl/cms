@@ -7,7 +7,7 @@ export const ObservatoryAsAFeature = () => {
     <section className="py-24">
       <div className="mx-auto flex max-w-7xl flex-col px-5 sm:px-10 md:flex-row md:px-12 lg:px-5">
         <div className=" text-gray-700 dark:text-gray-300 md:w-1/2">
-          <span className="mb-2 inline-block rounded-md border border-emerald-600 bg-emerald-800/30 px-4 py-1 text-sm text-white">
+          <span className="mb-2 inline-block rounded-md border border-teal-600 bg-teal-800/30 px-4 py-1 text-sm text-white">
             The Observatory (Beta)
           </span>
           <h2 className="mb-8 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
@@ -21,21 +21,21 @@ export const ObservatoryAsAFeature = () => {
           </p>
           <ul className="mt-16 space-y-4">
             <li className="flex items-center gap-x-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-emerald-700 text-sm text-white shadow-sm shadow-emerald-600 dark:border-emerald-600">
-                <Check className="h-5 w-5 text-emerald-400" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-teal-700 text-sm text-white shadow-sm shadow-teal-600 dark:border-teal-600">
+                <Check className="h-5 w-5 text-teal-400" />
               </span>
               Enter any URL to instantly retrieve the full HTML content of the
               page.
             </li>
             <li className="flex items-center gap-x-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-emerald-700 text-sm text-white shadow-sm shadow-emerald-600 dark:border-emerald-600">
-                <Check className="h-5 w-5 text-emerald-400" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-teal-700 text-sm text-white shadow-sm shadow-teal-600 dark:border-teal-600">
+                <Check className="h-5 w-5 text-teal-400" />
               </span>
               Choose to what part of the HTML content you want to work with
             </li>
             <li className="flex items-center gap-x-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-emerald-700 text-sm text-white shadow-sm shadow-emerald-600 dark:border-emerald-600">
-                <Check className="h-5 w-5 text-emerald-400" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-teal-700 text-sm text-white shadow-sm shadow-teal-600 dark:border-teal-600">
+                <Check className="h-5 w-5 text-teal-400" />
               </span>
               Interact with the HTML content to achieve specific research tasks
             </li>
