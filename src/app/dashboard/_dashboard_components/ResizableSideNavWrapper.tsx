@@ -105,6 +105,13 @@ export default function ResizableSideNavWrapper({
               >
                 Contact Us Form Submissions
               </Link>
+              <Link
+                href="/dashboard/log-manager"
+                className="ml-4 flex items-center gap-3 border-l border-l-stone-200/50 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground dark:border-l-stone-700/50"
+                prefetch={false}
+              >
+                Log Manager
+              </Link>
             </CollapsibleContent>
           </Collapsible>
           {/* <Link
