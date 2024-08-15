@@ -9,6 +9,10 @@ import {
 
 // TODO: Add pagination
 export async function GET(request: Request) {
+  const url = new URL(request.url)
+  const page = parseInt(url.searchParams.get('page') || '1')
+  const pageSize = parseInt(url.searchParams.get('pageSize') || '100')
+
   const start = performance.now()
   const { error: userError } = await getCurrentUser()
   if (userError) {
@@ -24,6 +28,7 @@ export async function GET(request: Request) {
     .from('__raw_logs')
     .select('*', { count: 'exact' })
     .order('timestamp', { ascending: false })
+    .range((page - 1) * pageSize, page * pageSize - 1)
 
   if (trendyError) {
     void logManagerHistory__v1__DatabaseError(trendyError)
@@ -36,6 +41,7 @@ export async function GET(request: Request) {
     {
       logs: logData,
       count: count as number,
+      pageSize: logData.length,
     },
     'Success',
   )

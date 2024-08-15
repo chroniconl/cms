@@ -28,12 +28,13 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { ChButtonSecondary } from '@/components/ui/button'
+import { Text } from '@/components/text'
 
 type LogEntry = {
   timestamp: string
@@ -151,7 +152,7 @@ const columns = [
                 <div>
                   <h3 className="text-sm font-medium text-white">Message</h3>
                   <ScrollArea className="ch-border mt-1 h-[300px] rounded-md p-2">
-                    <pre className="whitespace-pre-wrap break-words text-sm text-green-200">
+                    <pre className="whitespace-pre-wrap break-words text-xs text-stone-200">
                       <code>{getMessage()}</code>
                     </pre>
                   </ScrollArea>
@@ -262,18 +263,26 @@ export default function LogManager() {
   const [count, setCount] = useState<number>(0)
   const [intervals, setIntervals] = useState<Record<string, string>>({})
 
+  // Pagination state
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(1)
+
   useEffect(() => {
     const fetchLogs = async () => {
-      const response = await fetch('/api/v1/log-manager/history')
+      const response = await fetch(
+        '/api/v1/log-manager/history' + `?page=${page}&pageSize=${pageSize}`,
+      )
       const { data, error } = await response.json()
       if (error) {
         throw new Error('Failed to fetch logs')
       }
       setData(data?.logs)
       setCount(data?.count)
+      setTotalPages(Math.ceil(data?.count / pageSize))
     }
     fetchLogs()
-  }, [])
+  }, [page, pageSize])
 
   useEffect(() => {
     const fetchIntervals = async () => {
@@ -447,6 +456,29 @@ export default function LogManager() {
             </SelectContent>
           </Select>
         </div>
+        <div className="space-y-2">
+          <label
+            htmlFor="filter-rows-per-page"
+            className="text-sm font-medium text-white"
+          >
+            Rows per page
+          </label>
+          <Select
+            name="filter-rows-per-page"
+            value={pageSize.toString()}
+            onValueChange={(value) => setPageSize(Number(value))}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Rows per page" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="ch-border rounded-md">
         <Table>
@@ -485,6 +517,23 @@ export default function LogManager() {
             ))}
           </TableBody>
         </Table>
+        <div className="my-4 flex items-center justify-between px-4">
+          <ChButtonSecondary
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+          >
+            Previous
+          </ChButtonSecondary>
+          <Text>
+            Page {page} of {totalPages}
+          </Text>
+          <ChButtonSecondary
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            Next
+          </ChButtonSecondary>
+        </div>
       </div>
     </div>
   )
