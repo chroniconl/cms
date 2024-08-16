@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function imageDelete__v0__AuthError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'AUTH_ERROR',
     http_method: 'DELETE',
   })
@@ -46,7 +46,7 @@ export async function imageDelete__v0__UploadThingError() {
 // Database Error Logger
 export async function imageDelete__v0__DatabaseError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'DELETE',
   })

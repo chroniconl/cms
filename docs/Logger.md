@@ -13,7 +13,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function myLogger__AuthError(error: any) {
   void logger.logError({
-    message: 'POST failed - Error getting user' + JSON.stringify(error),
+    message: error, // automatically stringified
     error_code: 'AUTH_ERROR',
   })
 }

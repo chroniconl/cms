@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function createAuthor__v0_2__AuthError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'AUTH_ERROR',
   })
 }
@@ -18,7 +18,7 @@ export async function createAuthor__v0_2__ValidationError(
   validationError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(validationError),
+    message: validationError,
     error_code: 'VALIDATION_ERROR',
     http_method: 'POST',
   })
@@ -27,7 +27,7 @@ export async function createAuthor__v0_2__ValidationError(
 // Database Error Logger
 export async function createAuthor__v0_2__DatabaseError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })

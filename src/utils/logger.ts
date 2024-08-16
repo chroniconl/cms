@@ -48,6 +48,7 @@ class Logger {
   async logError(options: Omit<LogData, 'log_level'>) {
     const logData: LogData = {
       ...options,
+      message: JSON.stringify(options.message),
       log_level: 'ERROR',
     }
 

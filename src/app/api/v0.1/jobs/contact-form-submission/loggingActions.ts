@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function legalDocumentCreate__v0_1__AuthError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'AUTH_ERROR',
     http_method: 'POST',
   })
@@ -17,7 +17,7 @@ export async function legalDocumentCreate__v0_1__AuthError(error: any) {
 // Database Error Logger
 export async function legalDocumentCreate__v0_1__DatabaseError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })

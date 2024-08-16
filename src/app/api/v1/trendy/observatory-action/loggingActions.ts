@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function observatoryAction__v1__AuthError(userError: any) {
   void logger.logError({
-    message: JSON.stringify(userError),
+    message: userError,
     error_code: 'AUTH_ERROR',
     http_method: 'POST',
   })
@@ -64,7 +64,7 @@ export async function observatoryAction__v1__StructuredDataError(
   responseError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(responseError),
+    message: responseError,
     error_code: 'GPT_DATA_ERROR',
     exception_type: 'Error',
     http_method: 'POST',
@@ -75,6 +75,6 @@ export async function observatoryAction__v1__StructuredDataSuccess(
   response: any,
 ) {
   void logger.logPerformance({
-    message: JSON.stringify(response),
+    message: response,
   })
 }

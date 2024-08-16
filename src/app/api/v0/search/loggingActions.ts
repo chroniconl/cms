@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function search__v0__AuthError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'AUTH_ERROR',
     http_method: 'POST',
   })
@@ -17,7 +17,7 @@ export async function search__v0__AuthError(error: any) {
 // Validation Error Logger
 export async function search__v0__ValidationError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'VALIDATION_ERROR',
     http_method: 'POST',
   })
@@ -35,7 +35,7 @@ export async function search__v0__GeneralError(message: string) {
 // Database Error Logger for Title Search
 export async function search__v0__TitleSearchError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
@@ -44,7 +44,7 @@ export async function search__v0__TitleSearchError(error: any) {
 // Database Error Logger for Content Search
 export async function search__v0__ContentSearchError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })

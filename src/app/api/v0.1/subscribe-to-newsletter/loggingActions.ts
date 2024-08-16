@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Validation Error Logger
 export async function subscribeNewsletter__v0_1__ValidationError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'VALIDATION_ERROR',
     http_method: 'POST',
   })
@@ -19,7 +19,7 @@ export async function subscribeNewsletter__v0_1__DuplicateEmailError(
   error: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
@@ -30,7 +30,7 @@ export async function subscribeNewsletter__v0_1__GeneralDatabaseError(
   error: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })

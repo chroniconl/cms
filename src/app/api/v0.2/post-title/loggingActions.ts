@@ -11,7 +11,7 @@ export async function postTitle__v0_2__ValidationError(
   request: Request,
 ) {
   void logger.logError({
-    message: JSON.stringify(validationError),
+    message: validationError,
     error_code: 'VALIDATION_ERROR',
     http_method: 'PUT',
   })
@@ -20,7 +20,7 @@ export async function postTitle__v0_2__ValidationError(
 // Database Error Logger
 export async function postTitle__v0_2__DatabaseError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'PUT',
   })

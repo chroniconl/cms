@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function logManagerHistory__v1__AuthError(userError: any) {
   void logger.logError({
-    message: JSON.stringify(userError),
+    message: userError,
     error_code: 'AUTH_ERROR',
     http_method: 'GET',
   })

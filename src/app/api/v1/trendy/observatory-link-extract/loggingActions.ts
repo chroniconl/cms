@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Authentication Error Logger
 export async function observatoryLinkExtract__v1__AuthError(userError: any) {
   void logger.logError({
-    message: JSON.stringify(userError),
+    message: userError,
     error_code: 'AUTH_ERROR',
     http_method: 'POST',
   })
@@ -19,7 +19,7 @@ export async function observatoryLinkExtract__v1__ValidationError(
   validationError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(validationError),
+    message: validationError,
     error_code: 'VALIDATION_ERROR',
     http_method: 'POST',
   })
@@ -30,7 +30,7 @@ export async function observatoryLinkExtract__v1__TrendyAPIError(
   responseError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(responseError),
+    message: responseError,
     error_code: 'TRENDY_ERROR',
     http_method: 'POST',
   })
@@ -41,7 +41,7 @@ export async function observatoryLinkExtract__v1__DatabaseError(
   trendyError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(trendyError),
+    message: trendyError,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })

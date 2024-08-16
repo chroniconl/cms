@@ -8,7 +8,7 @@ const logger = new Logger(loggerName, applicationName, environment)
 // Fetch Media Error Logger
 export async function media__v0_1__FetchMediaError(error: any) {
   void logger.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'UPLOADTHING_MEDIA_FETCH_ERROR',
     http_method: 'GET',
   })

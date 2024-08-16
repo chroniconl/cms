@@ -17,7 +17,7 @@ export async function uploadDocumentImage__v0_2__MissingDataError() {
 // Supabase Upload Error Logger
 export async function uploadDocumentImage__v0_2__UploadError(uploadError: any) {
   void logger.logError({
-    message: JSON.stringify(uploadError),
+    message: uploadError,
     error_code: 'SUPABASE_UPLOAD_ERROR',
     http_method: 'POST',
   })
@@ -28,7 +28,7 @@ export async function uploadDocumentImage__v0_2__DocumentUpdateError(
   documentError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(documentError),
+    message: documentError,
     error_code: 'DOCUMENT_UPDATE_ERROR',
     http_method: 'POST',
   })

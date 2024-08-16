@@ -8,7 +8,7 @@ const loggerGetName = 'api.v0.categories.GET'
 const loggerGet = new Logger(loggerGetName, applicationName, environment)
 export async function categories__v0__GetDatabaseError(error: any) {
   void loggerGet.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'GET',
   })
@@ -30,14 +30,14 @@ const loggerPostName = 'api.v0.categories.POST'
 const loggerPost = new Logger(loggerPostName, applicationName, environment)
 export async function categories__v0__PostValidationError(error: any) {
   void loggerPost.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'VALIDATION_ERROR',
     http_method: 'POST',
   })
 }
 export async function categories__v0__PostDatabaseError(error: any) {
   void loggerPost.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
@@ -59,14 +59,14 @@ const loggerPutName = 'api.v0.categories.PUT'
 const loggerPut = new Logger(loggerPutName, applicationName, environment)
 export async function categories__v0__PutValidationError(error: any) {
   void loggerPut.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'VALIDATION_ERROR',
     http_method: 'PUT',
   })
 }
 export async function categories__v0__PutDatabaseError(error: any) {
   void loggerPut.logError({
-    message: JSON.stringify(error),
+    message: error,
     error_code: 'DATABASE_ERROR',
     http_method: 'PUT',
   })
