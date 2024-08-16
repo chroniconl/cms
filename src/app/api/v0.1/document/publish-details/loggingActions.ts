@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.1.document.publish-details.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.1.document.publish-details.PUT',
+  httpMethod: 'PUT',
+})
 
 // Authentication Error Logger
 export async function publishDetails__v0_1__AuthError(error: any) {

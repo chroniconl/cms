@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase'
 
 type LogData = {
-  message: string
+  message: any
   error_code?: string
   exception_type?: string
   stack_trace?: string
@@ -26,18 +26,23 @@ type LogData = {
 
 class Logger {
   constructor(
-    private loggerName: string,
-    private applicationName: string,
-    private environment: string,
+    private options: {
+      name: string
+      environment?: string
+      httpMethod?: string
+    },
   ) {}
 
   private async logToDatabase(logData: LogData) {
     const { error: insertError } = await supabase.from('__raw_logs').insert({
       ...logData,
       timestamp: new Date(),
-      logger_name: this.loggerName,
-      application_name: this.applicationName,
-      environment: this.environment,
+      logger_name: this.options.name,
+      application_name: 'Chroniconl',
+      environment: this.options.environment
+        ? this.options.environment
+        : (process.env.NODE_ENV as string) || 'development',
+      http_method: this.options.httpMethod,
     })
 
     if (insertError) {
@@ -68,6 +73,22 @@ class Logger {
     const logData: LogData = {
       ...infoData,
       log_level: 'INFO',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
+  // ERROR LOGGERS
+
+  async logDatabaseError(
+    error: any,
+    additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
+  ) {
+    const logData: LogData = {
+      ...additionalLogData,
+      message: JSON.stringify(error),
+      error_code: 'DATABASE_ERROR',
+      log_level: 'ERROR',
     }
 
     await this.logToDatabase(logData)

@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.search.POST'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.search.POST',
+  httpMethod: 'POST',
+})
 
 // Authentication Error Logger
 export async function search__v0__AuthError(error: any) {

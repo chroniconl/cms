@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.1.contact-form.POST'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.1.contact-form.POST',
+  httpMethod: 'POST',
+})
 
 // Validation Error Logger
 export async function contactForm__v0_1__ValidationError(error: any) {

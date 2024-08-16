@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.2.upload-document-image.POST'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.2.upload-document-image.POST',
+  httpMethod: 'POST',
+})
 
 // Missing Data Error Logger
 export async function uploadDocumentImage__v0_2__MissingDataError() {

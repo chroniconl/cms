@@ -1,11 +1,11 @@
 import Logger from '@/utils/logger'
 
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-
 // GET Categories Logger
-const loggerGetName = 'api.v0.categories.GET'
-const loggerGet = new Logger(loggerGetName, applicationName, environment)
+const loggerGet = new Logger({
+  name: 'api.v0.categories.GET',
+  httpMethod: 'GET',
+})
+
 export async function categories__v0__GetDatabaseError(error: any) {
   void loggerGet.logError({
     message: error,
@@ -26,8 +26,10 @@ export async function categories__v0__GetPerformanceSuccess(
 }
 
 // POST Categories Logger
-const loggerPostName = 'api.v0.categories.POST'
-const loggerPost = new Logger(loggerPostName, applicationName, environment)
+const loggerPost = new Logger({
+  name: 'api.v0.categories.POST',
+  httpMethod: 'POST',
+})
 export async function categories__v0__PostValidationError(error: any) {
   void loggerPost.logError({
     message: error,
@@ -55,8 +57,10 @@ export async function categories__v0__PostPerformanceSuccess(
 }
 
 // PUT Categories Logger
-const loggerPutName = 'api.v0.categories.PUT'
-const loggerPut = new Logger(loggerPutName, applicationName, environment)
+const loggerPut = new Logger({
+  name: 'api.v0.categories.PUT',
+  httpMethod: 'PUT',
+})
 export async function categories__v0__PutValidationError(error: any) {
   void loggerPut.logError({
     message: error,

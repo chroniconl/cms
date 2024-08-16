@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.document.image-metadata.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.document.image-metadata.PUT',
+  httpMethod: 'PUT',
+})
 
 // Authentication Error Logger
 export async function imageMetadata__v0__AuthError(error: any) {

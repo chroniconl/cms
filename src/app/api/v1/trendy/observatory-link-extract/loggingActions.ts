@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v1.trendy.observatory-link-extract.POST'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v1.trendy.observatory-link-extract.POST',
+  httpMethod: 'POST',
+})
 
 // Authentication Error Logger
 export async function observatoryLinkExtract__v1__AuthError(userError: any) {

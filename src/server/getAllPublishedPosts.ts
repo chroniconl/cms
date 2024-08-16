@@ -4,11 +4,10 @@ import { supabase } from '@/utils/supabase'
 import { format } from 'date-fns'
 import Logger from '@/utils/logger'
 
-const loggerName = 'server.getAllPublishedPosts'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'server.getAllPublishedPosts',
+  httpMethod: 'GET',
+})
 
 export async function getAllPublishedPosts() {
   const start = performance.now()

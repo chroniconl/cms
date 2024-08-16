@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.1.media.GET'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.1.media.GET',
+  httpMethod: 'GET',
+})
 
 // Fetch Media Error Logger
 export async function media__v0_1__FetchMediaError(error: any) {

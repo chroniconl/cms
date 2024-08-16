@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.document.image-upload.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.document.image-upload.PUT',
+  httpMethod: 'PUT',
+})
 
 // Authentication Error Logger
 export async function imageUpload__v0__AuthError(error: any) {

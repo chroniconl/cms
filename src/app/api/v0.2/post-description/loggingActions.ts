@@ -1,9 +1,9 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.2.post-description.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.2.post-description.PUT',
+  httpMethod: 'PUT',
+})
 
 // Validation Error Logger
 export async function postDescription__v0_2__ValidationError(
