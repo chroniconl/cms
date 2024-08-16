@@ -34,20 +34,12 @@ export async function search__v0__GeneralError(message: string) {
 
 // Database Error Logger for Title Search
 export async function search__v0__TitleSearchError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Database Error Logger for Content Search
 export async function search__v0__ContentSearchError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

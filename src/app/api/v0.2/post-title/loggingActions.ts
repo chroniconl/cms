@@ -19,11 +19,7 @@ export async function postTitle__v0_2__ValidationError(
 
 // Database Error Logger
 export async function postTitle__v0_2__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

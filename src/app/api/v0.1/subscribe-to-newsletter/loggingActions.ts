@@ -18,22 +18,14 @@ export async function subscribeNewsletter__v0_1__ValidationError(error: any) {
 export async function subscribeNewsletter__v0_1__DuplicateEmailError(
   error: any,
 ) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // General Database Error Logger
 export async function subscribeNewsletter__v0_1__GeneralDatabaseError(
   error: any,
 ) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

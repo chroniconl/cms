@@ -24,11 +24,7 @@ export async function postAuthor__v0_2__ValidationError(validationError: any) {
 
 // Database Error Logger
 export async function postAuthor__v0_2__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

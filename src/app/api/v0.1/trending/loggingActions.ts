@@ -15,12 +15,8 @@ export async function trending__v0_1__ValidationError(error: any) {
 }
 
 // Database Error Logger
-export async function trending__v0_1__DatabaseError(supabaseError: any) {
-  void logger.logError({
-    message: supabaseError,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'GET',
-  })
+export async function trending__v0_1__DatabaseError(error: any) {
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

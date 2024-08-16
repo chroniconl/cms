@@ -7,12 +7,9 @@ const loggerGet = new Logger({
 })
 
 export async function categories__v0__GetDatabaseError(error: any) {
-  void loggerGet.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'GET',
-  })
+  void loggerGet.logDatabaseError(error)
 }
+
 export async function categories__v0__GetPerformanceSuccess(
   start: number,
   end: number,
@@ -38,11 +35,7 @@ export async function categories__v0__PostValidationError(error: any) {
   })
 }
 export async function categories__v0__PostDatabaseError(error: any) {
-  void loggerPost.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void loggerPost.logDatabaseError(error)
 }
 export async function categories__v0__PostPerformanceSuccess(
   start: number,
@@ -69,11 +62,7 @@ export async function categories__v0__PutValidationError(error: any) {
   })
 }
 export async function categories__v0__PutDatabaseError(error: any) {
-  void loggerPut.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'PUT',
-  })
+  void loggerPut.logDatabaseError(error)
 }
 export async function categories__v0__PutPerformanceSuccess(
   start: number,

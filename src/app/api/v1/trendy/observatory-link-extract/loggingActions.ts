@@ -37,14 +37,8 @@ export async function observatoryLinkExtract__v1__TrendyAPIError(
 }
 
 // Database Error Logger
-export async function observatoryLinkExtract__v1__DatabaseError(
-  trendyError: any,
-) {
-  void logger.logError({
-    message: trendyError,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+export async function observatoryLinkExtract__v1__DatabaseError(error: any) {
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

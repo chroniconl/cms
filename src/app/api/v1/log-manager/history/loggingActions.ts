@@ -15,12 +15,8 @@ export async function logManagerHistory__v1__AuthError(userError: any) {
 }
 
 // Database Error Logger
-export async function logManagerHistory__v1__DatabaseError(trendyError: any) {
-  void logger.logError({
-    message: trendyError.message,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'GET',
-  })
+export async function logManagerHistory__v1__DatabaseError(error: any) {
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

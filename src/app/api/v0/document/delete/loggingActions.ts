@@ -16,11 +16,7 @@ export async function documentDelete__v0__AuthError(error: any) {
 
 // Database Error Logger
 export async function documentDelete__v0__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'DELETE',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

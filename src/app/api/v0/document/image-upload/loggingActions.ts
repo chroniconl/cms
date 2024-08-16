@@ -34,11 +34,7 @@ export async function imageUpload__v0__MissingImageIDError() {
 
 // Database Error Logger
 export async function imageUpload__v0__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

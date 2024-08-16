@@ -16,11 +16,7 @@ export async function documentCreate__v0__AuthError(error: any) {
 
 // Database Error Logger
 export async function documentCreate__v0__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // General Error Logger

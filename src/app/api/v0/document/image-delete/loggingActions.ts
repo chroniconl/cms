@@ -34,22 +34,14 @@ export async function imageDelete__v0__MissingImageIDError() {
 
 // UploadThing Deletion Error Logger
 export async function imageDelete__v0__UploadThingError() {
-  void logger.logError({
-    message: JSON.stringify({
-      message: "Image wasn't deleted. Please contact support.",
-    }),
-    error_code: 'DATABASE_ERROR',
-    http_method: 'DELETE',
+  void logger.logDatabaseError({
+    message: "Image wasn't deleted. Please contact support.",
   })
 }
 
 // Database Error Logger
 export async function imageDelete__v0__DatabaseError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'DELETE',
-  })
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

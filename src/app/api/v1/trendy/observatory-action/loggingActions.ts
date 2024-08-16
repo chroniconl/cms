@@ -38,13 +38,8 @@ export async function observatoryAction__v1__TrendyAPIError(
 }
 
 // Database Error Logger
-export async function observatoryAction__v1__DatabaseError(trendyError: any) {
-  void logger.logError({
-    message: trendyError.message,
-    error_code: 'DATABASE_ERROR',
-    exception_type: 'Error',
-    http_method: 'POST',
-  })
+export async function observatoryAction__v1__DatabaseError(error: any) {
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger
