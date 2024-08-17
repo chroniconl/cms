@@ -5,12 +5,13 @@ import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.categories.GET',
-    httpMethod: 'GET',
+    request: request,
   })
 
   const { data, error } = await supabase
@@ -29,10 +30,10 @@ export async function GET() {
   return okResponse(data)
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const logger = new Logger({
     name: 'api.v0.categories.POST',
-    httpMethod: 'POST',
+    request: request,
   })
   const start = performance.now()
   const requestData = await request.json()
@@ -76,10 +77,10 @@ export async function POST(request: Request) {
   return okResponse(data, 'Document category created')
 }
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   const logger = new Logger({
     name: 'api.v0.categories.PUT',
-    httpMethod: 'PUT',
+    request: request,
   })
 
   const start = performance.now()

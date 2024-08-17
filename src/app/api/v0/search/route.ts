@@ -17,11 +17,14 @@ export async function POST(request: Request) {
     httpMethod: 'POST',
   })
 
-  const { error: userError } = await getCurrentUser()
+  const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
 

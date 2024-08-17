@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase'
+import { NextRequest } from 'next/server'
 
 type LogData = {
   message?: any
@@ -29,8 +30,12 @@ class Logger {
     private options: {
       name: string
       environment?: string
+      // @deprecated use request instead
       httpMethod?: string
       url?: string
+      request?: NextRequest
+      user_id?: string
+      session_id?: string
     },
   ) {}
 
@@ -43,8 +48,15 @@ class Logger {
       environment: this.options.environment
         ? this.options.environment
         : (process.env.NODE_ENV as string) || 'development',
-      http_method: this.options.httpMethod,
+      http_method: this.options.request?.method || this.options.httpMethod,
       url: this.options.url,
+      ip_address: this.options.request?.ip || null,
+      request_headers: JSON.stringify(this.options.request?.headers) || null,
+      request_geo: JSON.stringify(this.options.request?.geo) || null,
+      request_cookies: JSON.stringify(this.options.request?.cookies) || null,
+      nextUrl: this.options.request?.nextUrl || null,
+      user_id: this.options.user_id || null,
+      session_id: this.options.session_id || null,
     })
 
     if (insertError) {
@@ -52,10 +64,19 @@ class Logger {
     }
   }
 
+  async setUserId(userId: string) {
+    this.options.user_id = userId
+  }
+
+  async setSessionId(sessionId: string) {
+    this.options.session_id = sessionId
+  }
+
   async logError(options: Omit<LogData, 'log_level'>) {
     const logData: LogData = {
       ...options,
       message: JSON.stringify(options.message),
+      error_code: options.error_code,
       log_level: 'ERROR',
     }
 
@@ -65,10 +86,6 @@ class Logger {
   async logPerformance(performanceData: Omit<LogData, 'log_level'>) {
     const logData: LogData = {
       ...performanceData,
-      // TODO remove message: '',
-      // Set during refactor to intentionally avoid logging message data as we
-      // refactor the logging system
-      message: '',
       log_level: 'PERFORMANCE',
     }
 

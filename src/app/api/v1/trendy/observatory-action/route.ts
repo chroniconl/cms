@@ -3,6 +3,7 @@ import { failResponse, okResponse } from '@/utils/response'
 import joi from 'joi'
 import { openai } from '@/utils/openai'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
 const schema = joi.object({
   html_content: joi.string().required(),
@@ -13,11 +14,11 @@ const schema = joi.object({
   prompt: joi.string().optional().allow('').allow(null),
 })
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v1.trendy.observatory-action.POST',
-    httpMethod: 'POST',
+    request: request,
   })
 
   const { error: userError } = await getCurrentUser()

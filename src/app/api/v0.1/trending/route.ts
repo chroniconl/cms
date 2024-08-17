@@ -2,13 +2,14 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
 // HEY MAT, HERE'S A LAZY LOAD EXAMPLE
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.1.trending.GET',
-    httpMethod: 'GET',
+    request: request,
   })
   const url = new URL(request.url)
   const params = url.searchParams

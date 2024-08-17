@@ -3,19 +3,23 @@ import { supabase } from '@/utils/supabase'
 import { utapi } from '@/server/utapi'
 import { getCurrentUser } from '@/server/getCurrentUser'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.document.image-delete.DELETE',
-    httpMethod: 'DELETE',
+    request: request,
   })
 
-  const { error: userError } = await getCurrentUser()
+  const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
 

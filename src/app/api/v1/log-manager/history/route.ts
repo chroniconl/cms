@@ -2,23 +2,28 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
 // TODO: Add pagination
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v1.log-manager.history.GET',
-    httpMethod: 'GET',
+    request: request,
   })
+
   const url = new URL(request.url)
   const page = parseInt(url.searchParams.get('page') || '1')
   const pageSize = parseInt(url.searchParams.get('pageSize') || '100')
 
-  const { error: userError } = await getCurrentUser()
+  const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const {
     data: logData,

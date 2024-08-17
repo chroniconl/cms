@@ -3,24 +3,28 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
-
-const logger = new Logger({
-  name: 'api.v0.1.document.filterable-data.POST',
-  httpMethod: 'POST',
-})
+import { NextRequest } from 'next/server'
 
 const schema = joi.object({
   id: joi.string().required(),
   category_id: joi.string().allow('').optional(),
 })
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
-  const { error: userError } = await getCurrentUser()
+  const logger = new Logger({
+    name: 'api.v0.1.document.filterable-data.POST',
+    request: request,
+  })
+
+  const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
   const { error: validationError } = schema.validate(requestData)
