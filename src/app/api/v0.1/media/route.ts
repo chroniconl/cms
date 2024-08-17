@@ -1,9 +1,11 @@
-import {
-  media__v0_1__FetchMediaError,
-  media__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 const fetchData = async () => {
+  const logger = new Logger({
+    name: 'api.v0.1.media.GET.fetchData',
+    httpMethod: 'GET',
+  })
+
   if (!process.env.UPLOADTHING_SECRET) {
     return
   }
@@ -19,7 +21,7 @@ const fetchData = async () => {
   })
 
   if (!response.ok) {
-    void media__v0_1__FetchMediaError(response)
+    void logger.logGeneralError(response)
     throw new Error('Failed to fetch media')
   }
 
@@ -30,10 +32,17 @@ const fetchData = async () => {
 
 export async function GET() {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.media.GET',
+    httpMethod: 'GET',
+  })
+
   const data = await fetchData()
 
   const end = performance.now()
-  void media__v0_1__PerformanceSuccess(start, end)
+  logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
 
   return new Response(JSON.stringify(data), {
     status: 200,

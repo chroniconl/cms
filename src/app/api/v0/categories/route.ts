@@ -3,35 +3,37 @@ import { formatSlug } from '@/utils/formatSlug'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  categories__v0__GetDatabaseError,
-  categories__v0__GetPerformanceSuccess,
-  categories__v0__PostValidationError,
-  categories__v0__PostDatabaseError,
-  categories__v0__PostPerformanceSuccess,
-  categories__v0__PutValidationError,
-  categories__v0__PutDatabaseError,
-  categories__v0__PutPerformanceSuccess,
-} from './loggingActions'
+
+import Logger from '@/utils/logger'
 
 export async function GET() {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.categories.GET',
+    httpMethod: 'GET',
+  })
 
   const { data, error } = await supabase
     .from('categories')
     .select('id, name, slug, color')
 
   if (error) {
-    void categories__v0__GetDatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void categories__v0__GetPerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(data)
 }
 
 export async function POST(request: Request) {
+  const logger = new Logger({
+    name: 'api.v0.categories.POST',
+    httpMethod: 'POST',
+  })
   const start = performance.now()
   const requestData = await request.json()
 
@@ -42,7 +44,7 @@ export async function POST(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void categories__v0__PostValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -63,16 +65,23 @@ export async function POST(request: Request) {
     .single()
 
   if (error) {
-    void categories__v0__PostDatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void categories__v0__PostPerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(data, 'Document category created')
 }
 
 export async function PUT(request: Request) {
+  const logger = new Logger({
+    name: 'api.v0.categories.PUT',
+    httpMethod: 'PUT',
+  })
+
   const start = performance.now()
   const requestData = await request.json()
 
@@ -84,7 +93,7 @@ export async function PUT(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void categories__v0__PutValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -96,11 +105,13 @@ export async function PUT(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void categories__v0__PutDatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void categories__v0__PutPerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Documents category was updated')
 }

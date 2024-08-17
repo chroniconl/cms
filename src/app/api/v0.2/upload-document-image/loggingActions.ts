@@ -1,15 +1,15 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.2.upload-document-image.POST'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.2.upload-document-image.POST',
+  httpMethod: 'POST',
+})
 
 // Missing Data Error Logger
 export async function uploadDocumentImage__v0_2__MissingDataError() {
   void logger.logError({
     message: 'POST failed - Missing image file or document ID',
-    error_code: 'MISSING_DATA_ERROR',
+    error_code: 'GENERAL_ERROR',
     http_method: 'POST',
   })
 }
@@ -17,8 +17,8 @@ export async function uploadDocumentImage__v0_2__MissingDataError() {
 // Supabase Upload Error Logger
 export async function uploadDocumentImage__v0_2__UploadError(uploadError: any) {
   void logger.logError({
-    message: JSON.stringify(uploadError),
-    error_code: 'SUPABASE_UPLOAD_ERROR',
+    message: uploadError,
+    error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
 }
@@ -28,8 +28,8 @@ export async function uploadDocumentImage__v0_2__DocumentUpdateError(
   documentError: any,
 ) {
   void logger.logError({
-    message: JSON.stringify(documentError),
-    error_code: 'DOCUMENT_UPDATE_ERROR',
+    message: documentError,
+    error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
 }

@@ -2,18 +2,17 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  postAuthor__v0_2__AuthError,
-  postAuthor__v0_2__ValidationError,
-  postAuthor__v0_2__DatabaseError,
-  postAuthor__v0_2__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.2.post-author.PUT',
+    httpMethod: 'PUT',
+  })
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void postAuthor__v0_2__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -27,7 +26,7 @@ export async function PUT(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void postAuthor__v0_2__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -40,11 +39,13 @@ export async function PUT(request: Request) {
     .match({ id: requestData?.id })
 
   if (error) {
-    void postAuthor__v0_2__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void postAuthor__v0_2__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Document updated')
 }

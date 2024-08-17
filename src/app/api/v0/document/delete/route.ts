@@ -1,17 +1,18 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  documentDelete__v0__AuthError,
-  documentDelete__v0__DatabaseError,
-  documentDelete__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function DELETE(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.delete.DELETE',
+    httpMethod: 'DELETE',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void documentDelete__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -22,11 +23,13 @@ export async function DELETE(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void documentDelete__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void documentDelete__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Document deleted')
 }

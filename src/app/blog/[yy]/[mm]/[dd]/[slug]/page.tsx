@@ -7,10 +7,10 @@ import type { Metadata, ResolvingMetadata } from 'next'
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v0.1.document.image-metadata.PUT'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v0.1.document.image-metadata.PUT',
+  httpMethod: 'GET',
+})
 
 type Props = {
   params: { yy: string; mm: string; dd: string; slug: string }

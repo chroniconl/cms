@@ -1,16 +1,8 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
-import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  observatoryAction__v1__AuthError,
-  observatoryAction__v1__ValidationError,
-  observatoryAction__v1__TrendyAPIError,
-  observatoryAction__v1__DatabaseError,
-  observatoryAction__v1__PerformanceSuccess,
-  observatoryAction__v1__StructuredDataError,
-} from './loggingActions'
 import { openai } from '@/utils/openai'
+import Logger from '@/utils/logger'
 
 const schema = joi.object({
   html_content: joi.string().required(),
@@ -23,9 +15,14 @@ const schema = joi.object({
 
 export async function POST(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v1.trendy.observatory-action.POST',
+    httpMethod: 'POST',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void observatoryAction__v1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -33,7 +30,7 @@ export async function POST(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void observatoryAction__v1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
   let responseData = {}
@@ -62,52 +59,19 @@ export async function POST(request: Request) {
         data: completion.choices[0].message.content,
         type: requestData.type,
       }
-      void observatoryAction__v1__StructuredDataError(responseData)
+      void logger.logChatGpt(responseData)
 
       // TODO AI prompt with html_content
     } catch (error) {
-      void observatoryAction__v1__StructuredDataError(error)
+      void logger.logGeneralError(error)
       return failResponse("Couldn't fetch data")
     }
   }
 
-  // const trendyResponse = await fetch(
-  //   process.env.TRENDY_API_URL + '/v1/research/preview/action',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       html_content: requestData.html_content,
-  //       type: requestData.type,
-  //       prompt: requestData.prompt,
-  //     }),
-  //   },
-  // )
-
-  // const responseData = await trendyResponse.json()
-
-  // if (responseData.error) {
-  //   void observatoryAction__v1__TrendyAPIError(responseData.error)
-  //   return failResponse("Couldn't fetch data")
-  // }
-
-  // const { error: trendyError } = await supabase
-  //   .from('chroniconl__trendy__url_history')
-  //   .insert({
-  //     full_url: requestData.url,
-  //     page_title: responseData?.title,
-  //     raw_contents: responseData.content,
-  //     head_content_only: responseData.head_content_only,
-  //     body_content_only: responseData.body_content_only,
-  //   })
-  //   .select()
-
-  // if (trendyError) {
-  //   void observatoryAction__v1__DatabaseError(trendyError)
-  //   return failResponse("Couldn't insert data")
-  // }
-
   const end = performance.now()
-  void observatoryAction__v1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
 
   return okResponse(responseData, 'Success')
 }

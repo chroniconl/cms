@@ -7,18 +7,18 @@ import {
   skirtFailedResponse,
 } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  documentCreate__v0__AuthError,
-  documentCreate__v0__DatabaseError,
-  documentCreate__v0__GeneralError,
-  documentCreate__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
+
+const logger = new Logger({
+  name: 'api.v0.document.create.POST',
+  httpMethod: 'POST',
+})
 
 async function createDocumentWithTitle(title: string): Promise<any> {
   try {
     const { data: userData, error: userError } = await getCurrentUser()
     if (userError) {
-      void documentCreate__v0__AuthError(userError)
+      void logger.logAuthError(userError)
       return failResponse('Trouble getting user')
     }
 
@@ -35,18 +35,16 @@ async function createDocumentWithTitle(title: string): Promise<any> {
 
     if (error) {
       if (error.code === '23505') {
-        void documentCreate__v0__GeneralError(
-          'Document with that title already exists',
-        )
+        void logger.logGeneralError('Document with that title already exists')
         return skirtFailedResponse('Document with that title already exists')
       }
 
-      void documentCreate__v0__DatabaseError(error)
+      void logger.logDatabaseError(error)
       return skirtFailedResponse('Failed to create document')
     }
     return bypassOkResponse(data[0].slug)
   } catch (error) {
-    void documentCreate__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return skirtFailedResponse('Failed to create document')
   }
 }
@@ -58,11 +56,13 @@ export async function POST(request: Request) {
   const responseObject = await createDocumentWithTitle(data.title)
 
   if (responseObject?.error === true) {
-    void documentCreate__v0__GeneralError(responseObject.message)
+    void logger.logGeneralError(responseObject.message)
     return failResponse(responseObject.message)
   }
 
   const end = performance.now()
-  void documentCreate__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(responseObject.data)
 }

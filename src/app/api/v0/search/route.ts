@@ -2,14 +2,7 @@ import joi from 'joi'
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  search__v0__AuthError,
-  search__v0__ValidationError,
-  search__v0__GeneralError,
-  search__v0__PerformanceSuccess,
-  search__v0__TitleSearchError,
-  search__v0__ContentSearchError,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 const searchSchema = joi.object({
   search: joi.string().required(),
@@ -19,9 +12,14 @@ const searchSchema = joi.object({
 
 export async function POST(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.search.POST',
+    httpMethod: 'POST',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void search__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -29,14 +27,14 @@ export async function POST(request: Request) {
 
   const { error: validationError } = searchSchema.validate(requestData)
   if (validationError) {
-    void search__v0__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
   const { search, include_titles, include_content } = requestData
 
   if (!search) {
-    void search__v0__GeneralError('No search term provided.')
+    void logger.logGeneralError('No search term provided.')
     return failResponse('No search term provided.')
   }
 
@@ -49,7 +47,7 @@ export async function POST(request: Request) {
       .textSearch('title', search)
 
     if (titleSearchError) {
-      void search__v0__TitleSearchError(titleSearchError)
+      void logger.logGeneralError(titleSearchError)
       return failResponse(titleSearchError.message)
     }
 
@@ -61,7 +59,7 @@ export async function POST(request: Request) {
       await supabase.from('posts').select('*').textSearch('content', search)
 
     if (contentSearchError) {
-      void search__v0__ContentSearchError(contentSearchError)
+      void logger.logGeneralError(contentSearchError)
       return failResponse(contentSearchError.message)
     }
 
@@ -69,7 +67,9 @@ export async function POST(request: Request) {
   }
 
   const end = performance.now()
-  void search__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse({
     searchResults: results,
     searchResultCount: results.length,

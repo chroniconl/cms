@@ -1,26 +1,18 @@
 import Logger from '@/utils/logger'
 
-const loggerName = 'api.v1.trendy.history.GET'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'api.v1.trendy.history.GET',
+  httpMethod: 'GET',
+})
 
 // Authentication Error Logger
-export async function trendyHistory__v1__AuthError(userError: any) {
-  void logger.logError({
-    message: JSON.stringify(userError),
-    error_code: 'AUTH_ERROR',
-    http_method: 'GET',
-  })
+export async function trendyHistory__v1__AuthError(error: any) {
+  void logger.logAuthError(error)
 }
 
 // Database Error Logger
-export async function trendyHistory__v1__DatabaseError(trendyError: any) {
-  void logger.logError({
-    message: trendyError.message,
-    error_code: 'DATABASE_ERROR',
-    http_method: 'GET',
-  })
+export async function trendyHistory__v1__DatabaseError(error: any) {
+  void logger.logDatabaseError(error)
 }
 
 // Performance Success Logger

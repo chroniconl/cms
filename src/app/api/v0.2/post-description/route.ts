@@ -1,12 +1,7 @@
 import { supabase } from '@/utils/supabase'
 import { failResponse, okResponse } from '@/utils/response'
 import Joi from 'joi'
-
-import {
-  postDescription__v0_2__ValidationError,
-  postDescription__v0_2__DatabaseError,
-  postDescription__v0_2__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 const schema = Joi.object({
   postId: Joi.string().required(),
@@ -15,11 +10,15 @@ const schema = Joi.object({
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.2.post-description.PUT',
+    httpMethod: 'PUT',
+  })
   const data = await request.json()
 
   const { error: validationError } = schema.validate(data)
   if (validationError) {
-    void postDescription__v0_2__ValidationError(validationError, request)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -31,11 +30,13 @@ export async function PUT(request: Request) {
     .match({ id: data.postId })
 
   if (error) {
-    void postDescription__v0_2__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void postDescription__v0_2__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Post updated')
 }

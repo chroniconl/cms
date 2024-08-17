@@ -3,11 +3,10 @@ import { supabase } from '@/utils/supabase'
 import { redirect } from 'next/navigation'
 import Logger from '@/utils/logger'
 
-const loggerName = 'server.getCurrentUser'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  name: 'server.subscribeToNewsletter',
+  httpMethod: 'GET',
+})
 
 export async function handleSubscribeToNewsletterFormSubmit(
   formData: FormData,
@@ -24,11 +23,8 @@ export async function handleSubscribeToNewsletterFormSubmit(
 
   if (error) {
     logger.logError({
-      message:
-        'handleSubscribeToNewsletterFormSubmit failed - Error inserting newsletter subscriber' +
-        error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
+      message: error,
+      error_code: 'SUBSCRIBE_TO_NEWSLETTER_ERROR',
     })
     // TODO: Add error message
     return

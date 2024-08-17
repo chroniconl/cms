@@ -1,31 +1,30 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  imageUpload__v0__AuthError,
-  imageUpload__v0__MissingDocumentIDError,
-  imageUpload__v0__MissingImageIDError,
-  imageUpload__v0__DatabaseError,
-  imageUpload__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.image-upload.PUT',
+    httpMethod: 'PUT',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void imageUpload__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
   const requestData = await request.json()
 
   if (!requestData.id) {
-    void imageUpload__v0__MissingDocumentIDError()
+    void logger.logValidationError({ message: 'Document ID is required' })
     return failResponse('Document ID is required')
   }
 
   if (!requestData.image_id) {
-    void imageUpload__v0__MissingImageIDError()
+    void logger.logValidationError({ message: 'Image ID is required' })
     return failResponse('Image ID is required')
   }
 
@@ -40,12 +39,14 @@ export async function PUT(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void imageUpload__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void imageUpload__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(
     {
       image_url: requestData.image_url,

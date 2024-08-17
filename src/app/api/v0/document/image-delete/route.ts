@@ -2,40 +2,39 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import { utapi } from '@/server/utapi'
 import { getCurrentUser } from '@/server/getCurrentUser'
-import {
-  imageDelete__v0__AuthError,
-  imageDelete__v0__MissingDocumentIDError,
-  imageDelete__v0__MissingImageIDError,
-  imageDelete__v0__UploadThingError,
-  imageDelete__v0__DatabaseError,
-  imageDelete__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function DELETE(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.image-delete.DELETE',
+    httpMethod: 'DELETE',
+  })
 
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void imageDelete__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
   const requestData = await request.json()
 
   if (!requestData.id) {
-    void imageDelete__v0__MissingDocumentIDError()
+    void logger.logValidationError({ message: 'Document ID is required' })
     return failResponse('Document ID is required')
   }
 
   if (!requestData.imageId) {
-    void imageDelete__v0__MissingImageIDError()
+    void logger.logValidationError({ message: 'Image ID is required' })
     return failResponse('Image ID is required')
   }
 
   // Remove from UploadThing
   const { success } = await utapi.deleteFiles(requestData.imageId)
   if (!success) {
-    void imageDelete__v0__UploadThingError()
+    void logger.logUploadThingError({
+      message: "Image wasn't deleted. Please contact support.",
+    })
     return failResponse("Image wasn't deleted. Please contact support.")
   }
 
@@ -51,11 +50,13 @@ export async function DELETE(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void imageDelete__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void imageDelete__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Documents image url updated')
 }

@@ -5,15 +5,17 @@ We have a custom logger component that we use for general purpose logging across
 ```js
 import Logger from '@/utils/logger'
 
-const loggerName = 'my-logger-name'
-const applicationName = 'chroniconl'
-const environment = (process.env.NODE_ENV as string) || 'development'
-const logger = new Logger(loggerName, applicationName, environment)
+const logger = new Logger({
+  loggerName: 'my-logger-name',
+  applicationName: 'my-application-name',
+  environment: (process.env.NODE_ENV as string) || 'development',
+  httpMethod: 'PUT',
+})
 
 // Authentication Error Logger
 export async function myLogger__AuthError(error: any) {
   void logger.logError({
-    message: 'POST failed - Error getting user' + JSON.stringify(error),
+    message: error, // automatically stringified
     error_code: 'AUTH_ERROR',
   })
 }

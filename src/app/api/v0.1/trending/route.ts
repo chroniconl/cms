@@ -1,15 +1,15 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  trending__v0_1__ValidationError,
-  trending__v0_1__DatabaseError,
-  trending__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 // HEY MAT, HERE'S A LAZY LOAD EXAMPLE
 export async function GET(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.trending.GET',
+    httpMethod: 'GET',
+  })
   const url = new URL(request.url)
   const params = url.searchParams
 
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   })
 
   if (error) {
-    void trending__v0_1__ValidationError(error)
+    void logger.logValidationError(error)
     return failResponse(error?.details[0]?.message)
   }
 
@@ -41,11 +41,13 @@ export async function GET(request: Request) {
     .range(offset, offset + limit)
 
   if (supabaseError) {
-    void trending__v0_1__DatabaseError(supabaseError)
+    void logger.logDatabaseError(supabaseError)
     return failResponse(supabaseError?.message)
   }
 
   const end = performance.now()
-  void trending__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(data)
 }

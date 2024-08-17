@@ -2,18 +2,18 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  documentMetadata__v0_1__AuthError,
-  documentMetadata__v0_1__ValidationError,
-  documentMetadata__v0_1__DatabaseError,
-  documentMetadata__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
+
+const logger = new Logger({
+  name: 'api.v0.1.document.metadata.PUT',
+  httpMethod: 'PUT',
+})
 
 export async function PUT(request: Request) {
   const start = performance.now()
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void documentMetadata__v0_1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -27,7 +27,7 @@ export async function PUT(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void documentMetadata__v0_1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -40,11 +40,13 @@ export async function PUT(request: Request) {
     .match({ id: requestData?.id })
 
   if (error) {
-    void documentMetadata__v0_1__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void documentMetadata__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Document updated')
 }
