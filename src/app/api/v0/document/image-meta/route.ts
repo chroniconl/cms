@@ -1,25 +1,25 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  imageMetadata__v0__AuthError,
-  imageMetadata__v0__MissingDocumentIDError,
-  imageMetadata__v0__DatabaseError,
-  imageMetadata__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.image-metadata.PUT',
+    httpMethod: 'PUT',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void imageMetadata__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
   const requestData = await request.json()
 
   if (!requestData.id) {
-    void imageMetadata__v0__MissingDocumentIDError()
+    void logger.logValidationError({ message: 'Document ID is required' })
     return failResponse('Document ID is required')
   }
 
@@ -34,12 +34,14 @@ export async function PUT(request: Request) {
     .match({ id: requestData.id })
 
   if (error) {
-    void imageMetadata__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void imageMetadata__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(
     {
       image_alt: requestData.image_alt,

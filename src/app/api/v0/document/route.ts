@@ -1,17 +1,17 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  document__v0__AuthError,
-  document__v0__DatabaseError,
-  document__v0__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.PUT',
+    httpMethod: 'PUT',
+  })
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void document__v0__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
   const requestData = await request.json()
@@ -25,11 +25,13 @@ export async function PUT(request: Request) {
     .match({ slug: requestData.slug })
 
   if (error) {
-    void document__v0__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void document__v0__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Document updated')
 }

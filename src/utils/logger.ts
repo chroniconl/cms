@@ -65,6 +65,10 @@ class Logger {
   async logPerformance(performanceData: Omit<LogData, 'log_level'>) {
     const logData: LogData = {
       ...performanceData,
+      // TODO remove message: '',
+      // Set during refactor to intentionally avoid logging message data as we
+      // refactor the logging system
+      message: '',
       log_level: 'PERFORMANCE',
     }
 
@@ -117,6 +121,34 @@ class Logger {
       ...additionalLogData,
       message: JSON.stringify(error),
       error_code: 'VALIDATION_ERROR',
+      log_level: 'ERROR',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
+  async logGeneralError(
+    error: any,
+    additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
+  ) {
+    const logData: LogData = {
+      ...additionalLogData,
+      message: JSON.stringify(error),
+      error_code: 'GENERAL_ERROR',
+      log_level: 'ERROR',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
+  async logUploadThingError(
+    error: any,
+    additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
+  ) {
+    const logData: LogData = {
+      ...additionalLogData,
+      message: JSON.stringify(error),
+      error_code: 'UPLOADTHING_MEDIA_FETCH_ERROR',
       log_level: 'ERROR',
     }
 
