@@ -6,12 +6,8 @@ const logger = new Logger({
 })
 
 // Authentication Error Logger
-export async function observatorySearch__v1__AuthError(userError: any) {
-  void logger.logError({
-    message: userError,
-    error_code: 'AUTH_ERROR',
-    http_method: 'POST',
-  })
+export async function observatorySearch__v1__AuthError(error: any) {
+  void logger.logAuthError(error)
 }
 
 // Validation Error Logger

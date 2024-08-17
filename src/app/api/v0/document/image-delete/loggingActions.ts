@@ -7,11 +7,7 @@ const logger = new Logger({
 
 // Authentication Error Logger
 export async function imageDelete__v0__AuthError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'AUTH_ERROR',
-    http_method: 'DELETE',
-  })
+  void logger.logAuthError(error)
 }
 
 // Validation Error Logger for Missing Document ID

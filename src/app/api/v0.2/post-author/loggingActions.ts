@@ -7,10 +7,7 @@ const logger = new Logger({
 
 // Authentication Error Logger
 export async function postAuthor__v0_2__AuthError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'AUTH_ERROR',
-  })
+  void logger.logAuthError(error)
 }
 
 // Validation Error Logger

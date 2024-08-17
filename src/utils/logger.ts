@@ -30,6 +30,7 @@ class Logger {
       name: string
       environment?: string
       httpMethod?: string
+      url?: string
     },
   ) {}
 
@@ -43,6 +44,7 @@ class Logger {
         ? this.options.environment
         : (process.env.NODE_ENV as string) || 'development',
       http_method: this.options.httpMethod,
+      url: this.options.url,
     })
 
     if (insertError) {
@@ -88,6 +90,16 @@ class Logger {
       ...additionalLogData,
       message: JSON.stringify(error),
       error_code: 'DATABASE_ERROR',
+      log_level: 'ERROR',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
+  async logAuthError(error: any) {
+    const logData: LogData = {
+      message: JSON.stringify(error),
+      error_code: 'AUTH_ERROR',
       log_level: 'ERROR',
     }
 
