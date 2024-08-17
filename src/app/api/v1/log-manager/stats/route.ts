@@ -1,23 +1,19 @@
 import { getCurrentUser } from '@/server/getCurrentUser'
-import {
-  bypassOkResponse,
-  failResponse,
-  okResponse,
-  skirtFailedResponse,
-} from '@/utils/response'
+import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  logManagerStats__v1__AuthError,
-  logManagerStats__v1__DatabaseError,
-  logManagerStats__v1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
+
+const logger = new Logger({
+  name: 'api.v1.log-manager.stats.GET',
+  httpMethod: 'GET',
+})
 
 // TODO: Add pagination
 export async function GET(request: Request) {
   const start = performance.now()
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void logManagerStats__v1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -33,11 +29,13 @@ export async function GET(request: Request) {
     .lt('timestamp', now.toISOString())
 
   if (error) {
-    void logManagerStats__v1__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse("Couldn't fetch data")
   }
 
   const end = performance.now()
-  void logManagerStats__v1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(data, 'Success')
 }

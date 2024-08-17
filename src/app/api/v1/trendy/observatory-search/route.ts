@@ -2,13 +2,7 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  observatorySearch__v1__AuthError,
-  observatorySearch__v1__ValidationError,
-  observatorySearch__v1__TrendyAPIError,
-  observatorySearch__v1__DatabaseError,
-  observatorySearch__v1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 const schema = joi.object({
   url: joi.string().required(),
@@ -16,9 +10,14 @@ const schema = joi.object({
 
 export async function POST(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v1.trendy.observatory-search.POST',
+    httpMethod: 'POST',
+  })
+
   const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
-    void observatorySearch__v1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -26,7 +25,7 @@ export async function POST(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void observatorySearch__v1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -37,7 +36,7 @@ export async function POST(request: Request) {
   const responseData = await trendyResponse.json()
 
   if (responseData.error) {
-    void observatorySearch__v1__TrendyAPIError(responseData.error)
+    void logger.logGeneralError(responseData)
     return failResponse("Couldn't fetch data")
   }
 
@@ -53,12 +52,14 @@ export async function POST(request: Request) {
     .select()
 
   if (trendyError) {
-    void observatorySearch__v1__DatabaseError(trendyError)
+    void logger.logDatabaseError(trendyError)
     return failResponse("Couldn't insert data")
   }
 
   const end = performance.now()
-  void observatorySearch__v1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
 
   return okResponse(responseData, 'Success')
 }

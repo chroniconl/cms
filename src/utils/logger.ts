@@ -84,6 +84,15 @@ class Logger {
     await this.logToDatabase(logData)
   }
 
+  async logChatGpt(infoData: Omit<LogData, 'log_level'>) {
+    const logData: LogData = {
+      ...infoData,
+      log_level: 'CHATGPT',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
   // ERROR LOGGERS
   async logDatabaseError(
     error: any,
