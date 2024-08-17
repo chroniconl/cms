@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase'
 
 type LogData = {
-  message: any
+  message?: any
   error_code?: string
   exception_type?: string
   stack_trace?: string
