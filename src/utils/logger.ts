@@ -81,7 +81,6 @@ class Logger {
   }
 
   // ERROR LOGGERS
-
   async logDatabaseError(
     error: any,
     additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
@@ -96,10 +95,28 @@ class Logger {
     await this.logToDatabase(logData)
   }
 
-  async logAuthError(error: any) {
+  async logAuthError(
+    error: any,
+    additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
+  ) {
     const logData: LogData = {
+      ...additionalLogData,
       message: JSON.stringify(error),
       error_code: 'AUTH_ERROR',
+      log_level: 'ERROR',
+    }
+
+    await this.logToDatabase(logData)
+  }
+
+  async logValidationError(
+    error: any,
+    additionalLogData?: Omit<LogData, 'log_level' | 'message'>,
+  ) {
+    const logData: LogData = {
+      ...additionalLogData,
+      message: JSON.stringify(error),
+      error_code: 'VALIDATION_ERROR',
       log_level: 'ERROR',
     }
 

@@ -1,7 +1,7 @@
 import Logger from '@/utils/logger'
 
 const logger = new Logger({
-  name: 'api.v0.1.legal-document-manager.create-document.POST',
+  name: 'api.v0.1.legal-document-manager.contact-form-submission.POST',
   httpMethod: 'POST',
 })
 

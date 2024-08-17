@@ -7,11 +7,7 @@ const logger = new Logger({
 
 // Validation Error Logger
 export async function trending__v0_1__ValidationError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'GET',
-  })
+  void logger.logValidationError(error)
 }
 
 // Database Error Logger

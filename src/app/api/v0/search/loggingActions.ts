@@ -12,20 +12,12 @@ export async function search__v0__AuthError(error: any) {
 
 // Validation Error Logger
 export async function search__v0__ValidationError(error: any) {
-  void logger.logError({
-    message: error,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'POST',
-  })
+  void logger.logValidationError(error)
 }
 
 // General Error Logger
-export async function search__v0__GeneralError(message: string) {
-  void logger.logError({
-    message: JSON.stringify({ message }),
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'POST',
-  })
+export async function search__v0__GeneralError(error: any) {
+  void logger.logValidationError(error)
 }
 
 // Database Error Logger for Title Search

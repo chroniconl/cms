@@ -6,18 +6,8 @@ const logger = new Logger({
 })
 
 // Validation Error Logger
-export async function postDescription__v0_2__ValidationError(
-  validationError: any,
-  request: Request,
-) {
-  void logger.logError({
-    message: validationError,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-    session_id: request.headers.get('x-clerk-session-id') || '',
-    user_id: request.headers.get('x-clerk-user-id') || '',
-    ip_address: request.headers.get('x-forwarded-for') || '',
-  })
+export async function postDescription__v0_2__ValidationError(error: any) {
+  void logger.logValidationError(error)
 }
 
 // Database Error Logger

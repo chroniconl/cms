@@ -12,20 +12,12 @@ export async function imageUpload__v0__AuthError(error: any) {
 
 // Validation Error Logger for Missing Document ID
 export async function imageUpload__v0__MissingDocumentIDError() {
-  void logger.logError({
-    message: JSON.stringify({ message: 'Document ID is required' }),
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logValidationError({ message: 'Document ID is required' })
 }
 
 // Validation Error Logger for Missing Image ID
 export async function imageUpload__v0__MissingImageIDError() {
-  void logger.logError({
-    message: JSON.stringify({ message: 'Image ID is required' }),
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logValidationError({ message: 'Image ID is required' })
 }
 
 // Database Error Logger

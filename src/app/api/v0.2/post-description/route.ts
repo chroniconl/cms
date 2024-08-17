@@ -19,7 +19,7 @@ export async function PUT(request: Request) {
 
   const { error: validationError } = schema.validate(data)
   if (validationError) {
-    void postDescription__v0_2__ValidationError(validationError, request)
+    void postDescription__v0_2__ValidationError(validationError)
     return failResponse(validationError.message)
   }
 

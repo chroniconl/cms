@@ -11,14 +11,8 @@ export async function observatoryLinkExtract__v1__AuthError(error: any) {
 }
 
 // Validation Error Logger
-export async function observatoryLinkExtract__v1__ValidationError(
-  validationError: any,
-) {
-  void logger.logError({
-    message: validationError,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'POST',
-  })
+export async function observatoryLinkExtract__v1__ValidationError(error: any) {
+  void logger.logValidationError(error)
 }
 
 // Trendy API Error Logger

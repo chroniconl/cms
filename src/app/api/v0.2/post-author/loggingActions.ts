@@ -11,12 +11,8 @@ export async function postAuthor__v0_2__AuthError(error: any) {
 }
 
 // Validation Error Logger
-export async function postAuthor__v0_2__ValidationError(validationError: any) {
-  void logger.logError({
-    message: validationError,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-  })
+export async function postAuthor__v0_2__ValidationError(error: any) {
+  void logger.logValidationError(error)
 }
 
 // Database Error Logger

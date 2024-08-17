@@ -7,14 +7,10 @@ const logger = new Logger({
 
 // Validation Error Logger
 export async function postTitle__v0_2__ValidationError(
-  validationError: any,
+  error: any,
   request: Request,
 ) {
-  void logger.logError({
-    message: validationError,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-  })
+  void logger.logValidationError(error)
 }
 
 // Database Error Logger

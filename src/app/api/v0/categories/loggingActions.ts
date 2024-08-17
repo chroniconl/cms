@@ -28,11 +28,7 @@ const loggerPost = new Logger({
   httpMethod: 'POST',
 })
 export async function categories__v0__PostValidationError(error: any) {
-  void loggerPost.logError({
-    message: error,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'POST',
-  })
+  void loggerPost.logValidationError(error)
 }
 export async function categories__v0__PostDatabaseError(error: any) {
   void loggerPost.logDatabaseError(error)
@@ -55,11 +51,7 @@ const loggerPut = new Logger({
   httpMethod: 'PUT',
 })
 export async function categories__v0__PutValidationError(error: any) {
-  void loggerPut.logError({
-    message: error,
-    error_code: 'VALIDATION_ERROR',
-    http_method: 'PUT',
-  })
+  void loggerPut.logValidationError(error)
 }
 export async function categories__v0__PutDatabaseError(error: any) {
   void loggerPut.logDatabaseError(error)
