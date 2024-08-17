@@ -1,11 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import { failResponse, okResponse } from '@/utils/response'
-import {
-  uploadDocumentImage__v0_2__MissingDataError,
-  uploadDocumentImage__v0_2__UploadError,
-  uploadDocumentImage__v0_2__DocumentUpdateError,
-  uploadDocumentImage__v0_2__PerformanceSuccess,
-} from './loggingActions'
 import Logger from '@/utils/logger'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
