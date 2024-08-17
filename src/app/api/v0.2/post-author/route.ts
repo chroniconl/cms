@@ -3,18 +3,22 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.2.post-author.PUT',
-    httpMethod: 'PUT',
+    request: request,
   })
-  const { error: userError } = await getCurrentUser()
+  const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
 

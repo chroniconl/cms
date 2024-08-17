@@ -8,13 +8,16 @@ import {
 } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-const logger = new Logger({
-  name: 'api.v0.document.create.POST',
-  httpMethod: 'POST',
-})
-
-async function createDocumentWithTitle(title: string): Promise<any> {
+async function createDocumentWithTitle(
+  title: string,
+  request: NextRequest,
+): Promise<any> {
+  const logger = new Logger({
+    name: 'api.v0.document.create.POST.createDocumentWithTitle',
+    request: request,
+  })
   try {
     const { data: userData, error: userError } = await getCurrentUser()
     if (userError) {
@@ -49,11 +52,25 @@ async function createDocumentWithTitle(title: string): Promise<any> {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.document.create.POST',
+    request: request,
+  })
+
+  const { data: userData, error: userError } = await getCurrentUser()
+  if (userError) {
+    void logger.logAuthError(userError)
+    return failResponse('Trouble getting user')
+  }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
+
   const data = await request.json()
 
-  const responseObject = await createDocumentWithTitle(data.title)
+  const responseObject = await createDocumentWithTitle(data.title, request)
 
   if (responseObject?.error === true) {
     void logger.logGeneralError(responseObject.message)

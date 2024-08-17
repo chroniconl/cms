@@ -2,16 +2,17 @@ import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
 const schema = joi.object({
   email: joi.string().required(),
 })
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.1.subscribe-newsletter.POST',
-    httpMethod: 'POST',
+    request: request,
   })
 
   const requestData = await request.json()

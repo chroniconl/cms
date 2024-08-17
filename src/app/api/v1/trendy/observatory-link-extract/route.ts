@@ -2,18 +2,20 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { failResponse, okResponse } from '@/utils/response'
 import joi from 'joi'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-const logger = new Logger({
-  name: 'api.v1.trendy.observatory-link-extract.POST',
-  httpMethod: 'POST',
-})
 const schema = joi.object({
   og_url: joi.string().required(),
   raw_contents: joi.string().required(),
 })
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v1.trendy.observatory-link-extract.POST',
+    request: request,
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
     void logger.logAuthError(userError)

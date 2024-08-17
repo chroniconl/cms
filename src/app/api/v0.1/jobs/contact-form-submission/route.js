@@ -7,15 +7,15 @@ import { supabase } from '@/utils/supabase'
 import { UnreadNotifications } from '@/components/email/UnreadNotifications'
 import Logger from '@/utils/logger'
 
-const logger = new Logger({
-  name: 'api.v0.1.legal-document-manager.contact-form-submission.POST',
-  httpMethod: 'POST',
-})
-
 const resend = new Resend(process.env.RESEND_KEY)
 
 export async function GET(request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.legal-document-manager.contact-form-submission.POST',
+    request: request,
+  })
+
   const { error: supabaseError, count } = await supabase
     .from('contact_form')
     .select('*', { count: 'exact' })

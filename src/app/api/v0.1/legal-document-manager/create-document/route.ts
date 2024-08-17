@@ -3,13 +3,13 @@ import { formatSlug } from '@/utils/formatSlug'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
-
   const logger = new Logger({
     name: 'api.v0.1.legal-document-manager.create-document.POST',
-    httpMethod: 'POST',
+    request: request,
   })
 
   const { data: userData, error: userError } = await getCurrentUser()
@@ -17,6 +17,9 @@ export async function POST(request: Request) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
   const { data, error } = await supabase

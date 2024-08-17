@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { failResponse, okResponse } from '@/utils/response'
 import Logger from '@/utils/logger'
+import { NextRequest } from 'next/server'
+import { getCurrentUser } from '@/server/getCurrentUser'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -12,12 +14,21 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
     name: 'api.v0.2.upload-document-image.POST',
-    httpMethod: 'POST',
+    request: request,
   })
+  const { data: userData, error: userError } = await getCurrentUser()
+  if (userError) {
+    void logger.logAuthError(userError)
+    return failResponse('Trouble getting user')
+  }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
+
   const formData = await request.formData()
   const file = formData.get('image') as File
   const documentId = formData.get('id') as string

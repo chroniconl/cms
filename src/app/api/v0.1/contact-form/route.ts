@@ -3,11 +3,6 @@ import { supabase } from '@/utils/supabase'
 import joi from 'joi'
 import Logger from '@/utils/logger'
 
-const logger = new Logger({
-  name: 'api.v0.1.contact-form.POST',
-  httpMethod: 'POST',
-})
-
 const schema = joi.object({
   name: joi.string().required(),
   email: joi.string().required(),
@@ -17,6 +12,11 @@ const schema = joi.object({
 
 export async function POST(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.contact-form.POST',
+    httpMethod: 'POST',
+  })
+
   const requestData = await request.json()
 
   const { error: validationError } = schema.validate(requestData)
