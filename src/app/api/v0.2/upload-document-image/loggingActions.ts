@@ -9,7 +9,7 @@ const logger = new Logger({
 export async function uploadDocumentImage__v0_2__MissingDataError() {
   void logger.logError({
     message: 'POST failed - Missing image file or document ID',
-    error_code: 'MISSING_DATA_ERROR',
+    error_code: 'GENERAL_ERROR',
     http_method: 'POST',
   })
 }
@@ -18,7 +18,7 @@ export async function uploadDocumentImage__v0_2__MissingDataError() {
 export async function uploadDocumentImage__v0_2__UploadError(uploadError: any) {
   void logger.logError({
     message: uploadError,
-    error_code: 'SUPABASE_UPLOAD_ERROR',
+    error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
 }
@@ -29,7 +29,7 @@ export async function uploadDocumentImage__v0_2__DocumentUpdateError(
 ) {
   void logger.logError({
     message: documentError,
-    error_code: 'DOCUMENT_UPDATE_ERROR',
+    error_code: 'DATABASE_ERROR',
     http_method: 'POST',
   })
 }
