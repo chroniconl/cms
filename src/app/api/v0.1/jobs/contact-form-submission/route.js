@@ -4,12 +4,13 @@
 import { Resend } from 'resend'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import { UnreadNotifications } from '../../../../../components/email/UnreadNotifications'
-import {
-  legalDocumentCreate__v0_1__AuthError,
-  legalDocumentCreate__v0_1__DatabaseError,
-  legalDocumentCreate__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import { UnreadNotifications } from '@/components/email/UnreadNotifications'
+import Logger from '@/utils/logger'
+
+const logger = new Logger({
+  name: 'api.v0.1.legal-document-manager.contact-form-submission.POST',
+  httpMethod: 'POST',
+})
 
 const resend = new Resend(process.env.RESEND_KEY)
 
@@ -21,13 +22,15 @@ export async function GET(request) {
     .eq('internal__status', 'UNSEEN')
 
   if (supabaseError) {
-    void legalDocumentCreate__v0_1__DatabaseError(supabaseError)
+    void logger.logDatabaseError(supabaseError)
     return failResponse(supabaseError.message)
   }
 
   if (count === 0) {
     const end = performance.now()
-    void legalDocumentCreate__v0_1__PerformanceSuccess(start, end)
+    void logger.logPerformance({
+      execution_time: Math.round(end - start),
+    })
     return okResponse('No unread forms')
   }
 
@@ -47,11 +50,13 @@ export async function GET(request) {
   })
 
   if (error) {
-    void legalDocumentCreate__v0_1__AuthError(error)
+    void logger.logAuthError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void legalDocumentCreate__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Email sent')
 }

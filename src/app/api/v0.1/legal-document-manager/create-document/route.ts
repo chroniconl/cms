@@ -2,18 +2,19 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 import { formatSlug } from '@/utils/formatSlug'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
-import {
-  legalDocumentCreate__v0_1__AuthError,
-  legalDocumentCreate__v0_1__DatabaseError,
-  legalDocumentCreate__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 export async function POST(request: Request) {
   const start = performance.now()
 
+  const logger = new Logger({
+    name: 'api.v0.1.legal-document-manager.create-document.POST',
+    httpMethod: 'POST',
+  })
+
   const { data: userData, error: userError } = await getCurrentUser()
   if (userError) {
-    void legalDocumentCreate__v0_1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -30,11 +31,13 @@ export async function POST(request: Request) {
     .single()
 
   if (error) {
-    void legalDocumentCreate__v0_1__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void legalDocumentCreate__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse(data, 'Document created')
 }

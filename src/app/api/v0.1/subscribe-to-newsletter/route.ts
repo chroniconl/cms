@@ -1,12 +1,7 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  subscribeNewsletter__v0_1__ValidationError,
-  subscribeNewsletter__v0_1__DuplicateEmailError,
-  subscribeNewsletter__v0_1__GeneralDatabaseError,
-  subscribeNewsletter__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 const schema = joi.object({
   email: joi.string().required(),
@@ -14,11 +9,16 @@ const schema = joi.object({
 
 export async function POST(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.subscribe-newsletter.POST',
+    httpMethod: 'POST',
+  })
+
   const requestData = await request.json()
 
   const { error: validationError } = schema.validate(requestData)
   if (validationError) {
-    void subscribeNewsletter__v0_1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -27,14 +27,16 @@ export async function POST(request: Request) {
   })
 
   if (error?.code === '23505') {
-    void subscribeNewsletter__v0_1__DuplicateEmailError(error)
+    void logger.logGeneralError(error)
     return failResponse('Email already subscribed')
   } else if (error) {
-    void subscribeNewsletter__v0_1__GeneralDatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse('Something went wrong')
   }
 
   const end = performance.now()
-  void subscribeNewsletter__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('You have successfully subscribed to our newsletter.')
 }

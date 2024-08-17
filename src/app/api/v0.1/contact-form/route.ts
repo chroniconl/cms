@@ -1,11 +1,12 @@
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  contactForm__v0_1__ValidationError,
-  contactForm__v0_1__DatabaseError,
-  contactForm__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
+
+const logger = new Logger({
+  name: 'api.v0.1.contact-form.POST',
+  httpMethod: 'POST',
+})
 
 const schema = joi.object({
   name: joi.string().required(),
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void contactForm__v0_1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -33,11 +34,13 @@ export async function POST(request: Request) {
   })
 
   if (error) {
-    void contactForm__v0_1__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse('Error submitting contact form')
   }
 
   const end = performance.now()
-  void contactForm__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Contact form submitted')
 }

@@ -3,12 +3,7 @@ import { toPST } from '@/utils/dates'
 import { failResponse, okResponse } from '@/utils/response'
 import { supabase } from '@/utils/supabase'
 import joi from 'joi'
-import {
-  publishDetails__v0_1__AuthError,
-  publishDetails__v0_1__ValidationError,
-  publishDetails__v0_1__DatabaseError,
-  publishDetails__v0_1__PerformanceSuccess,
-} from './loggingActions'
+import Logger from '@/utils/logger'
 
 interface PublishDetailsApiProps {
   id: string
@@ -19,9 +14,14 @@ interface PublishDetailsApiProps {
 
 export async function PUT(request: Request) {
   const start = performance.now()
+  const logger = new Logger({
+    name: 'api.v0.1.document.publish-details.PUT',
+    httpMethod: 'PUT',
+  })
+
   const { error: userError } = await getCurrentUser()
   if (userError) {
-    void publishDetails__v0_1__AuthError(userError)
+    void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
 
@@ -37,7 +37,7 @@ export async function PUT(request: Request) {
   const { error: validationError } = schema.validate(requestData)
 
   if (validationError) {
-    void publishDetails__v0_1__ValidationError(validationError)
+    void logger.logValidationError(validationError)
     return failResponse(validationError.message)
   }
 
@@ -54,11 +54,13 @@ export async function PUT(request: Request) {
     .match({ id: requestData?.id })
 
   if (error) {
-    void publishDetails__v0_1__DatabaseError(error)
+    void logger.logDatabaseError(error)
     return failResponse(error?.message)
   }
 
   const end = performance.now()
-  void publishDetails__v0_1__PerformanceSuccess(start, end)
+  void logger.logPerformance({
+    execution_time: Math.round(end - start),
+  })
   return okResponse('Document updated')
 }
