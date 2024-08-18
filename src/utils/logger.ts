@@ -86,6 +86,7 @@ class Logger {
   async logPerformance(performanceData: Omit<LogData, 'log_level'>) {
     const logData: LogData = {
       ...performanceData,
+      message: '',
       log_level: 'PERFORMANCE',
     }
 
