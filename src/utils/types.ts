@@ -81,4 +81,6 @@ export type SafePost = {
     slug: string
     color: string
   }
+  wordCount?: number
+  characterCount?: number
 }
