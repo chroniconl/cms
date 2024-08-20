@@ -17,7 +17,9 @@ export default async function PostsPage() {
     <>
       <section className="mb-5 grid grid-cols-12 gap-4">
         <div className="col-span-12 md:col-span-6">
-          <Heading className="mb-2">Your Posts</Heading>
+          <Heading level={1} className="mb-2">
+            Your Posts
+          </Heading>
           <Text>
             Here you can view all the posts you have created and manage their
             settings.

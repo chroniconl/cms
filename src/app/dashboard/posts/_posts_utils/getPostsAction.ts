@@ -87,6 +87,8 @@ export const getPostsAction = async () => {
         slug: post.category?.slug,
         color: post.category?.color,
       },
+      wordCount: post.word_count,
+      characterCount: post.character_count,
     }
   })
 
