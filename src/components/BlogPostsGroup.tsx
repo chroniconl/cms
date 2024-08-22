@@ -9,6 +9,7 @@ import { Category } from '@/utils/types'
 export default async function BlogPostsGroup({
   posts,
   limit,
+  categories = [],
 }: {
   limit?: number | undefined
   posts: {
@@ -30,17 +31,42 @@ export default async function BlogPostsGroup({
       twitter_handle: string
     }
   }[]
+  categories?: {
+    id: string
+    name: string
+    color: string
+    slug: string
+  }[]
 }) {
   const postsCollection = limit ? posts?.slice(0, limit) : posts
   return (
     <div className="mt-20">
-      <div className="mb-8 flex flex-col items-center justify-center text-center">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
-          From the blog
-        </h2>
-        <p className="mb-8">
-          Check out the latest trends and discover what's happening in the world
-        </p>
+      <div className="mb-8 grid grid-cols-12">
+        <div className="md:col-span-5">
+          <h2 className="mb-4 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
+            Writings about experiences working with technology
+          </h2>
+          <p className="mb-8">
+            There's always something to be built and there are always something
+            learn. I should probably say more, but I'd rather say less.
+          </p>
+        </div>
+
+        <div className="col-span-12 flex flex-wrap gap-2 py-4">
+          {categories &&
+            categories.length > 1 &&
+            categories.map((cat) => (
+              <Badge
+                // @ts-ignore
+                variant={cat.color}
+                size="lg"
+                className="my-0.5"
+                key={cat.id}
+              >
+                {cat.name}
+              </Badge>
+            ))}
+        </div>
       </div>
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {postsCollection?.map((post, i) => (
@@ -62,7 +88,7 @@ export default async function BlogPostsGroup({
                   </Text>
                 </div>
                 <div className="mt-3 flex items-center text-sm">
-                  <Badge color={post.category?.color}>
+                  <Badge variant={post.category?.color}>
                     {post.category?.name}
                   </Badge>
                 </div>

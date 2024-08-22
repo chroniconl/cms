@@ -25,12 +25,7 @@ export async function getAllPublishedPosts() {
     .order('publish_date_day', { ascending: false })
 
   if (error) {
-    void logger.logError({
-      message:
-        'getAllPublishedPosts failed - Error fetching posts' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void logger.logDatabaseError(error)
     throw Error()
   }
 
@@ -39,10 +34,7 @@ export async function getAllPublishedPosts() {
 
   const end = performance.now()
   void logger.logPerformance({
-    message: 'getAllPublishedPosts executed successfully',
     execution_time: Math.round(end - start),
-    url: '/api/getAllPublishedPosts',
-    http_method: 'GET',
   })
 
   return filteredPosts
