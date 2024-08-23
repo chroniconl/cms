@@ -6,7 +6,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useTheme } from 'next-themes'
-import Link from 'next/link'
 
 function ThemeToggler({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()

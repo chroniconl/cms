@@ -135,6 +135,12 @@ Once you're ready to deploy, you can use Vercel to deploy the project to your ow
 
 ## FAQ
 
+### Can you elaborate on why WordPress can't solve your problem?
+
+Security for the most part. I once deployed api.chroniconl.com to Digital Ocean and not even 15 minutes later I had bots crawling my site for what I assume to be potential vulnerabilities in WordPress architecture. This is the kind of behavior I often see.
+
+<img src="https://azhrbvulmwgxcijoaenn.supabase.co/storage/v1/object/public/my-blog/ThisIsWhyISayNoWordPress.png" height="400px" />
+
 ### Why is my Blog Post not showing up?
 
 If you've already created a blog post and are expecting it to show up on the homepage or be accessible via direct link, make sure you've set the posts "Visibility" field to "Public". In addition, ensure the "Publish Date" field is set to a point in the past.
