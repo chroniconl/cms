@@ -106,6 +106,13 @@ export default function Footer() {
             >
               We're open source!
             </Link>
+            <a
+              href="mailto:6matbub@gmail.com"
+              target="__blank"
+              className="ch-color-secondary hover:underline"
+            >
+              Submit an article
+            </a>
           </nav>
         </div>
       </div>

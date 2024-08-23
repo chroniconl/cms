@@ -42,7 +42,7 @@ export default function Post({
         </div>
         <div className="mt-1 flex items-center space-x-2.5 text-sm">
           <Time date={date} className="text-stone-500 dark:text-stone-400" />
-          <Badge color={category?.color}>{category?.name}</Badge>
+          <Badge variant={category?.color}>{category?.name}</Badge>
         </div>
         {author && (
           <div className="mt-3 flex items-center space-x-2.5 text-sm">

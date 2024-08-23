@@ -4,7 +4,7 @@ import type * as React from 'react'
 import { cn } from '@/utils/cn'
 
 const badgeVariants = cva(
-  'inline-flex items-center text-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center text-center rounded-full border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       variant: {
@@ -39,13 +39,36 @@ const badgeVariants = cva(
   },
 )
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+export interface BadgeProps {
+  className: string
+  variant: any
+  size: string
+}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({
+  className,
+  variant,
+  size = 'sm',
+  children,
+}: {
+  className?: string
+  variant?: any
+  size?: string
+  children: React.ReactNode
+}) {
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div
+      className={cn(
+        badgeVariants({ variant }),
+        {
+          'px-2.5 py-0.5 text-xs': size === 'sm',
+          'whitespace-nowrap px-4 py-2 text-xs': size === 'lg',
+        },
+        className,
+      )}
+    >
+      {children}
+    </div>
   )
 }
 

@@ -182,13 +182,7 @@ export default function Messages({ messages }: MessagesProps) {
                   <TableCell>{message.message}</TableCell>
                   <TableCell>{message.phone}</TableCell>
                   <TableCell>
-                    <Badge
-                      variant={
-                        message.status === 'seen' ? 'secondary' : 'outline'
-                      }
-                    >
-                      {message.status}
-                    </Badge>
+                    <Badge size={''}>{message.status}</Badge>
                   </TableCell>
                   <TableCell>
                     {new Date(message.date).toLocaleString()}
