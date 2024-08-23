@@ -8,7 +8,7 @@ import { toast } from '@/components/ui/use-toast'
 import { useState } from 'react'
 import Confetti from './Confetti'
 import BorderBottom from './BorderBottom'
-import Link from 'next/Link'
+import Link from 'next/link'
 
 export default function SubscribeToNewsletter() {
   const [trigger, setTrigger] = useState(false)
