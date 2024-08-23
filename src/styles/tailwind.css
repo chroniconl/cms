@@ -75,3 +75,7 @@
 .SliderSet .border-primary {
   @apply rounded-full border-2 border-black dark:border-white;
 }
+
+.ch-card {
+  @apply bg-[#1a1a1a] transition-colors duration-200 hover:bg-[#2a2a2a];
+}

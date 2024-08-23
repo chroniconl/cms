@@ -5,6 +5,7 @@ import { ClientImage } from '@/components/image'
 import { Text } from '@/components/text'
 import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
 import { Category } from '@/utils/types'
+import { cn } from '@/utils/cn'
 
 export default async function BlogPostsGroup({
   posts,
@@ -45,11 +46,22 @@ export default async function BlogPostsGroup({
               post.slug
             }`}
           >
-            <article key={post.id} className="group h-full">
+            <article
+              key={post.id}
+              className={cn([
+                'group h-full',
+                { 'ch-border-outline ch-card rounded-xl p-4': noImage },
+              ])}
+            >
               {noImage === false && (
                 <ClientImage src={post.image_url} alt={post.image_alt} />
               )}
-              <div className="mt-4 flex flex-col justify-between">
+              <div
+                className={cn([
+                  'flex flex-col justify-between',
+                  { 'mt-4': noImage === false },
+                ])}
+              >
                 <div>
                   <Heading level={3}>{post.title}</Heading>
                   <Text className="mt-2">{post?.publish_date_day}</Text>
