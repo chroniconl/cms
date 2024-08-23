@@ -19,14 +19,14 @@ export default function Header() {
         </Link>
         <Link
           href="/about"
-          className="ch-color-secondary rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+          className="ch-color-secondary ch-border-outline-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
           prefetch={false}
         >
           About
         </Link>
         <Link
           href="/contact"
-          className="ch-color-secondary rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+          className="ch-color-secondary ch-border-outline-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
           prefetch={false}
         >
           Contact

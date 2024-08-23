@@ -50,20 +50,16 @@ export default function SubscribeToNewsletter() {
   }
 
   return (
-    <>
-      <div className="mt-32 w-full rounded-lg bg-secondary p-12">
+    <div>
+      <div className="ch-border-outline mt-32 w-full rounded-lg bg-card p-6 md:p-12">
         <div className="flex max-w-xl flex-col gap-4">
           <div className="">
             <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
               Subscribe to the Newsletter
             </h2>
             <p className="mb-8">
-              If you want to remain in the loop, consider subscribing for
-              updates. Alternatively,{' '}
-              <Link href="/feed.xml" className="text-teal-600 underline">
-                add Chroniconl
-              </Link>{' '}
-              to your RSS feed
+              If you want to receive bi-monthly updates on this project and
+              more, enter your email below.
             </p>
           </div>
           <div className="relative">
@@ -93,6 +89,7 @@ export default function SubscribeToNewsletter() {
                 {/* i don't think this will ever be hit but it makes me feel better */}
                 {errors.email && <span>This field is required</span>}
               </div>
+              <p className="text-sm italic">You may unsubscribe at any time</p>
               <div className="flex w-full justify-end">
                 <ChButtonPrimary type="submit" className="w-fit text-base">
                   Subscribe
@@ -102,7 +99,14 @@ export default function SubscribeToNewsletter() {
           </div>
         </div>
       </div>
+      <p className="ch-text mt-2">
+        Alternatively,{' '}
+        <Link href="/feed.xml" className="text-teal-600 underline">
+          add Chroniconl
+        </Link>{' '}
+        to your RSS feed
+      </p>
       <Confetti trigger={trigger} />
-    </>
+    </div>
   )
 }
