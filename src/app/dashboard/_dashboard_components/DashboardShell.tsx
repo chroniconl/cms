@@ -1,8 +1,6 @@
 import { supabase } from '@/utils/supabase'
 import { currentUser } from '@clerk/nextjs/server'
 import DashboardHeader from './DashboardHeader'
-import SideNav from './ResizableSideNavWrapper'
-import ResizableSideNavWrapper from './ResizableSideNavWrapper'
 
 interface UserEmailInterface {
   id: string
@@ -59,7 +57,7 @@ export default async function DashboardShell({
   return (
     <div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#0f0f0f]">
       <DashboardHeader />
-      <ResizableSideNavWrapper>{children}</ResizableSideNavWrapper>
+      <div className="mx-auto max-w-7xl py-4">{children}</div>
     </div>
   )
 }

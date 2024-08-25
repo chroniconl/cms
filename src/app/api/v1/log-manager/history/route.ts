@@ -21,7 +21,6 @@ const schema = Joi.object({
   logLevel: Joi.string().optional().allow(null),
 })
 
-// TODO: Add pagination
 export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({

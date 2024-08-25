@@ -27,7 +27,7 @@ export default function MediaView({
             <div
               key={id}
               className={cn([
-                'group flex flex-col gap-2 rounded-md border border-stone-200 bg-white p-2 shadow-sm',
+                'ch-border group flex flex-col gap-2 rounded-md bg-white p-2 shadow-sm',
                 'hover:shadow-md dark:border-stone-800 dark:bg-stone-950',
               ])}
             >

@@ -3,105 +3,31 @@ import Avatar from '@/components/Avatar'
 import Link from 'next/link'
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import BorderBottom from '@/components/BorderBottom'
 
 const navItems = [
-  { label: 'Dashboard', url: '/dashboard' },
+  { label: '/', url: '/dashboard' },
   { label: 'Posts', url: '/dashboard/posts' },
   { label: 'Media', url: '/dashboard/media' },
+  { label: 'Log Manager', url: '/dashboard/log-manager' },
+  { label: 'Page Builder', url: '/dashboard/page-builder' },
   { label: 'Settings', url: '/dashboard/settings' },
-  { label: 'Docs', url: '/documentation' },
-  { label: 'Website', url: 'https://chroniconl.com' },
-  { label: 'Form Submissions', url: '/dashboard/form-submissions' },
 ]
-
 export default async function DashboardHeader() {
   return (
     <>
-      <header className="hidden h-[80px] w-full items-center bg-card px-4 md:flex">
+      <header className="ch-border-outline mx-auto mt-6 hidden h-[80px] w-full max-w-7xl items-center rounded-md bg-card px-4 md:flex">
         <div className="flex w-full items-center gap-4">
-          <div className="flex flex-grow">
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-all hover:text-primary"
-            >
-              Dashboard
-            </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <span className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-all hover:text-primary">
-                  Content
-                </span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <Link href="/dashboard/posts" className="text-sm">
-                      Posts
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/dashboard/media" className="text-sm">
-                      Media
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <span className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-all hover:text-primary">
-                  Admin
-                </span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <Link
-                      href="/dashboard/form-submissions"
-                      className="text-sm"
-                    >
-                      Form Submissions
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link
-                      href="/dashboard/admin/legal-doc-manager"
-                      className="text-sm"
-                    >
-                      Legal Document Manager
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/" className="text-sm">
-                      Live Site
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Link
-              href="/dashboard/settings"
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-all hover:text-primary"
-            >
-              Settings
-            </Link>
-
-            {/* {navItems.map(({ label, url }) => (
-							<Link
-								key={label}
-								href={url}
-								className="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-							>
-								{label}
-							</Link>
-						))} */}
+          <div className="flex flex-grow gap-2">
+            {navItems.map(({ label, url }) => (
+              <Link
+                key={label}
+                href={url}
+                className="ch-color-secondary ch-border-outline-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+              >
+                {label}
+              </Link>
+            ))}
           </div>
           <div className="flex flex-grow-0 items-center gap-4">
             <SearchHeader />
@@ -119,15 +45,14 @@ export default async function DashboardHeader() {
           <SheetContent side="left" className="w-80">
             <div className="space-y-4">
               <Avatar />
-              <SearchHeader />
-              <hr className="border-stone-200 pb-8 dark:border-stone-700" />
+              <BorderBottom height={2} borderColor="#FFF" />
             </div>
             <div className="grid gap-2 py-6">
               {navItems.map(({ label, url }) => (
                 <Link
                   key={label}
                   href={url}
-                  className="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                  className="ch-color-secondary ch-border-outline-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
                 >
                   {label}
                 </Link>
