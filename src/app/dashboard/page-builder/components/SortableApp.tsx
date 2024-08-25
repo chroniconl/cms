@@ -1,5 +1,4 @@
 'use client'
-import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/utils/cn'
 import {
   Tooltip,
@@ -7,21 +6,36 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { Article, type Post } from '@/components/BlogPostsGroup'
+import { useSortableAppStore } from './SortableAppContext'
 
 const SkeletonCardDropZone = ({ children, uuid }: any) => {
   const { setNodeRef } = useDroppable({
     id: uuid,
   })
 
+  const order = useSortableAppStore((state) =>
+    state.order.find((item) => item.skeletonKey === uuid),
+  )
+  const post = useSortableAppStore((state) =>
+    state.posts.find((p) => p.id === order?.postId),
+  )
+
+  if (post) {
+    console.log(post)
+  }
+
   return (
     <div
       ref={setNodeRef}
-      className="flex h-[250px] w-full items-center justify-center rounded-md border border-dashed border-stone-700"
+      className={cn([
+        'flex w-full items-center justify-center rounded-md border border-dashed border-stone-700',
+        !post && ' h-[250px]',
+      ])}
     >
-      {children}
+      {post ? <Article post={post} noImage /> : <>{children}</>}
     </div>
   )
 }
@@ -75,7 +89,7 @@ const DraggableArticleCard = ({
     transform: adjustedTransform
       ? `translate3d(${adjustedTransform.x}px, ${adjustedTransform.y}px, 0) scale(1)`
       : 'none',
-    transition: 'transform 0.2s ease',
+    transition: 'transform 0.02s ease',
   }
 
   return (
@@ -108,9 +122,22 @@ export const SortableApp = ({
 }) => {
   const alreadyUsed = posts.slice(0, 6)
 
-  const [postOrder, setPostOrder] = useState(
-    posts.map((post: { id: string }) => post.id),
-  )
+  const setSkeletonKeys = useSortableAppStore((state) => state.setSkeletonKeys)
+  const sk = useSortableAppStore((state) => state.skeletonKeys)
+  const setPosts = useSortableAppStore((state) => state.setPosts)
+  const postList = useSortableAppStore((state) => state.posts)
+  const setOrder = useSortableAppStore((state) => state.setOrder)
+  const order = useSortableAppStore((state) => state.order)
+  const setPostList = useSortableAppStore((state) => state.setPostList)
+
+  useEffect(() => {
+    setSkeletonKeys(skeletonKeys)
+    setPosts(posts) // this is for referencing the data in the post
+    setOrder(
+      posts.map((_, i) => ({ postId: null, skeletonKey: skeletonKeys[i] })),
+    )
+    setPostList(posts.map((p) => p.id))
+  }, [])
 
   return (
     <div className="w-full">
@@ -118,21 +145,14 @@ export const SortableApp = ({
         Page Builder
       </h2>
       <p className="mb-8">
-        Sorting is a great way to organize your content. You can sort by
-        publishing date, title, or any other field you've added to your post
-        metadata.
+        Control the order of your posts by dragging them from the left panel to
+        the right panel.
       </p>
 
       <div className="grid grid-cols-12 gap-4">
-        <div className="ch-border-outline sticky top-10 col-span-3 h-fit rounded-md bg-card">
+        <div className="ch-border-outline sticky top-4 col-span-3 h-fit rounded-md bg-card">
           <div className="flex flex-col gap-2">
-            {postOrder.map((postId: string) => {
-              const post = posts.find((p: { id: string }) => p.id === postId)
-
-              if (!post) {
-                return null
-              }
-
+            {postList.map((post: Post) => {
               const isAlreadyUsed = alreadyUsed.some(
                 ({ id }: { id: string }) => post.id === id,
               )
@@ -150,7 +170,7 @@ export const SortableApp = ({
 
         <div className="ch-border-outline col-span-9 rounded-md bg-card">
           <div className="grid grid-cols-1 gap-4 p-4 px-4 md:mx-0 md:grid-cols-2 lg:grid-cols-3">
-            {skeletonKeys.map((uuid: string, i: number) => (
+            {sk.map((uuid: string, i: number) => (
               <SkeletonCardDropZone key={uuid} uuid={uuid}>
                 {(i += 1)}
               </SkeletonCardDropZone>
