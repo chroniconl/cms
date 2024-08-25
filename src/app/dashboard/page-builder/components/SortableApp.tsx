@@ -27,8 +27,9 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
     <div
       ref={setNodeRef}
       className={cn([
-        'flex w-full items-center justify-center rounded-md border border-dashed border-stone-700',
-        !post && ' h-[250px]',
+        'w-full',
+        !post &&
+          'flex h-[250px] items-center justify-center rounded-md border border-dashed border-stone-700',
       ])}
     >
       {post ? <Article post={post} noImage /> : <>{children}</>}
@@ -91,7 +92,7 @@ const DraggableArticleCard = ({
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      style={isDragging ? style : {}}
       {...attributes}
       {...listeners}
       className={cn('rounded-md border border-transparent p-2 text-sm', {
