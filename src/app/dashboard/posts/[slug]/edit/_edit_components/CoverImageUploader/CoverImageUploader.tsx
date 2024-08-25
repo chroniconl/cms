@@ -106,7 +106,6 @@ export default function ImageForm({
         description: 'The image has been uploaded.',
       })
     } catch (error) {
-      console.log('Upload error:', error)
       toast({
         title: 'Error',
         description: 'Failed to upload image. Please try again later.',

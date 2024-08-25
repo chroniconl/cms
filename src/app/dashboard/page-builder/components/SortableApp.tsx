@@ -23,10 +23,6 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
     state.posts.find((p) => p.id === order?.postId),
   )
 
-  if (post) {
-    console.log(post)
-  }
-
   return (
     <div
       ref={setNodeRef}

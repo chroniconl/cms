@@ -21,7 +21,7 @@ const tryToGetEmailFromClerkResponse = (user: UserInterface) => {
       )
     return userEmailData?.emailAddress
   } catch (e) {
-    console.log(e)
+    // console.log(e)
 
     return ''
   }
