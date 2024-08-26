@@ -126,10 +126,14 @@ export const SortableApp = ({
   const skeletonKeys = useSortableAppStore((state) => state.skeletonKeys)
 
   const setCoreArticles = useSortableAppStore((state) => state.setCoreArticles)
-  const postList = useSortableAppStore((state) => state.coreArticles)
+  const coreArticles = useSortableAppStore((state) => state.coreArticles)
 
   const setDefaultOrder = useSortableAppStore((state) => state.setDefaultOrder)
   const order = useSortableAppStore((state) => state.order)
+
+  const draggableArticleOrder = useSortableAppStore(
+    (state) => state.draggableArticleOrder,
+  )
   const setDefaultDraggableArticleOrder = useSortableAppStore(
     (state) => state.setDefaultDraggableArticleOrder,
   )
@@ -156,7 +160,13 @@ export const SortableApp = ({
       <div className="grid grid-cols-12 gap-4">
         <div className="ch-border-outline sticky top-4 col-span-3 h-fit rounded-md bg-card">
           <div className="flex flex-col gap-2">
-            {postList.map((post: Post) => {
+            {draggableArticleOrder.map((id: string) => {
+              const post = coreArticles.find((p) => p.id === id)
+
+              if (!post) {
+                return null
+              }
+
               const isAlreadyUsed = alreadyUsed.some(
                 ({ id }: { id: string }) => post.id === id,
               )

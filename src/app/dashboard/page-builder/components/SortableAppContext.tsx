@@ -49,28 +49,27 @@ export const useSortableAppStore = create<SortableAppStore>((set) => ({
   draggableArticleOrder: [],
   setDefaultDraggableArticleOrder: (draggableArticleOrder: string[]) =>
     set({ draggableArticleOrder }),
-  removeDraggableArticle: (postId: string, skeletonKey: string) => {
+  removeDraggableArticle: (postId: string) => {
     set((state) => ({
-      draggableArticleOrder: state.draggableArticleOrder.map((item) => {
-        if (item === skeletonKey) {
-          return postId
-        }
-        return item
-      }),
+      draggableArticleOrder: state.draggableArticleOrder.filter(
+        (item) => item !== postId,
+      ),
     }))
   },
 }))
 
 export const SortableAppContext = ({ children }: any) => {
   const setUpdatedOrder = useSortableAppStore((state) => state.setUpdatedOrder)
+  const removeDraggableArticle = useSortableAppStore(
+    (state) => state.removeDraggableArticle,
+  )
 
   return (
     <DndContext
       onDragEnd={({ active, over }: any) => {
         if (over) {
-          console.log('active', active)
-          console.log('over', over)
           setUpdatedOrder(active.id, over.id)
+          removeDraggableArticle(active.id, over.id)
         }
       }}
     >
