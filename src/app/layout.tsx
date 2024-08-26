@@ -31,17 +31,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark h-full antialiased">
-      <body
-        className={cn(
-          'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
-          GeistSans.className,
-        )}
-      >
-        <ClerkProvider
-          appearance={{
-            baseTheme: dark,
-          }}
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en" className="dark h-full antialiased">
+        <body
+          className={cn(
+            'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',
+            GeistSans.className,
+          )}
         >
           <ReactQueryClientProvider>
             <Providers>
@@ -50,9 +50,9 @@ export default function RootLayout({
               <Toaster />
             </Providers>
           </ReactQueryClientProvider>
-        </ClerkProvider>
-        <GoogleAnalytics gaId="G-R8Z92CFCBM" />
-      </body>
-    </html>
+          <GoogleAnalytics gaId="G-R8Z92CFCBM" />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
