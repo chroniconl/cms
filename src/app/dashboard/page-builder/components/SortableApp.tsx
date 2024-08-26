@@ -1,4 +1,6 @@
 'use client'
+
+import { useEffect } from 'react'
 import { cn } from '@/utils/cn'
 import {
   Tooltip,
@@ -6,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useEffect } from 'react'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { Article, type Post } from '@/components/BlogPostsGroup'
 import { useSortableAppStore } from './SortableAppContext'
@@ -19,20 +20,22 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
   const order = useSortableAppStore((state) =>
     state.order.find((item) => item.skeletonKey === uuid),
   )
-  const post = useSortableAppStore((state) =>
-    state.posts.find((p) => p.id === order?.postId),
+  // console.log('order', order)
+  const article = useSortableAppStore((state) =>
+    state.coreArticles.find((p) => p.id === order?.postId),
   )
+  // console.log('article', article)
 
   return (
     <div
       ref={setNodeRef}
       className={cn([
         'w-full',
-        !post &&
+        !article &&
           'flex h-[250px] items-center justify-center rounded-md border border-dashed border-stone-700',
       ])}
     >
-      {post ? <Article post={post} noImage /> : <>{children}</>}
+      {article ? <Article post={article} noImage /> : <>{children}</>}
     </div>
   )
 }
@@ -111,29 +114,33 @@ const DraggableArticleCard = ({
 }
 
 export const SortableApp = ({
-  posts,
-  skeletonKeys,
+  articles,
+  skeletonKeys: sk,
 }: {
-  posts: Post[]
+  articles: Post[]
   skeletonKeys: string[]
 }) => {
-  const alreadyUsed = posts.slice(0, 6)
+  const alreadyUsed = articles.slice(0, 6)
 
   const setSkeletonKeys = useSortableAppStore((state) => state.setSkeletonKeys)
-  const sk = useSortableAppStore((state) => state.skeletonKeys)
-  const setPosts = useSortableAppStore((state) => state.setPosts)
-  const postList = useSortableAppStore((state) => state.posts)
-  const setOrder = useSortableAppStore((state) => state.setOrder)
+  const skeletonKeys = useSortableAppStore((state) => state.skeletonKeys)
+
+  const setCoreArticles = useSortableAppStore((state) => state.setCoreArticles)
+  const postList = useSortableAppStore((state) => state.coreArticles)
+
+  const setDefaultOrder = useSortableAppStore((state) => state.setDefaultOrder)
   const order = useSortableAppStore((state) => state.order)
-  const setPostList = useSortableAppStore((state) => state.setPostList)
+  const setDefaultDraggableArticleOrder = useSortableAppStore(
+    (state) => state.setDefaultDraggableArticleOrder,
+  )
 
   useEffect(() => {
-    setSkeletonKeys(skeletonKeys)
-    setPosts(posts) // this is for referencing the data in the post
-    setOrder(
-      posts.map((_, i) => ({ postId: null, skeletonKey: skeletonKeys[i] })),
+    setSkeletonKeys(sk)
+    setCoreArticles(articles) // this is for referencing the data in the post
+    setDefaultOrder(
+      articles.map((_, i) => ({ postId: null, skeletonKey: sk[i] })),
     )
-    setPostList(posts.map((p) => p.id))
+    setDefaultDraggableArticleOrder(articles.map((p) => p.id))
   }, [])
 
   return (
@@ -167,7 +174,7 @@ export const SortableApp = ({
 
         <div className="ch-border-outline col-span-9 rounded-md bg-card">
           <div className="grid grid-cols-1 gap-4 p-4 px-4 md:mx-0 md:grid-cols-2 lg:grid-cols-3">
-            {sk.map((uuid: string, i: number) => (
+            {skeletonKeys.map((uuid: string, i: number) => (
               <SkeletonCardDropZone key={uuid} uuid={uuid}>
                 {(i += 1)}
               </SkeletonCardDropZone>

@@ -7,53 +7,70 @@ import { create } from 'zustand'
 interface SortableAppStore {
   skeletonKeys: string[]
   setSkeletonKeys: (skeletonKeys: string[]) => void
-  posts: Post[]
-  setPosts: (posts: Post[]) => void
+
+  coreArticles: Post[]
+  setCoreArticles: (coreArticles: Post[]) => void
+
   order: { postId: string | null; skeletonKey: string }[]
-  setOrder: (order: { postId: string | null; skeletonKey: string }[]) => void
-  updateOrder: (postId: string, skeletonKey: string) => void
-  postList: string[]
-  setPostList: (postList: string[]) => void
+  setDefaultOrder: (
+    order: { postId: string | null; skeletonKey: string }[],
+  ) => void
+  setUpdatedOrder: (postId: string, skeletonKey: string) => void
+
+  draggableArticleOrder: string[]
+  setDefaultDraggableArticleOrder: (draggableArticleOrder: string[]) => void
+  removeDraggableArticle: (postId: string, skeletonKey: string) => void
 }
 
 export const useSortableAppStore = create<SortableAppStore>((set) => ({
   skeletonKeys: [],
   setSkeletonKeys: (skeletonKeys: string[]) => set({ skeletonKeys }),
-  posts: [],
-  setPosts: (posts: Post[]) => set({ posts }),
+
+  coreArticles: [],
+  setCoreArticles: (coreArticles: Post[]) => set({ coreArticles }),
+
   order: [],
-  setOrder: (order: { postId: string | null; skeletonKey: string }[]) =>
+  setDefaultOrder: (order: { postId: string | null; skeletonKey: string }[]) =>
     set({ order }),
-  updateOrder: (postId: string, skeletonKey: string) => {
+  setUpdatedOrder: (postId: string, skeletonKey: string) => {
     set((state) => ({
       order: state.order.map((item) => {
         if (item.skeletonKey === skeletonKey) {
           return {
+            ...item,
             postId,
-            skeletonKey,
           }
         }
         return item
       }),
     }))
   },
-  postList: [],
-  setPostList: (postList: string[]) => set({ postList }),
-  removeFromPostList: (postId: string) => {
+
+  draggableArticleOrder: [],
+  setDefaultDraggableArticleOrder: (draggableArticleOrder: string[]) =>
+    set({ draggableArticleOrder }),
+  removeDraggableArticle: (postId: string, skeletonKey: string) => {
     set((state) => ({
-      postList: state.postList.filter((id) => id !== postId),
+      draggableArticleOrder: state.draggableArticleOrder.map((item) => {
+        if (item === skeletonKey) {
+          return postId
+        }
+        return item
+      }),
     }))
   },
 }))
 
 export const SortableAppContext = ({ children }: any) => {
-  const updateOrder = useSortableAppStore((state) => state.updateOrder)
+  const setUpdatedOrder = useSortableAppStore((state) => state.setUpdatedOrder)
 
   return (
     <DndContext
       onDragEnd={({ active, over }: any) => {
         if (over) {
-          updateOrder(active.id, over.id)
+          console.log('active', active)
+          console.log('over', over)
+          setUpdatedOrder(active.id, over.id)
         }
       }}
     >
