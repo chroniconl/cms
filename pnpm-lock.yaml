@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@clerk/clerk-react':
-        specifier: ^5.0.5
-        version: 5.2.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^5.4.2
+        version: 5.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/nextjs':
-        specifier: ^5.0.8
-        version: 5.2.4(next@14.2.4(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^5.3.3
+        version: 5.3.3(next@14.2.4(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/themes':
-        specifier: ^2.1.8
-        version: 2.1.12
+        specifier: ^2.1.21
+        version: 2.1.21
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1038,6 +1038,10 @@ packages:
     resolution: {integrity: sha512-PT/CejuGK0b7+iKFc59myFcYCEpTmqCjSjw7jG0G3fhBo8LWn+Pfv5f7udndrYI+RFP0Jbcv+2nnW6etHXErGA==}
     engines: {node: '>=18.17.0'}
 
+  '@clerk/backend@1.8.0':
+    resolution: {integrity: sha512-csIF8eHM84JPP6ZuOdE37saDRIY7Dp5B8Yt26FZSehCveUTeI16iCCbVb8Co4hutlKZa08Mcb2GEcXavRnkvfA==}
+    engines: {node: '>=18.17.0'}
+
   '@clerk/clerk-react@5.2.8':
     resolution: {integrity: sha512-OMwlqhbJlSNHHON6ybB5HebtUKp25B4I2j9v4hwLsU392r14a14SoYlwNPTNAit/oQrcaz9YtAlKED3CSN/4yQ==}
     engines: {node: '>=18.17.0'}
@@ -1045,8 +1049,23 @@ packages:
       react: '>=18 || >=19.0.0-beta'
       react-dom: '>=18 || >=19.0.0-beta'
 
+  '@clerk/clerk-react@5.4.2':
+    resolution: {integrity: sha512-F6F9yZ2lZDv365M6rn4Cpct0V2ZxFMoSxxRGag1du9QP73+twL7YoEeIimp+j4/RxH5uSsGv9JL2I7a6jnktHw==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      react: '>=18 || >=19.0.0-beta'
+      react-dom: '>=18 || >=19.0.0-beta'
+
   '@clerk/nextjs@5.2.4':
     resolution: {integrity: sha512-QqDcI4/fxZ+o5hFGi+HTGxp4LqLClooo/GW4hJJOAsCfpKs0uSyTbvgAG+aRhoUol5szJBfbPthqcgylQSfCGw==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      next: ^13.5.4 || ^14.0.3 || >=15.0.0-rc
+      react: '>=18 || >=19.0.0-beta'
+      react-dom: '>=18 || >=19.0.0-beta'
+
+  '@clerk/nextjs@5.3.3':
+    resolution: {integrity: sha512-Zn5FkuB/wo1uFSxIqsc4fcOZDd43zN4RPFbhpDYzF1JbjMuS18zzDJOlbScYl14pEC0Usqu0Z6lrMlyHmwFxkQ==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       next: ^13.5.4 || ^14.0.3 || >=15.0.0-rc
@@ -1065,8 +1084,28 @@ packages:
       react-dom:
         optional: true
 
+  '@clerk/shared@2.5.2':
+    resolution: {integrity: sha512-3+I5vMhkn3wSqCuoxIIXRma3m8zpLJBH11MO2uxKOAeZJRyeALY0jGPeyptskl+Fl9j9Rtan0OWJIisMN8TiAA==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      react: '>=18 || >=19.0.0-beta'
+      react-dom: '>=18 || >=19.0.0-beta'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   '@clerk/themes@2.1.12':
     resolution: {integrity: sha512-9YxHyfWKiuopwQQp4APl8S8JY5qowQBbVOTJgw0VP3XwCc22UrQACo+hPCOcQA0j7xXLI2XfafPaS+CWRqOHlw==}
+    engines: {node: '>=18.17.0'}
+
+  '@clerk/themes@2.1.21':
+    resolution: {integrity: sha512-eJTji2x6XMt6FOD5deNjTe86foHIUEBNuaCWVywjVnLbqHX5/uYsJkiexpUrKGGfyEjTr7z5j7V7jZNLsYRSRw==}
+    engines: {node: '>=18.17.0'}
+
+  '@clerk/types@4.14.0':
+    resolution: {integrity: sha512-d3MUcWtXGTOS7QYCRVrOra7NYAGRiNWlb+Ke2KMSb+Z3lea6WlKeHa18uVnAkIVxBXtHlzdU2kwW0PrHkx8j9Q==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/types@4.8.0':
@@ -7675,10 +7714,29 @@ snapshots:
       - react
       - react-dom
 
+  '@clerk/backend@1.8.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@clerk/shared': 2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/types': 4.14.0
+      cookie: 0.5.0
+      snakecase-keys: 5.4.4
+      tslib: 2.4.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+
   '@clerk/clerk-react@5.2.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/shared': 2.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/types': 4.8.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.4.1
+
+  '@clerk/clerk-react@5.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@clerk/shared': 2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/types': 4.14.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.4.1
@@ -7696,9 +7754,34 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.4.1
 
+  '@clerk/nextjs@5.3.3(next@14.2.4(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@clerk/backend': 1.8.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/clerk-react': 5.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/shared': 2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/types': 4.14.0
+      crypto-js: 4.2.0
+      next: 14.2.4(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8)
+      path-to-regexp: 6.2.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      server-only: 0.0.1
+      tslib: 2.4.1
+
   '@clerk/shared@2.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/types': 4.8.0
+      glob-to-regexp: 0.4.1
+      js-cookie: 3.0.5
+      std-env: 3.7.0
+      swr: 2.2.5(react@18.3.1)
+    optionalDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@clerk/shared@2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@clerk/types': 4.14.0
       glob-to-regexp: 0.4.1
       js-cookie: 3.0.5
       std-env: 3.7.0
@@ -7711,6 +7794,15 @@ snapshots:
     dependencies:
       '@clerk/types': 4.8.0
       tslib: 2.4.1
+
+  '@clerk/themes@2.1.21':
+    dependencies:
+      '@clerk/types': 4.14.0
+      tslib: 2.4.1
+
+  '@clerk/types@4.14.0':
+    dependencies:
+      csstype: 3.1.1
 
   '@clerk/types@4.8.0':
     dependencies:
@@ -11150,7 +11242,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
@@ -11195,7 +11287,7 @@ snapshots:
       enhanced-resolve: 5.17.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
       is-core-module: 2.14.0
@@ -11255,7 +11347,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5

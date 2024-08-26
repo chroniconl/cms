@@ -1,16 +1,16 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { clerkMiddleware } from '@clerk/nextjs/server'
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/explore(.*)'])
-
-const options = {
-  // debug: process.env.DEV === 'development' || process.env.NODE_ENV === 'development',
-}
-
-export default clerkMiddleware(async (auth, request) => {
-  // https://clerk.com/docs/references/nextjs/clerk-middleware#protect-routes-based-on-user-authorization-status
-  if (isProtectedRoute(request)) auth().protect()
-}, options)
+export default clerkMiddleware()
 
 export const config = {
-  matcher: ['/((?!.+.[w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+
+    // protected routes
+    '/dashboard(.*)',
+    '/explore(.*)',
+  ],
 }
