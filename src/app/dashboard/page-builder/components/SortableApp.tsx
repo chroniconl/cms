@@ -13,10 +13,6 @@ import { Article, type Post } from '@/components/BlogPostsGroup'
 import { useSortableAppStore } from './SortableAppContext'
 
 const SkeletonCardDropZone = ({ children, uuid }: any) => {
-  const { setNodeRef } = useDroppable({
-    id: uuid,
-  })
-
   const order = useSortableAppStore((state) =>
     state.order.find((item) => item.skeletonKey === uuid),
   )
@@ -24,6 +20,34 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
   const article = useSortableAppStore((state) =>
     state.coreArticles.find((p) => p.id === order?.postId),
   )
+
+  const { setNodeRef } = useDroppable({
+    id: uuid,
+  })
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setDraggableNodeRef,
+    transform,
+    isDragging,
+  } = useDraggable({
+    id: article?.id as string,
+    disabled: article?.id ? false : true,
+  })
+
+  const adjustedTransform = {
+    ...transform,
+    scaleX: 1,
+    scaleY: 1,
+  }
+
+  const style = {
+    transform: adjustedTransform
+      ? `translate3d(${adjustedTransform.x}px, ${adjustedTransform.y}px, 0) scale(1)`
+      : 'none',
+    transition: 'transform 0.02s ease',
+  }
+
   // console.log('article', article)
 
   return (
@@ -31,11 +55,22 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
       ref={setNodeRef}
       className={cn([
         'w-full',
-        !article &&
+        (!article || isDragging) &&
           'flex h-[250px] items-center justify-center rounded-md border border-dashed border-stone-700',
       ])}
     >
-      {article ? <Article post={article} noImage /> : <>{children}</>}
+      {article || (article && !isDragging) ? (
+        <div
+          ref={setDraggableNodeRef}
+          style={isDragging ? style : {}}
+          {...attributes}
+          {...listeners}
+        >
+          <Article post={article} noImage noLink />
+        </div>
+      ) : (
+        <>{children}</>
+      )}
     </div>
   )
 }
@@ -105,7 +140,7 @@ const DraggableArticleCard = ({
       })}
     >
       {isDragging ? (
-        <Article post={post} noImage />
+        <Article post={post} noImage noLink />
       ) : (
         <ToolTipCard isAlreadyUsed={isAlreadyUsed}>{post.title}</ToolTipCard>
       )}

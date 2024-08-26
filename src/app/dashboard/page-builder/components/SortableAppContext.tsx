@@ -16,6 +16,7 @@ interface SortableAppStore {
     order: { postId: string | null; skeletonKey: string }[],
   ) => void
   setUpdatedOrder: (postId: string, skeletonKey: string) => void
+  removeOrderedItem: (postId: string) => void
 
   draggableArticleOrder: string[]
   setDefaultDraggableArticleOrder: (draggableArticleOrder: string[]) => void
@@ -45,6 +46,19 @@ export const useSortableAppStore = create<SortableAppStore>((set) => ({
       }),
     }))
   },
+  removeOrderedItem: (postId: string) => {
+    set((state) => ({
+      order: state.order.map((item) => {
+        if (item.postId === postId) {
+          return {
+            ...item,
+            postId: null,
+          }
+        }
+        return item
+      }),
+    }))
+  },
 
   draggableArticleOrder: [],
   setDefaultDraggableArticleOrder: (draggableArticleOrder: string[]) =>
@@ -60,6 +74,10 @@ export const useSortableAppStore = create<SortableAppStore>((set) => ({
 
 export const SortableAppContext = ({ children }: any) => {
   const setUpdatedOrder = useSortableAppStore((state) => state.setUpdatedOrder)
+  const order = useSortableAppStore((state) => state.order)
+  const removeOrderedItem = useSortableAppStore(
+    (state) => state.removeOrderedItem,
+  )
   const removeDraggableArticle = useSortableAppStore(
     (state) => state.removeDraggableArticle,
   )
@@ -67,6 +85,12 @@ export const SortableAppContext = ({ children }: any) => {
   return (
     <DndContext
       onDragEnd={({ active, over }: any) => {
+        // if active.id is already in the order array, remove it
+        if (order.find((item) => item.postId === active.id)) {
+          removeOrderedItem(active.id)
+        }
+
+        // if over is not null, update the order
         if (over) {
           setUpdatedOrder(active.id, over.id)
           removeDraggableArticle(active.id, over.id)

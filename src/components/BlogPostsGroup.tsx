@@ -30,15 +30,17 @@ export interface Post {
   }
 }
 
-export function Article({ post, noImage }: { post: Post; noImage: boolean }) {
-  return (
-    <Link
-      className="inline-block h-full"
-      key={post.id}
-      href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
-        post.slug
-      }`}
-    >
+export function Article({
+  post,
+  noImage,
+  noLink,
+}: {
+  post: Post
+  noImage: boolean
+  noLink?: boolean
+}) {
+  const BaseArticle = () => {
+    return (
       <article
         key={post.id}
         className={cn([
@@ -65,6 +67,22 @@ export function Article({ post, noImage }: { post: Post; noImage: boolean }) {
           </div>
         </div>
       </article>
+    )
+  }
+
+  if (noLink) {
+    return <BaseArticle />
+  }
+
+  return (
+    <Link
+      className="inline-block h-full"
+      key={post.id}
+      href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
+        post.slug
+      }`}
+    >
+      <BaseArticle />
     </Link>
   )
 }

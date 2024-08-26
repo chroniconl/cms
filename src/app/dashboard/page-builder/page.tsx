@@ -7,7 +7,7 @@ const Page = async () => {
   const articles = await getAllPublishedPosts()
   const uuids = Array.from({ length: articles.length }).map((_) => uuidv4())
   return (
-    <div className="px-4">
+    <div className="px-4 md:px-0">
       <SortableAppContext>
         <SortableApp articles={articles} skeletonKeys={uuids} />
       </SortableAppContext>
