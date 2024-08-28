@@ -57,7 +57,9 @@ export default async function DashboardShell({
   return (
     <div className="flex min-h-svh w-full flex-col bg-white dark:bg-[#0f0f0f]">
       <DashboardHeader />
-      <div className="mx-auto max-w-7xl py-4">{children}</div>
+      <div className="px-4 py-4">
+        <div className="mx-auto max-w-7xl">{children}</div>
+      </div>
     </div>
   )
 }

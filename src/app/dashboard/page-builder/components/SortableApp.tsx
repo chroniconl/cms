@@ -16,7 +16,7 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
   const order = useSortableAppStore((state) =>
     state.order.find((item) => item.skeletonKey === uuid),
   )
-  // console.log('order', order)
+
   const article = useSortableAppStore((state) =>
     state.coreArticles.find((p) => p.id === order?.postId),
   )
@@ -33,6 +33,9 @@ const SkeletonCardDropZone = ({ children, uuid }: any) => {
   } = useDraggable({
     id: article?.id as string,
     disabled: article?.id ? false : true,
+    data: {
+      draggedFrom: 'skeleton',
+    },
   })
 
   const adjustedTransform = {
@@ -179,7 +182,9 @@ export const SortableApp = ({
     setDefaultOrder(
       articles.map((_, i) => ({ postId: null, skeletonKey: sk[i] })),
     )
-    setDefaultDraggableArticleOrder(articles.map((p) => p.id))
+    setDefaultDraggableArticleOrder(
+      articles.map((p) => ({ postId: p.id, show: true })),
+    )
   }, [])
 
   return (
@@ -192,28 +197,30 @@ export const SortableApp = ({
         the right panel.
       </p>
 
-      <div className="grid grid-cols-12 gap-4">
+      <div className="grid grid-cols-12 space-x-4">
         <div className="ch-border-outline sticky top-4 col-span-3 h-fit rounded-md bg-card">
           <div className="flex flex-col gap-2">
-            {draggableArticleOrder.map((id: string) => {
-              const post = coreArticles.find((p) => p.id === id)
+            {draggableArticleOrder.map(
+              ({ postId, show }: { postId: string; show: boolean }) => {
+                const post = coreArticles.find((p) => p.id === postId)
 
-              if (!post) {
-                return null
-              }
+                if (!post || show === false) {
+                  return null
+                }
 
-              const isAlreadyUsed = alreadyUsed.some(
-                ({ id }: { id: string }) => post.id === id,
-              )
+                const isAlreadyUsed = alreadyUsed.some(
+                  ({ id }: { id: string }) => post.id === id,
+                )
 
-              return (
-                <DraggableArticleCard
-                  key={post.id}
-                  post={post}
-                  isAlreadyUsed={isAlreadyUsed}
-                />
-              )
-            })}
+                return (
+                  <DraggableArticleCard
+                    key={post.id}
+                    post={post}
+                    isAlreadyUsed={isAlreadyUsed}
+                  />
+                )
+              },
+            )}
           </div>
         </div>
 
