@@ -24,7 +24,7 @@ export default async function DashboardHeader() {
                 <Link
                   key={label}
                   href={url}
-                  className="ch-color-secondary ch-border-outline-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+                  className="ch-color-secondary ch-border-secondary-hover rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
                 >
                   {label}
                 </Link>

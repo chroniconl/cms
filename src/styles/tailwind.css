@@ -30,7 +30,7 @@
 
     --border: #e5e4e1;
     --input: #e5e4e1;
-    --ring: #ffa145;
+    --ring: #0d9488;
     --radius: 0.75rem;
     --text-primary: #000;
   }
@@ -62,7 +62,7 @@
 
     --border: #2a2422;
     --input: #2a2422;
-    --ring: #f1580a;
+    --ring: #0d9488;
     --text-primary: #fff;
   }
 }
