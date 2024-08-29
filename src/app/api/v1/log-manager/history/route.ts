@@ -62,15 +62,6 @@ export async function GET(request: NextRequest) {
   logger.setUserId(userData?.id)
   logger.setSessionId(userData?.session_id)
 
-  // const {
-  //   data: logData,
-  //   error: trendyError,
-  //   count,
-  // } = await supabase
-  //   .from('__raw_logs')
-  //   .select('*', { count: 'exact' })
-  //   .order('timestamp', { ascending: false })
-  //   .range((page - 1) * pageSize, page * pageSize - 1)
   let query = supabase
     .from('__raw_logs')
     .select('*', { count: 'exact' })

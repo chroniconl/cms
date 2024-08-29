@@ -4,7 +4,6 @@ import { supabase } from '@/utils/supabase'
 import Logger from '@/utils/logger'
 import { NextRequest } from 'next/server'
 
-// TODO: Add pagination
 export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
