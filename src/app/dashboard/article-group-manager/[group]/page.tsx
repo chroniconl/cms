@@ -3,6 +3,7 @@ import { SortableApp } from './components/SortableApp'
 import { SortableAppContext } from './components/SortableAppContext'
 import { v4 as uuidv4 } from 'uuid'
 import { Check } from 'lucide-react'
+import ArticleGroupsOverview from './components/Landing'
 
 const Page = async () => {
   const articles = await getAllPublishedPosts()

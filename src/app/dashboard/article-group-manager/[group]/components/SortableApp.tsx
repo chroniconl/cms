@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
+} from '@chroniconl/ui/tooltip'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { Article, type Post } from '@/components/BlogPostsGroup'
 import { useSortableAppStore } from './SortableAppContext'
@@ -189,13 +189,16 @@ export const SortableApp = ({
 
   return (
     <div className="w-full">
-      <h2 className="mb-4 text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
-        Page Builder
-      </h2>
-      <p className="mb-8">
-        Control the order of your posts by dragging them from the left panel to
-        the right panel.
-      </p>
+      <div className="ch-border-outline mx-auto mb-8 mt-6 w-full max-w-7xl flex-col items-center rounded-md bg-card p-4">
+        <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
+          Page Builder
+        </h2>
+        <p className="">
+          You're editing an article group. An article group can be displayed
+          anywhere in the UI, and is a nice way of creating categories and / or
+          collections of content.
+        </p>
+      </div>
 
       <div className="grid grid-cols-12 space-x-4">
         <div className="ch-border-outline sticky top-4 col-span-3 h-fit rounded-md bg-card">
