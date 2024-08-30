@@ -23,6 +23,10 @@ interface SortableAppStore {
     draggableArticleOrder: { postId: string; show: boolean }[],
   ) => void
   updateDraggableArticle: (postId: string, show: boolean) => void
+  heading: string
+  setHeading: (heading: string) => void
+  subheading: string
+  setSubheading: (subheading: string) => void
 }
 
 export const useSortableAppStore = create<SortableAppStore>((set) => ({
@@ -91,6 +95,10 @@ export const useSortableAppStore = create<SortableAppStore>((set) => ({
       }),
     }))
   },
+  heading: '',
+  setHeading: (heading: string) => set({ heading }),
+  subheading: '',
+  setSubheading: (subheading: string) => set({ subheading }),
 }))
 
 export const SortableAppContext = ({ children }: any) => {
