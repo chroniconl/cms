@@ -40,11 +40,17 @@ export default async function DocumentsSlugPage({
       </div>
 
       <Post
+        // @ts-ignore
         title={data.title}
+        // @ts-ignore
         date={data.publish_date_day}
+        // @ts-ignore
         slug={data.slug}
+        // @ts-ignore
         category={data.category}
+        // @ts-ignore
         description={data.description}
+        // @ts-ignore
         content={data.content}
         imageAlt={data.image_alt}
         imageUrl={data.image_url}

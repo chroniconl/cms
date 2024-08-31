@@ -36,7 +36,7 @@ export default function RootLayout({
         baseTheme: dark,
       }}
     >
-      <html lang="en" className="dark h-full antialiased">
+      <html lang="en" className="dark">
         <body
           className={cn(
             'bg-[#FFF] text-[#0f0f0f] dark:bg-[#0f0f0f] dark:text-[#A2A2A2]',

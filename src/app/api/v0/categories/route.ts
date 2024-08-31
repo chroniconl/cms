@@ -7,29 +7,6 @@ import joi from 'joi'
 import Logger from '@/utils/logger'
 import { NextRequest } from 'next/server'
 
-export async function GET(request: NextRequest) {
-  const start = performance.now()
-  const logger = new Logger({
-    name: 'api.v0.categories.GET',
-    request: request,
-  })
-
-  const { data, error } = await supabase
-    .from('categories')
-    .select('id, name, slug, color')
-
-  if (error) {
-    void logger.logDatabaseError(error)
-    return failResponse(error?.message)
-  }
-
-  const end = performance.now()
-  void logger.logPerformance({
-    execution_time: Math.round(end - start),
-  })
-  return okResponse(data)
-}
-
 export async function POST(request: NextRequest) {
   const logger = new Logger({
     name: 'api.v0.categories.POST',
@@ -75,44 +52,4 @@ export async function POST(request: NextRequest) {
     execution_time: Math.round(end - start),
   })
   return okResponse(data, 'Document category created')
-}
-
-export async function PUT(request: NextRequest) {
-  const logger = new Logger({
-    name: 'api.v0.categories.PUT',
-    request: request,
-  })
-
-  const start = performance.now()
-  const requestData = await request.json()
-
-  const schema = joi.object({
-    id: joi.string().required(),
-    category_id: joi.string().required(),
-  })
-
-  const { error: validationError } = schema.validate(requestData)
-
-  if (validationError) {
-    void logger.logValidationError(validationError)
-    return failResponse(validationError.message)
-  }
-
-  const { error } = await supabase
-    .from('categories')
-    .update({
-      category_id: requestData.category_id,
-    })
-    .match({ id: requestData.id })
-
-  if (error) {
-    void logger.logDatabaseError(error)
-    return failResponse(error?.message)
-  }
-
-  const end = performance.now()
-  void logger.logPerformance({
-    execution_time: Math.round(end - start),
-  })
-  return okResponse('Documents category was updated')
 }

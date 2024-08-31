@@ -20,7 +20,7 @@ async function createDocumentWithTitle(
   })
   try {
     const { data: userData, error: userError } = await getCurrentUser()
-    if (userError) {
+    if (userError || !userData) {
       void logger.logAuthError(userError)
       return failResponse('Trouble getting user')
     }
@@ -32,7 +32,7 @@ async function createDocumentWithTitle(
         content: '<p>Nothing here yet</p>',
         slug: formatSlug(title),
         user_id: userData?.id,
-        last_updated: new Date(),
+        last_updated: new Date().toISOString(),
       })
       .select()
 
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
   })
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }

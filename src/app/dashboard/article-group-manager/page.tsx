@@ -1,13 +1,15 @@
-import { getAllPublishedPosts } from '@/server/getAllPublishedPosts'
-import { v4 as uuidv4 } from 'uuid'
 import ArticleGroupsOverview from './components/Landing'
+import { getAllArticleGroups } from '@/server/getAllArticleGroups'
 
 const Page = async () => {
-  // const articles = await getAllPublishedPosts()
-  // const uuids = Array.from({ length: articles.length }).map(
-  //   (_) => 'skel_' + uuidv4(),
-  // )
-  return <ArticleGroupsOverview />
+  const articleGroups = await getAllArticleGroups()
+
+  const fixedArticleGroups = articleGroups.map((group) => ({
+    ...group,
+    articles: JSON.parse(JSON.stringify(group.articles)),
+  }))
+
+  return <ArticleGroupsOverview articleGroups={fixedArticleGroups} />
 }
 
 export default Page

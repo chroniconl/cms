@@ -18,6 +18,7 @@ export async function handleSubscribeToNewsletterFormSubmit(
   }
 
   const { error } = await supabase.from('newsletter_subscribers').insert({
+    // @ts-ignore
     email: email,
   })
 

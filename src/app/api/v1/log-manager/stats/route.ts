@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     request: request,
   })
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }

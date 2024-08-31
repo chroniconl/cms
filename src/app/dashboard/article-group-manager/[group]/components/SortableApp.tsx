@@ -561,9 +561,11 @@ const DraggableArticleCard = ({
 export const SortableApp = ({
   articles,
   skeletonKeys: sk,
+  articleGroup,
 }: {
   articles: Post[]
   skeletonKeys: string[]
+  articleGroup: any
 }) => {
   const alreadyUsed = articles.slice(0, 6)
 
@@ -616,7 +618,7 @@ export const SortableApp = ({
         <div className="ch-border-outline sticky top-4 col-span-4 h-fit rounded-md bg-card">
           <div className="flex flex-col gap-2">
             <PostList />
-            {draggableArticleOrder.map(
+            {/* {draggableArticleOrder.map(
               ({ postId, show }: { postId: string; show: boolean }) => {
                 const post = coreArticles.find((p) => p.id === postId)
 
@@ -636,7 +638,7 @@ export const SortableApp = ({
                   />
                 )
               },
-            )}
+            )} */}
           </div>
         </div>
 

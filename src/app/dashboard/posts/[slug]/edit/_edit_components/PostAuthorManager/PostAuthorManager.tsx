@@ -21,7 +21,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { UploadButton } from '@/components/UploadThingys'
 import { create } from 'zustand'
 import { useEffect } from 'react'
 import Image from 'next/image'
@@ -248,49 +247,6 @@ export default function PostAuthorForm({
                     />
                   </AvatarFallback>
                 </Avatar>
-                <UploadButton
-                  className="w-fit"
-                  endpoint="imageUploader"
-                  onClientUploadComplete={async (res) => {
-                    if (!res[0].key || !res[0].url) {
-                      toast({
-                        title: 'Error',
-                        description:
-                          'Failed to upload avatar. Please try again later.',
-                        variant: 'destructive',
-                      })
-                      return
-                    }
-
-                    // This sets the avatar to CLIENT state
-                    // Not sure how I feel about the success toast here because unless the user submits the form,
-                    // the avatar will not persist
-                    setAvatarUrl(res[0].url)
-                    setAvatarId(res[0].key)
-
-                    toast({
-                      title: 'Success',
-                      description: 'Author avatar uploaded successfully.',
-                    })
-                  }}
-                  onUploadError={(error: Error) => {
-                    if (error.message.includes('FileSizeMismatch')) {
-                      toast({
-                        title: 'Error',
-                        description: 'The file size is too large',
-                        variant: 'destructive',
-                      })
-                      return
-                    }
-
-                    toast({
-                      title: 'Error',
-                      description:
-                        'Failed to upload avatar. Please try again later.',
-                      variant: 'destructive',
-                    })
-                  }}
-                />
               </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">

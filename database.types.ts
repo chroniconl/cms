@@ -1,3 +1,11 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
 export type Database = {
   public: {
     Tables: {
@@ -23,7 +31,7 @@ export type Database = {
           nextUrl: string | null
           request_cookies: string | null
           request_geo: string | null
-          request_headers: JSON | null
+          request_headers: Json | null
           request_id: string | null
           response_time: number | null
           service_name: string | null
@@ -55,7 +63,7 @@ export type Database = {
           nextUrl?: string | null
           request_cookies?: string | null
           request_geo?: string | null
-          request_headers?: JSON | null
+          request_headers?: Json | null
           request_id?: string | null
           response_time?: number | null
           service_name?: string | null
@@ -87,7 +95,7 @@ export type Database = {
           nextUrl?: string | null
           request_cookies?: string | null
           request_geo?: string | null
-          request_headers?: JSON | null
+          request_headers?: Json | null
           request_id?: string | null
           response_time?: number | null
           service_name?: string | null
@@ -127,6 +135,39 @@ export type Database = {
         }
         Relationships: []
       }
+      article_group_manager: {
+        Row: {
+          articles: Json | null
+          created_at: string
+          heading: string | null
+          id: string
+          reference_name: string | null
+          shareable_id: string | null
+          subheading: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          articles?: Json | null
+          created_at?: string
+          heading?: string | null
+          id?: string
+          reference_name?: string | null
+          shareable_id?: string | null
+          subheading?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          articles?: Json | null
+          created_at?: string
+          heading?: string | null
+          id?: string
+          reference_name?: string | null
+          shareable_id?: string | null
+          subheading?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       authors: {
         Row: {
           avatar_id: string | null
@@ -163,11 +204,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'authors_created_by_fkey'
-            columns: ['created_by']
+            foreignKeyName: "authors_created_by_fkey"
+            columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -294,11 +335,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'legal_documents_user_id_fkey'
-            columns: ['user_id']
+            foreignKeyName: "legal_documents_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -344,25 +385,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'post_tag_relationship_created_by_fkey'
-            columns: ['created_by']
+            foreignKeyName: "post_tag_relationship_created_by_fkey"
+            columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'post_tag_relationship_post_id_fkey'
-            columns: ['post_id']
+            foreignKeyName: "post_tag_relationship_post_id_fkey"
+            columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: 'posts'
-            referencedColumns: ['id']
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'post_tag_relationship_tag_id_fkey'
-            columns: ['tag_id']
+            foreignKeyName: "post_tag_relationship_tag_id_fkey"
+            columns: ["tag_id"]
             isOneToOne: false
-            referencedRelation: 'tags'
-            referencedColumns: ['id']
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -383,6 +424,7 @@ export type Database = {
           last_updated: string | null
           publish_date_day: string | null
           publish_date_time: string | null
+          shareable_id: string | null
           slug: string | null
           title: string | null
           user_id: string | null
@@ -405,6 +447,7 @@ export type Database = {
           last_updated?: string | null
           publish_date_day?: string | null
           publish_date_time?: string | null
+          shareable_id?: string | null
           slug?: string | null
           title?: string | null
           user_id?: string | null
@@ -427,6 +470,7 @@ export type Database = {
           last_updated?: string | null
           publish_date_day?: string | null
           publish_date_time?: string | null
+          shareable_id?: string | null
           slug?: string | null
           title?: string | null
           user_id?: string | null
@@ -435,25 +479,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posts_author_id_fkey'
-            columns: ['author_id']
+            foreignKeyName: "posts_author_id_fkey"
+            columns: ["author_id"]
             isOneToOne: false
-            referencedRelation: 'authors'
-            referencedColumns: ['id']
+            referencedRelation: "authors"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'posts_category_id_fkey'
-            columns: ['category_id']
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
             isOneToOne: false
-            referencedRelation: 'categories'
-            referencedColumns: ['id']
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'posts_user_id_fkey'
-            columns: ['user_id']
+            foreignKeyName: "posts_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -499,11 +543,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: '__repo_trends___raw_trend_id_fkey'
-            columns: ['__raw_trend_id']
+            foreignKeyName: "__repo_trends___raw_trend_id_fkey"
+            columns: ["__raw_trend_id"]
             isOneToOne: false
-            referencedRelation: '__raw_trends'
-            referencedColumns: ['id']
+            referencedRelation: "__raw_trends"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -534,11 +578,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'tags_created_by_fkey'
-            columns: ['created_by']
+            foreignKeyName: "tags_created_by_fkey"
+            columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -615,27 +659,27 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>]
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -644,19 +688,19 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -665,19 +709,19 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -686,13 +730,13 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof PublicSchema['Enums']
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never

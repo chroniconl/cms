@@ -14,6 +14,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 // Define the structure of an article
 interface Article {
@@ -98,21 +99,64 @@ const ArticleCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
   )
 }
 
-const CreateGroupModal: React.FC<{
-  onCreateGroup: (group: Omit<Group, 'id' | 'articles'>) => void
-}> = ({ onCreateGroup }) => {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [title, setTitle] = React.useState('')
-  const [heading, setHeading] = React.useState('')
-  const [subheading, setSubheading] = React.useState('')
+interface GroupFormValues {
+  title: string
+  heading: string
+  subheading: string
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onCreateGroup({ title, heading, subheading, url: '' })
+const CreateGroupModal: React.FC<{ onCreateGroup: (group: Group) => void }> = ({
+  onCreateGroup,
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const { register, handleSubmit, reset } = useForm<GroupFormValues>()
+
+  const onSubmit: SubmitHandler<GroupFormValues> = async (data) => {
+    const response = await fetch('/api/v1/article-group-manager', {
+      method: 'POST',
+      body: JSON.stringify({
+        articles: [],
+        heading: data.heading,
+        subheading: data.subheading,
+        reference_name: data.title,
+      }),
+    })
+
+    const newGroupData = (await response.json()) as {
+      data: {
+        articles: JSON | null
+        created_at: string
+        heading: string | null
+        id: string
+        reference_name: string | null
+        shareable_id: string | null
+        subheading: string | null
+        updated_at: string | null
+      }
+      error: any
+    }
+
+    if (newGroupData.error) {
+      throw new Error('Failed to create article group')
+    }
+
+    // id: string
+    // title: string
+    // heading: string
+    // subheading: string
+    // url: string
+    // articles: Article[]
+    onCreateGroup({
+      id: newGroupData.data.id || '',
+      title: newGroupData.data?.reference_name || '',
+      heading: newGroupData.data?.heading || '',
+      subheading: newGroupData.data.subheading || '',
+      url: newGroupData.data.shareable_id || '',
+      // @ts-ignore
+      articles: newGroupData.data.articles,
+    })
     setIsOpen(false)
-    setTitle('')
-    setHeading('')
-    setSubheading('')
+    reset()
   }
 
   return (
@@ -126,14 +170,13 @@ const CreateGroupModal: React.FC<{
         <DialogHeader>
           <DialogTitle>Create New Group</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title">Article Group Name</Label>
             <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter group title"
+              id="articleGroupName"
+              {...register('title', { required: true })}
+              placeholder="Enter article group name"
               required
             />
           </div>
@@ -141,8 +184,7 @@ const CreateGroupModal: React.FC<{
             <Label htmlFor="heading">Heading</Label>
             <Input
               id="heading"
-              value={heading}
-              onChange={(e) => setHeading(e.target.value)}
+              {...register('heading', { required: true })}
               placeholder="Enter group heading"
               required
             />
@@ -151,8 +193,7 @@ const CreateGroupModal: React.FC<{
             <Label htmlFor="subheading">Subheading</Label>
             <Textarea
               id="subheading"
-              value={subheading}
-              onChange={(e) => setSubheading(e.target.value)}
+              {...register('subheading', { required: true })}
               placeholder="Enter group subheading"
               required
             />
@@ -166,75 +207,42 @@ const CreateGroupModal: React.FC<{
   )
 }
 
-export default function ArticleGroupsOverview() {
-  const [groups, setGroups] = React.useState<Group[]>([
-    {
-      id: '1',
-      title: 'TypeScript Tutorials',
-      heading: 'Learn TypeScript',
-      subheading: 'Enhance your JavaScript skills',
-      url: '/typescript-tutorials',
-      articles: [
-        {
-          id: '1',
-          image: '/placeholder.svg?height=60&width=80',
-          title: 'TypeScript Basics',
-          date: '2024-08-01',
-          description: 'Get started with TypeScript fundamentals',
-          badge: 'Beginner',
-        },
-        {
-          id: '2',
-          image: '/placeholder.svg?height=60&width=80',
-          title: 'Advanced Types',
-          date: '2024-08-15',
-          description: 'Explore complex types in TypeScript',
-          badge: 'Advanced',
-        },
-        {
-          id: '3',
-          image: '/placeholder.svg?height=60&width=80',
-          title: 'TypeScript with React',
-          date: '2024-08-30',
-          description: 'Use TypeScript in React applications',
-          badge: 'Intermediate',
-        },
-      ],
-    },
-    {
-      id: '2',
-      title: 'React Basics',
-      heading: 'Getting Started with React',
-      subheading: 'Build interactive UIs',
-      url: '/react-basics',
-      articles: [
-        {
-          id: '4',
-          image: '/placeholder.svg?height=60&width=80',
-          title: 'React Components',
-          date: '2024-09-01',
-          description: 'Learn about React components',
-          badge: 'Beginner',
-        },
-        {
-          id: '5',
-          image: '/placeholder.svg?height=60&width=80',
-          title: 'State and Props',
-          date: '2024-09-15',
-          description: 'Understand state and props in React',
-          badge: 'Intermediate',
-        },
-      ],
-    },
-  ])
+export default function ArticleGroupsOverview({
+  articleGroups,
+}: {
+  articleGroups: {
+    articles: JSON | null
+    created_at: string
+    heading: string | null
+    id: string
+    reference_name: string | null
+    shareable_id: string | null
+    subheading: string | null
+    updated_at: string | null
+  }[]
+}) {
+  const [groups, setGroups] = React.useState<Group[]>(
+    (articleGroups.map((group) => ({
+      id: group.id,
+      title: group.reference_name,
+      heading: group.heading,
+      subheading: group.subheading,
+      url: group.shareable_id,
+      articles: group.articles,
+    })) as unknown as Group[]) || [],
+  )
 
-  const handleCreateGroup = (newGroup: Omit<Group, 'id' | 'articles'>) => {
-    const groupWithId: Group = {
+  const handleCreateGroup = async (
+    newGroup: Omit<Group, 'id' | 'articles'>,
+  ) => {
+    console.log(newGroup)
+
+    const completeNewGroup: Group = {
       ...newGroup,
-      id: (groups.length + 1).toString(),
-      articles: [],
+      id: String(groups.length + 1), // Generate a new id based on the length of the groups array
+      articles: [], // Initialize with an empty array of articles
     }
-    setGroups([...groups, groupWithId])
+    setGroups([...groups, completeNewGroup])
   }
 
   return (
@@ -244,32 +252,33 @@ export default function ArticleGroupsOverview() {
         <CreateGroupModal onCreateGroup={handleCreateGroup} />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {groups.map((group) => (
-          <Card key={group.id} className="transition-shadow hover:shadow-lg">
-            <CardHeader>
-              <CardTitle>{group.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="font-semibold">{group.heading}</p>
-              <p className="mb-4 text-sm text-muted-foreground">
-                {group.subheading}
-              </p>
-              <ArticleCarousel articles={group.articles} />
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm font-medium">
-                  {group.articles.length}{' '}
-                  {group.articles.length === 1 ? 'Article' : 'Articles'}
-                </span>
-                <a
-                  href={'/dashboard/article-group-manager/' + group.url}
-                  className="ch-color-secondary ch-border-secondary-hover flex items-center rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
-                >
-                  Edit <ChevronRight className="ml-2 h-4 w-4" />
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {groups &&
+          groups?.map((group) => (
+            <Card key={group.id} className="transition-shadow hover:shadow-lg">
+              <CardHeader>
+                <CardTitle>{group.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="font-semibold">{group.heading}</p>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  {group.subheading}
+                </p>
+                <ArticleCarousel articles={group.articles} />
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-sm font-medium">
+                    {group.articles.length}{' '}
+                    {group.articles.length === 1 ? 'Article' : 'Articles'}
+                  </span>
+                  <a
+                    href={'/dashboard/article-group-manager/' + group.url}
+                    className="ch-color-secondary ch-border-secondary-hover flex items-center rounded-sm px-4 py-2 text-sm hover:bg-stone-900"
+                  >
+                    Edit <ChevronRight className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
       </div>
     </div>
   )

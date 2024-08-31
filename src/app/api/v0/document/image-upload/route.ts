@@ -12,7 +12,7 @@ export async function PUT(request: NextRequest) {
   })
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -38,7 +38,7 @@ export async function PUT(request: NextRequest) {
     .update({
       image_url: requestData.image_url,
       image_id: requestData.image_id,
-      last_updated: new Date(),
+      last_updated: new Date().toISOString(),
     })
     .match({ id: requestData.id })
 

@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
   // const pageSize = parseInt(url.searchParams.get('pageSize') || '100')
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }

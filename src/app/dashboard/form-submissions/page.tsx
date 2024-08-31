@@ -22,6 +22,7 @@ export default async function Media() {
 
   return (
     <section>
+      {/* @ts-ignore */}
       <Messages messages={formattedData} />
     </section>
   )

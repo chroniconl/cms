@@ -109,6 +109,7 @@
     "react-resizable-panels": "^2.0.22",
     "remark-gfm": "^4.0.0",
     "resend": "^3.4.0",
+    "supabase": "^1.191.3",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "typed.js": "^2.1.0",

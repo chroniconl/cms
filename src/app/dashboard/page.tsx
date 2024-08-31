@@ -106,7 +106,9 @@ async function ComingSoon() {
                         <div className="items-top flex w-full justify-between md:w-fit">
                           <img
                             className="h-12 w-12"
+                            // @ts-ignore
                             src={post.image_url}
+                            // @ts-ignore
                             alt={post.image_alt}
                           />
                           <div className="block md:hidden">
@@ -204,6 +206,7 @@ async function DraftPosts() {
                     </Link>
                   </TableCell>
                   <TableCell className="col-span-4 text-right">
+                    {/* @ts-ignore */}
                     {formatDate(post.publish_date_day)}
                   </TableCell>
                 </TableRow>

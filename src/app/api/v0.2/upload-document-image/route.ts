@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     request: request,
   })
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     .from('posts')
     .update({
       image_url: process.env.SUPABASE_STORAGE_BUCKET_URL + uploadData.path,
-      last_updated: new Date(),
+      last_updated: new Date().toISOString(),
     })
     .eq('id', documentId)
     .single()
