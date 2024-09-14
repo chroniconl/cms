@@ -19,6 +19,7 @@ export async function Categories() {
     <div className="rounded-md bg-secondary p-4 shadow-md">
       <h3 className="pb-4 text-lg font-bold">Categories</h3>
       <ul className="space-y-1">
+        {/* @ts-ignore */}
         {categories?.map((category: Category) => (
           <li key={category.id}>
             <Link

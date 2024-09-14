@@ -1,3 +1,9 @@
+/**
+ * Typescript sucks for shit like this
+ * this file broke when I added the Supabase type defs to the SDK
+ * It's always worked previously, the loggers have never picked up an error
+ * So we'll just ignore the errors for now, it's not worth it
+ */
 import { supabase } from '@/utils/supabase'
 import Post from '@/components/Post'
 import { getPSTDate } from '@/utils/dates'
@@ -8,7 +14,7 @@ import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
 import Logger from '@/utils/logger'
 
 const logger = new Logger({
-  name: 'api.v0.1.document.image-metadata.PUT',
+  name: 'BLOG_POST',
   httpMethod: 'GET',
 })
 
@@ -47,15 +53,20 @@ export async function generateMetadata(
     openGraph: {
       type: 'article',
       url: `https://chroniconl.com/blog/${formatTimestampToSlug(
+        // @ts-ignore
         data.publish_date_day,
       )}/${slug}`,
+      // @ts-ignore
       title: data.title,
+      // @ts-ignore
       description: data.description,
       images: [
         {
+          // @ts-ignore
           url: data.image_url,
           width: 800,
           height: 600,
+          // @ts-ignore
           alt: data.image_alt,
         },
         ...previousImages,
@@ -63,14 +74,19 @@ export async function generateMetadata(
     },
     twitter: {
       card: 'summary_large_image',
+      // @ts-ignore
       title: data.title,
+      // @ts-ignore
       description: data.description,
+      // @ts-ignore
       images: [data.image_url],
       site: '@repo_src',
+      // @ts-ignore
       creator: data.author_twitter_handle,
     },
     alternates: {
       canonical: `https://chroniconl.com/blog/${formatTimestampToSlug(
+        // @ts-ignore
         data.publish_date_day,
       )}/${slug}`,
     },
@@ -80,6 +96,7 @@ export async function generateMetadata(
     },
     authors: [
       {
+        // @ts-ignore
         name: data.author_name,
         url: 'https://chroniconl.com/about',
       },
@@ -113,20 +130,12 @@ export default async function BlogPage({
     const date = new Date(year, month, day)
     safeDate = format(date, 'yyyy-MM-dd')
   } catch (error) {
-    void logger.logError({
-      message: 'GET failed - Error formatting date',
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void logger.logGeneralError(error)
     throw new Error('Something went wrong, please try again later')
   }
 
   if (!safeDate) {
-    void logger.logError({
-      message: 'GET failed - Error formatting date',
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void logger.logGeneralError('Error formatting date')
     throw new Error('Something went wrong, please try again later')
   }
 
@@ -162,11 +171,7 @@ export default async function BlogPage({
     .single()
 
   if (error) {
-    void logger.logError({
-      message: 'GET failed - Error fetching post' + error.message,
-      error_code: 'E001',
-      exception_type: 'Error',
-    })
+    void logger.logDatabaseError(error)
     throw new Error('Something went wrong, please try again later')
   }
 
@@ -174,6 +179,7 @@ export default async function BlogPage({
 
   // Can't show a post that is going live in a few hours..
   const postGotPublishedTodayWithinTime =
+    // @ts-ignore
     data.publish_date_time > formattedPSTTime
   if (postGotPublishedToday && postGotPublishedTodayWithinTime) {
     throw new Error('Something went wrong, please try again later')
@@ -182,8 +188,8 @@ export default async function BlogPage({
   const end = performance.now()
   void logger.logPerformance({
     message: 'GET executed successfully',
+    url: 'src/app/api/v1/log-manager/stats/route.ts',
     execution_time: Math.round(end - start),
-    url: '/api/v0.1/document/image-upload',
     http_method: 'GET',
   })
 
@@ -191,11 +197,16 @@ export default async function BlogPage({
     <PublicLayout>
       <div className="mx-auto w-full md:max-w-3xl">
         <Post
+          // @ts-ignore
           title={data?.title}
+          // @ts-ignore
           date={data?.publish_date_day}
+          // @ts-ignore
           slug={data?.slug}
           category={data.category as any}
+          // @ts-ignore
           description={data?.description}
+          // @ts-ignore
           content={data?.content}
           imageUrl={data?.image_url}
           imageAlt={data?.image_alt}

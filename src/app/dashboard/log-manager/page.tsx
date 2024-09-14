@@ -334,7 +334,6 @@ export default function LogManager() {
       if (error) {
         throw new Error('Failed to fetch intervals')
       }
-      console.log(data)
       setIntervals(data)
     }
     fetchIntervals()

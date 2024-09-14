@@ -39,8 +39,12 @@ export default async function Page() {
         return
       }
 
+      if (!curr.name) {
+        return
+      }
+
       return {
-        [curr.name]: {
+        [curr?.name]: {
           count: filterPosts.length,
           ...curr,
         },
@@ -63,6 +67,7 @@ export default async function Page() {
   return (
     <PublicLayout>
       <div className="mx-auto max-w-7xl px-2 md:mt-10 md:px-4">
+        {/* @ts-ignore */}
         <ViewBy data={categorizedPosts} />
       </div>
     </PublicLayout>

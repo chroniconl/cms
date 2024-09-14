@@ -1,9 +1,9 @@
-import { currentUser } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 import { supabase } from '@/utils/supabase'
 import Logger from '@/utils/logger'
 
 const logger = new Logger({
-  name: 'server.getCurrentUser',
+  name: 'SERVER_GET_CURRENT_USER',
   httpMethod: 'GET',
 })
 
@@ -14,31 +14,47 @@ const logger = new Logger({
  * 		id: string
  * 		user_id: string
  * 		provider: string
+ *    session_id: string
  * 	}
  * 	error: any
  * }>} userData
  */
 export async function getCurrentUser() {
-  const user = await currentUser()
+  const user = await auth()
+
+  if (user?.userId === null) {
+    void logger.logAuthError('No user found')
+
+    return {
+      data: null,
+      error: 'No user found',
+    }
+  }
 
   const { data: userData, error: userError } = await supabase
     .from('users')
     .select('*')
-    .eq('user_id', user?.id)
+    .eq('user_id', user?.userId)
     .single()
 
-  if (userError) {
+  if (
+    userError ||
+    userData === null ||
+    userData.user_id === null ||
+    user.sessionId === null
+  ) {
     void logger.logError({
-      message:
-        'getCurrentUser failed - Error fetching user' + userError.message,
-      error_code: 'E001',
-      exception_type: 'Error',
+      message: 'getCurrentUser failed - Error fetching user',
+      error_code: JSON.stringify(userError),
     })
     throw new Error('Error fetching user')
   }
 
   return {
-    data: userData,
+    data: {
+      ...userData,
+      session_id: user?.sessionId,
+    },
     error: userError,
   }
 }

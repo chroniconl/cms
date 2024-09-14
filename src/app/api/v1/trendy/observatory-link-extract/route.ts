@@ -16,11 +16,14 @@ export async function POST(request: NextRequest) {
     request: request,
   })
 
-  const { error: userError } = await getCurrentUser()
-  if (userError) {
+  const { data: userData, error: userError } = await getCurrentUser()
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
+
+  logger.setUserId(userData?.id)
+  logger.setSessionId(userData?.session_id)
 
   const requestData = await request.json()
   const { error: validationError } = schema.validate(requestData)

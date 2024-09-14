@@ -10,7 +10,7 @@ import { formatTimestampToSlug } from '@/utils/formatTimestampToSlug'
 import { Category } from '@/utils/types'
 import { cn } from '@/utils/cn'
 
-interface Post {
+export interface Post {
   id: string
   title: string
   description: string
@@ -29,6 +29,64 @@ interface Post {
     twitter_handle: string
   }
 }
+
+export function Article({
+  post,
+  noImage,
+  noLink,
+}: {
+  post: Post
+  noImage: boolean
+  noLink?: boolean
+}) {
+  const BaseArticle = () => {
+    return (
+      <article
+        key={post.id}
+        className={cn([
+          'group h-full',
+          { 'ch-border-outline ch-card rounded-xl p-4': noImage },
+        ])}
+      >
+        {noImage === false && (
+          <ClientImage src={post.image_url} alt={post.image_alt} />
+        )}
+        <div
+          className={cn([
+            'flex flex-col justify-between',
+            { 'mt-4': noImage === false },
+          ])}
+        >
+          <div>
+            <Heading level={3}>{post.title}</Heading>
+            <Text className="mt-2">{post?.publish_date_day}</Text>
+            <Text className="mt-2">{post?.description?.slice(0, 200)}</Text>
+          </div>
+          <div className="mt-3 flex items-center text-sm">
+            <Badge variant={post.category?.color}>{post.category?.name}</Badge>
+          </div>
+        </div>
+      </article>
+    )
+  }
+
+  if (noLink) {
+    return <BaseArticle />
+  }
+
+  return (
+    <Link
+      className="inline-block h-full"
+      key={post.id}
+      href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
+        post.slug
+      }`}
+    >
+      <BaseArticle />
+    </Link>
+  )
+}
+
 export default function BlogPostsGroup({
   posts,
   noImage = false,
@@ -104,44 +162,7 @@ export default function BlogPostsGroup({
     <div>
       <section className="grid grid-cols-1 gap-4 px-4 md:mx-0 md:grid-cols-2 md:gap-8 md:px-0 lg:grid-cols-3">
         {feed?.map((post) => (
-          <Link
-            className="inline-block h-full"
-            key={post.id}
-            href={`/blog/${formatTimestampToSlug(post.publish_date_day)}/${
-              post.slug
-            }`}
-          >
-            <article
-              key={post.id}
-              className={cn([
-                'group h-full',
-                { 'ch-border-outline ch-card rounded-xl p-4': noImage },
-              ])}
-            >
-              {noImage === false && (
-                <ClientImage src={post.image_url} alt={post.image_alt} />
-              )}
-              <div
-                className={cn([
-                  'flex flex-col justify-between',
-                  { 'mt-4': noImage === false },
-                ])}
-              >
-                <div>
-                  <Heading level={3}>{post.title}</Heading>
-                  <Text className="mt-2">{post?.publish_date_day}</Text>
-                  <Text className="mt-2">
-                    {post?.description?.slice(0, 200)}
-                  </Text>
-                </div>
-                <div className="mt-3 flex items-center text-sm">
-                  <Badge variant={post.category?.color}>
-                    {post.category?.name}
-                  </Badge>
-                </div>
-              </div>
-            </article>
-          </Link>
+          <Article key={post.id} post={post} noImage={noImage} />
         ))}
       </section>
       {enableLazyScroll && (

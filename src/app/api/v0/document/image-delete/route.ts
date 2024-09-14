@@ -13,7 +13,7 @@ export async function DELETE(request: NextRequest) {
   })
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -49,7 +49,7 @@ export async function DELETE(request: NextRequest) {
       image_id: null,
       image_alt: null,
       image_caption: null,
-      last_updated: new Date(),
+      last_updated: new Date().toISOString(),
     })
     .match({ id: requestData.id })
 

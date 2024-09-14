@@ -21,7 +21,6 @@ const schema = Joi.object({
   logLevel: Joi.string().optional().allow(null),
 })
 
-// TODO: Add pagination
 export async function GET(request: NextRequest) {
   const start = performance.now()
   const logger = new Logger({
@@ -55,7 +54,7 @@ export async function GET(request: NextRequest) {
   // const pageSize = parseInt(url.searchParams.get('pageSize') || '100')
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -63,15 +62,6 @@ export async function GET(request: NextRequest) {
   logger.setUserId(userData?.id)
   logger.setSessionId(userData?.session_id)
 
-  // const {
-  //   data: logData,
-  //   error: trendyError,
-  //   count,
-  // } = await supabase
-  //   .from('__raw_logs')
-  //   .select('*', { count: 'exact' })
-  //   .order('timestamp', { ascending: false })
-  //   .range((page - 1) * pageSize, page * pageSize - 1)
   let query = supabase
     .from('__raw_logs')
     .select('*', { count: 'exact' })

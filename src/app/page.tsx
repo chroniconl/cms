@@ -15,7 +15,7 @@ export default async function Page() {
           </h2>
           <p className="mb-8">
             There's always something to be built and there are always something
-            learn. Really I don't know what else to say, so I'll leave it there.
+            learn. I pretty much just come here to ramble.
           </p>
         </div>
       </div>

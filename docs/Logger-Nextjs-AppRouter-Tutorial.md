@@ -185,7 +185,7 @@ export async function GET() {
     name: 'api.v1.trendy.history.GET',
   })
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -231,7 +231,7 @@ export async function GET(request: NextRequest) {
   // OPTIONAL (Steps 4 and 5 are only needed to tie the user to the event)
   // 4. Extract the data object from the `getCurrentUser` response
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }

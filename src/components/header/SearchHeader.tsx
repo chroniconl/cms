@@ -71,15 +71,15 @@ const SearchCard = ({ result }: { result: IDocument }) => {
   }
 
   return (
-    <button
-      className="flex items-center space-x-2 overflow-ellipsis bg-secondary p-2 hover:bg-secondary"
+    <div
+      className="flex space-x-2 overflow-ellipsis bg-secondary p-2 hover:bg-secondary"
       key={result.id}
       onClick={handleClick}
     >
       <div>
         <File className="h-6 w-6 text-secondary-foreground" />
       </div>
-      <div>
+      <div className="flex flex-col">
         <span className="block overflow-ellipsis text-nowrap text-sm font-bold text-secondary-foreground">
           {result.title}
         </span>
@@ -87,7 +87,7 @@ const SearchCard = ({ result }: { result: IDocument }) => {
           {formatDate(result.created_at)}
         </span>
       </div>
-    </button>
+    </div>
   )
 }
 
@@ -184,7 +184,7 @@ export function SearchHeader() {
           <form>
             <div>
               <Label htmlFor="search">Include results from</Label>
-              <div className="mt-2 flex flex-wrap items-center gap-4 rounded-md border px-2 py-4">
+              <div className="ch-border mt-2 flex flex-wrap items-center gap-4 rounded-md px-2 py-4">
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-muted-foreground">Titles</span>
                   <Controller
@@ -217,7 +217,7 @@ export function SearchHeader() {
             </div>
           </form>
 
-          <ScrollArea className="h-72 rounded-md border">
+          <ScrollArea className="ch-border h-72 rounded-md">
             <div className="p-2">
               {loading && (
                 <p className="text-sm text-muted-foreground">Loading...</p>

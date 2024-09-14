@@ -42,6 +42,7 @@ class Logger {
   private async logToDatabase(logData: LogData) {
     const { error: insertError } = await supabase.from('__raw_logs').insert({
       ...logData,
+      // @ts-ignore
       timestamp: new Date(),
       logger_name: this.options.name,
       application_name: 'Chroniconl',

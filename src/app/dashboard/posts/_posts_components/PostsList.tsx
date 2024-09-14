@@ -108,7 +108,7 @@ const columns: ColumnDef<SafePost>[] = [
     header: 'Publish Date',
     cell: (info) => {
       const publishDateDay = info.getValue() as string
-      console.log(info.cell.row.original.isPublished)
+
       if (info.cell.row.original.visibility !== 'public') {
         return <span className="text-green-500">-</span>
       }

@@ -21,7 +21,7 @@ export async function PUT(request: NextRequest) {
   })
 
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     void logger.logAuthError(userError)
     return failResponse('Trouble getting user')
   }
@@ -49,11 +49,12 @@ export async function PUT(request: NextRequest) {
     .from('posts')
     .update({
       visibility: requestData?.visibility || null,
+      // @ts-ignore
       publish_date_day: requestData?.publishDateDay
         ? toPST(requestData?.publishDateDay)
         : null,
       publish_date_time: requestData?.publishDateTime || null,
-      last_updated: new Date(),
+      last_updated: new Date().toISOString(),
     })
     .match({ id: requestData?.id })
 

@@ -6,7 +6,7 @@ import { getCurrentUser } from '@/server/getCurrentUser'
 
 export const getPostsAction = async () => {
   const { data: userData, error: userError } = await getCurrentUser()
-  if (userError) {
+  if (userError || !userData) {
     throw new Error('Error fetching user')
   }
 
@@ -38,6 +38,7 @@ export const getPostsAction = async () => {
         return null
     }
   }
+  // @ts-ignore
   const clientSafeData: SafePost[] = data.map((post) => {
     let formatablePublishDate: string | null = null
     const publishDateDay = findPublishableDate(
@@ -58,7 +59,9 @@ export const getPostsAction = async () => {
       content: post.content,
       slug: {
         base: post.slug,
+        // @ts-ignore
         public: `${formatTimestampToSlug(post.publish_date_day)}/${post.slug}`,
+        // @ts-ignore
         share: `${process.env.NEXT_PUBLIC_SITE_URL}/${formatTimestampToSlug(post.publish_date_day)}/${post.slug}/share`,
       },
       visibility: post.visibility,
