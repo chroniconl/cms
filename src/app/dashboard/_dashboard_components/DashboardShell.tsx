@@ -1,6 +1,7 @@
 import { supabase } from '@/utils/supabase'
 import { currentUser } from '@clerk/nextjs/server'
 import DashboardHeader from './DashboardHeader'
+import { redirect } from 'next/navigation'
 
 interface UserEmailInterface {
   id: string
@@ -35,7 +36,7 @@ export default async function DashboardShell({
   const user = await currentUser()
 
   if (!user) {
-    throw new Error('Please sign in')
+    redirect('/sign-in')
   }
 
   // its the same, just what we need
