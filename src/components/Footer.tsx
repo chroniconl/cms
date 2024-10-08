@@ -113,6 +113,13 @@ export default function Footer() {
             >
               Submit an article
             </a>
+            <Link
+              href="/sign-in"
+              className="ch-color-secondary hover:underline"
+              prefetch={false}
+            >
+              Sign in to your account
+            </Link>
           </nav>
         </div>
       </div>

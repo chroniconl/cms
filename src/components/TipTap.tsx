@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CharacterCount from '@tiptap/extension-character-count'
 import Blockquote from '@tiptap/extension-blockquote'
 import BulletList from '@tiptap/extension-bullet-list'
@@ -91,12 +91,13 @@ const TipTap = ({
   className?: string
 }) => {
   const { control, setValue } = useForm()
+  const [classNameFromState, setClassNameFromState] = useState(proseClassNames)
 
   const editor = useEditor({
     editable: editable,
     editorProps: {
       attributes: {
-        class: className,
+        class: classNameFromState,
       },
     },
     extensions: [
@@ -139,14 +140,21 @@ const TipTap = ({
 
   const debouncedUpdate = useCallback(
     debounce(async (content: string) => {
-      await fetch('/api/v0/document', {
-        method: 'PUT',
-        body: JSON.stringify({
-          slug: params?.slug,
-          content,
-        }),
-      })
-    }, 500),
+      try {
+        await fetch('/api/v0/document', {
+          method: 'PUT',
+          body: JSON.stringify({
+            slug: params?.slug,
+            content,
+          }),
+        })
+      } catch (e) {
+        console.error(e)
+        setClassNameFromState(
+          proseClassNames + ' border-red-500 border-2 border-solid',
+        )
+      }
+    }, 100),
     [params?.slug],
   )
 

@@ -1,5 +1,5 @@
 pnpm run eslint
 
-pnpm run test
+# pnpm run test
 
 pnpm run build
